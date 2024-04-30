@@ -1,55 +1,13 @@
 using MySql.Data.MySqlClient;
 using System.Runtime.CompilerServices;
 using System.Xml.Linq;
+using static clinic_system.classes;
 
 namespace clinic_system
 {
     public partial class Form1 : Form
     {
-        public class db
-        {
-           public string mysqlconn = "server=localhost; user=root; database=clinic-system; password=";
-           public MySqlConnection mysqlconnection;
-            public void connection()
-            {
-                string mysqlconn = "server=localhost; user=root; database=clinic-system; password=";
-                mysqlconnection = new MySqlConnection(mysqlconn);
-                try
-                {
-                    mysqlconnection.Open();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-
-                }
-                
-
-            }
-
-            public void ExecuteNonQuery(string query)
-            {
-                MySqlCommand mySqlCommand = new MySqlCommand(query, mysqlconnection);
-                mySqlCommand.ExecuteNonQuery();
-            }
-        }
-        public class Patient
-        {
-            public int pid;
-            public string name;
-            public string number;
-            db d = new db();
-          
-
-        }
-        public class Doctor
-        {
-            public int did;
-            public string drname;
-            public int drnumber;
-            public string spec;
-
-        }
+       
         private db dbInstance;
         private Patient patientInstance;
         public Form1()
