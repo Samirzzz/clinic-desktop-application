@@ -30,28 +30,37 @@ namespace clinic_system
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            dbInstance.connection();
-            patientInstance.name = patient_name.Text.ToString();
-            string number = patient_number.Text.ToString();
-            patientInstance.setnumber(number);
-            if (!string.IsNullOrEmpty(patientInstance.number)) 
+            try
             {
-                string query = "INSERT INTO patient (name, number) VALUES (@name, @number)";
-                MySqlCommand mySqlCommand = new MySqlCommand(query, dbInstance.mysqlconnection);
-                mySqlCommand.Parameters.AddWithValue("@name", patientInstance.name);
-                mySqlCommand.Parameters.AddWithValue("@number", patientInstance.number);
-                int rowsAffected = mySqlCommand.ExecuteNonQuery();
+
+                dbInstance.connection();
+                string name = patient_name.Text.ToString();
+                string number = patient_number.Text.ToString();
+                patientInstance.setname(name);
+                if (patientInstance.setnumber(number))
+                {
+                    string query = "INSERT INTO patient (name, number) VALUES (@name, @number)";
+                    MySqlCommand mySqlCommand = new MySqlCommand(query, dbInstance.mysqlconnection);
+                    mySqlCommand.Parameters.AddWithValue("@name", patientInstance.getname());
+                    mySqlCommand.Parameters.AddWithValue("@number", patientInstance.getnumber());
+                    int rowsAffected = mySqlCommand.ExecuteNonQuery();
 
 
-            if (rowsAffected > 0)
-            {
-                MessageBox.Show("User added successfully!");
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("User added successfully!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to add user.");
+                    }
+                }
+                
+                
             }
-            else
+            catch(Exception ex) 
             {
-                MessageBox.Show("Failed to add user.");
-            }
+                MessageBox.Show("error: "+ex.Message);
             }
 
         }

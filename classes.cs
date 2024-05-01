@@ -64,20 +64,43 @@ namespace clinic_system
             {
                 this.messages = messages;
             }
-            public void setnumber(string number)
+            public string getname()
+            {
+                return this.name;
+            }
+            public string getnumber()
+            {
+                return this.number;
+            }
+            public void setname(string name)
+            {
+                this.name = name;
+            }
+            public bool setnumber(string number)
             {
 
-                if (number.Length < 11)
+                if (string.IsNullOrEmpty(number))
                 {
-                    messages.message = "Number must be bigger than 11 characters";
+                    messages.message = "No empty field is allowed";
                     messages.title = "Validation error";
                     messages.show_messages();
+                    return false;
                 }
-
-                   
+                else if (number.Length < 11)
+                {
+                    messages.message = "Number must be at least 11 characters long";
+                    messages.title = "Validation error";
+                    messages.show_messages();
+                    return false ;
+                }
+                else
+                {
+                    this.number = number;
+                    return true;
+                }
             }
 
-        }
+            }
         public class Doctor
         {
             public int did;
