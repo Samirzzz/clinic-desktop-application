@@ -14,7 +14,8 @@ namespace clinic_system
         {
             InitializeComponent();
             dbInstance = new db();
-            patientInstance = new Patient();
+            Messages messages = new Messages("", "");
+            patientInstance = new Patient(messages);
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -32,12 +33,16 @@ namespace clinic_system
 
             dbInstance.connection();
             patientInstance.name = patient_name.Text.ToString();
-            patientInstance.number = patient_number.Text.ToString();
-            string query = "INSERT INTO patient (name, number) VALUES (@name, @number)";
-            MySqlCommand mySqlCommand = new MySqlCommand(query, dbInstance.mysqlconnection);
-            mySqlCommand.Parameters.AddWithValue("@name", patientInstance.name);
-            mySqlCommand.Parameters.AddWithValue("@number", patientInstance.number);
-            int rowsAffected = mySqlCommand.ExecuteNonQuery();
+            string number = patient_number.Text.ToString();
+            patientInstance.setnumber(number);
+            if (!string.IsNullOrEmpty(patientInstance.number)) 
+            {
+                string query = "INSERT INTO patient (name, number) VALUES (@name, @number)";
+                MySqlCommand mySqlCommand = new MySqlCommand(query, dbInstance.mysqlconnection);
+                mySqlCommand.Parameters.AddWithValue("@name", patientInstance.name);
+                mySqlCommand.Parameters.AddWithValue("@number", patientInstance.number);
+                int rowsAffected = mySqlCommand.ExecuteNonQuery();
+
 
             if (rowsAffected > 0)
             {
@@ -47,6 +52,8 @@ namespace clinic_system
             {
                 MessageBox.Show("Failed to add user.");
             }
+            }
+
         }
 
         private void label3_Click(object sender, EventArgs e)

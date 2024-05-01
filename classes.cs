@@ -36,13 +36,46 @@ namespace clinic_system
                 mySqlCommand.ExecuteNonQuery();
             }
         }
+        public class Messages
+        {
+            public string message;
+            public string title;
+
+
+            public Messages(string message,string title)
+            {
+                this.message = message;
+                this.title=title;
+            }
+            public void show_messages()
+            {
+                MessageBox.Show(message, title);
+            }
+        }
         public class Patient
         {
+            
             public int pid;
             public string name;
             public string number;
             db d = new db();
+            Messages messages;
+            public Patient(Messages messages)
+            {
+                this.messages = messages;
+            }
+            public void setnumber(string number)
+            {
 
+                if (number.Length < 11)
+                {
+                    messages.message = "Number must be bigger than 11 characters";
+                    messages.title = "Validation error";
+                    messages.show_messages();
+                }
+
+                   
+            }
 
         }
         public class Doctor
