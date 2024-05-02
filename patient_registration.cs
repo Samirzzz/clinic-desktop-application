@@ -5,12 +5,12 @@ using static clinic_system.classes;
 
 namespace clinic_system
 {
-    public partial class Form1 : Form
+    public partial class patient_registration : Form
     {
        
         private db dbInstance;
         private Patient patientInstance;
-        public Form1()
+        public patient_registration()
         {
             InitializeComponent();
             dbInstance = new db();
@@ -30,39 +30,18 @@ namespace clinic_system
 
         private void button1_Click(object sender, EventArgs e)
         {
-            try
-            {
-
-                dbInstance.connection();
+            
                 string name = patient_name.Text.ToString();
                 string number = patient_number.Text.ToString();
                 patientInstance.setname(name);
-                if (patientInstance.setnumber(number))
+                if (patientInstance.validatenumber(number))
                 {
-                    string query = "INSERT INTO patient (name, number) VALUES (@name, @number)";
-                    MySqlCommand mySqlCommand = new MySqlCommand(query, dbInstance.mysqlconnection);
-                    mySqlCommand.Parameters.AddWithValue("@name", patientInstance.getname());
-                    mySqlCommand.Parameters.AddWithValue("@number", patientInstance.getnumber());
-                    int rowsAffected = mySqlCommand.ExecuteNonQuery();
-
-
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("User added successfully!");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed to add user.");
-                    }
+                    patientInstance.addpatient(name, number);
                 }
                 
                 
-            }
-            catch(Exception ex) 
-            {
-                MessageBox.Show("error: "+ex.Message);
-            }
-
+            
+            
         }
 
         private void label3_Click(object sender, EventArgs e)

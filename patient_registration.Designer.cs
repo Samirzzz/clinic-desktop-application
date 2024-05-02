@@ -1,6 +1,6 @@
 ﻿namespace clinic_system
 {
-    partial class Form1
+    partial class patient_registration
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(patient_registration));
             namelbl = new Label();
             num = new Label();
             patient_name = new TextBox();
@@ -42,7 +42,8 @@
             namelbl.AutoSize = true;
             namelbl.BackColor = Color.Transparent;
             namelbl.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            namelbl.Location = new Point(321, 157);
+            namelbl.ForeColor = SystemColors.ButtonHighlight;
+            namelbl.Location = new Point(327, 185);
             namelbl.Name = "namelbl";
             namelbl.Size = new Size(62, 25);
             namelbl.TabIndex = 0;
@@ -54,7 +55,8 @@
             num.AutoSize = true;
             num.BackColor = Color.Transparent;
             num.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            num.Location = new Point(302, 226);
+            num.ForeColor = SystemColors.ButtonHighlight;
+            num.Location = new Point(308, 254);
             num.Name = "num";
             num.Size = new Size(81, 25);
             num.TabIndex = 1;
@@ -62,7 +64,7 @@
             // 
             // patient_name
             // 
-            patient_name.Location = new Point(389, 155);
+            patient_name.Location = new Point(395, 183);
             patient_name.Name = "patient_name";
             patient_name.Size = new Size(402, 27);
             patient_name.TabIndex = 2;
@@ -70,14 +72,14 @@
             // 
             // patient_number
             // 
-            patient_number.Location = new Point(389, 227);
+            patient_number.Location = new Point(395, 255);
             patient_number.Name = "patient_number";
             patient_number.Size = new Size(402, 27);
             patient_number.TabIndex = 3;
             // 
             // button1
             // 
-            button1.Location = new Point(513, 297);
+            button1.Location = new Point(498, 322);
             button1.Name = "button1";
             button1.Size = new Size(140, 33);
             button1.TabIndex = 4;
@@ -90,6 +92,7 @@
             label3.AutoSize = true;
             label3.BackColor = Color.Transparent;
             label3.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.ForeColor = SystemColors.ButtonHighlight;
             label3.Location = new Point(436, 38);
             label3.Name = "label3";
             label3.Size = new Size(299, 41);
@@ -97,20 +100,21 @@
             label3.Text = "Patient Registration";
             label3.Click += label3_Click;
             // 
-            // Form1
+            // patient_registration
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GrayText;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
-            ClientSize = new Size(1121, 450);
+            BackgroundImageLayout = ImageLayout.Stretch;
+            ClientSize = new Size(1121, 594);
             Controls.Add(label3);
             Controls.Add(button1);
             Controls.Add(patient_number);
             Controls.Add(patient_name);
             Controls.Add(num);
             Controls.Add(namelbl);
-            Name = "Form1";
+            Name = "patient_registration";
             Text = "Form1";
             Load += Form1_Load;
             ResumeLayout(false);
