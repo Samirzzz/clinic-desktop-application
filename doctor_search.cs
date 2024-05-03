@@ -19,8 +19,7 @@ namespace clinic_system
         public doctor_search()
         {
             InitializeComponent();
-            //zjxifozofzi 
-            //zfdfdsfsd
+            dbInstance = new db();
 
             Messages messages = new Messages("", "");
             doctorInstance = new Doctor(messages);
