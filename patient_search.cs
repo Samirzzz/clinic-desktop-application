@@ -13,13 +13,13 @@ namespace clinic_system
 {
     public partial class patient_search : Form
     {
-        private db dbInstance;
+        
         private Patient patientInstance;
 
         public patient_search()
         {
             InitializeComponent();
-            dbInstance = new db();
+           
 
             Messages messages = new Messages("", "");
             patientInstance = new Patient(messages);
