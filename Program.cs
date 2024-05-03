@@ -12,7 +12,7 @@ namespace clinic_system
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             //Application.Run(new Form1());
-            Application.Run(new patient_registration());
+            Application.Run(new doctor_search());
         }
     }
 }

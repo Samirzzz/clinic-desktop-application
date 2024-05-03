@@ -29,8 +29,7 @@ namespace clinic_system
         {
           
                 string number = doctor_num.Text.ToString();
-                doctorInstance.doctor_search(number);
-                this.Hide();
+                doctorInstance.doctor_search(number,this);
             
           
         }

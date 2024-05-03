@@ -270,7 +270,7 @@ namespace clinic_system
                     MessageBox.Show("error: " + ex.Message);
                 }
             }
-            public void doctor_search(string number)
+            public void doctor_search(string number,Form hide)
             {
                 try
                 {
@@ -291,7 +291,7 @@ namespace clinic_system
                         {
                             patient_search patientform = new patient_search();
                             patientform.Show();
-                           
+                            hide.Hide();
                            
                         }
                         else
