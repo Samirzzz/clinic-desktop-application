@@ -33,7 +33,7 @@ namespace clinic_system
             pictureBox1 = new PictureBox();
             AddPatient = new Button();
             AddDoctor = new Button();
-            ViewPatient = new Button();
+            searchPatient = new Button();
             SearchDoctor = new Button();
             WelcomeText = new TextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -80,19 +80,19 @@ namespace clinic_system
             AddDoctor.UseVisualStyleBackColor = true;
             AddDoctor.Click += AddDoctor_Click;
             // 
-            // ViewPatient
+            // searchPatient
             // 
-            ViewPatient.FlatAppearance.BorderColor = Color.Black;
-            ViewPatient.FlatAppearance.MouseDownBackColor = Color.Black;
-            ViewPatient.FlatStyle = FlatStyle.Flat;
-            ViewPatient.Font = new Font("Arial Rounded MT Bold", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ViewPatient.Location = new Point(800, 313);
-            ViewPatient.Name = "ViewPatient";
-            ViewPatient.Size = new Size(207, 53);
-            ViewPatient.TabIndex = 3;
-            ViewPatient.Text = "View Patient";
-            ViewPatient.UseVisualStyleBackColor = true;
-            ViewPatient.Click += ViewPatient_Click;
+            searchPatient.FlatAppearance.BorderColor = Color.Black;
+            searchPatient.FlatAppearance.MouseDownBackColor = Color.Black;
+            searchPatient.FlatStyle = FlatStyle.Flat;
+            searchPatient.Font = new Font("Arial Rounded MT Bold", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            searchPatient.Location = new Point(779, 318);
+            searchPatient.Name = "searchPatient";
+            searchPatient.Size = new Size(257, 50);
+            searchPatient.TabIndex = 3;
+            searchPatient.Text = "search for patient";
+            searchPatient.UseVisualStyleBackColor = true;
+            searchPatient.Click += searchPatient_Click;
             // 
             // SearchDoctor
             // 
@@ -100,7 +100,7 @@ namespace clinic_system
             SearchDoctor.FlatAppearance.MouseDownBackColor = Color.Black;
             SearchDoctor.FlatStyle = FlatStyle.Flat;
             SearchDoctor.Font = new Font("Arial Rounded MT Bold", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            SearchDoctor.Location = new Point(779, 393);
+            SearchDoctor.Location = new Point(779, 416);
             SearchDoctor.Name = "SearchDoctor";
             SearchDoctor.Size = new Size(257, 53);
             SearchDoctor.TabIndex = 4;
@@ -126,7 +126,7 @@ namespace clinic_system
             ClientSize = new Size(1069, 680);
             Controls.Add(WelcomeText);
             Controls.Add(SearchDoctor);
-            Controls.Add(ViewPatient);
+            Controls.Add(searchPatient);
             Controls.Add(AddDoctor);
             Controls.Add(AddPatient);
             Controls.Add(pictureBox1);
@@ -148,7 +148,7 @@ namespace clinic_system
         private PictureBox pictureBox1;
         private Button AddPatient;
         private Button AddDoctor;
-        private Button ViewPatient;
+        private Button searchPatient;
         private Button SearchDoctor;
         private TextBox WelcomeText;
     }
