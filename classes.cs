@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using static clinic_system.classes;
 using static clinic_system.doctor_search;
 using static clinic_system.patient_search;
+using static clinic_system.diagnosis;
+
 
 
 namespace clinic_system
@@ -151,7 +153,7 @@ namespace clinic_system
 
 
             }
-             public void patient_search(string number)
+             public void patient_search(string number,string docnumber,Form hide)
             {
                 try
                 {
@@ -164,8 +166,10 @@ namespace clinic_system
                     {
                         if (reader.Read())
                         {
-                            MessageBox.Show($"Doctor with number {number} is found.");
-
+                            patient_search doc = new patient_search(docnumber);
+                             diagnosis diagnosis = new diagnosis(number,docnumber);
+                            diagnosis.Show();
+                            hide.Hide();
 
 
                         }
@@ -310,6 +314,39 @@ namespace clinic_system
                 }
             }
     }
+        public interface Treatment
+        {
+            string getdiagnosis();
+        }
+        public class BoneTreatment : Treatment
+        {
+            public string getdiagnosis()
+            {
+                return "Bone related diagnosis";
+            }
+        }
+        public class TreatmentFactory
+        {
+public Treatment createTreatment(string diagnosis)
+            {
+                switch (diagnosis.ToLower())
+                {
+                    case "bone":
+                        return new BoneTreatment();
+                    default:
+                        throw new ArgumentException("Invalid diagnosis");
+                }
+
+            }
+
+            public string setxray()
+            {
+                return "X-ray reserved"; 
+            }
+
+
+        }
+
         public class Diagnosis
         {
             int diagid;

@@ -16,12 +16,14 @@ namespace clinic_system
 
         private Patient patientInstance;
         private string docnumber;
+        private string patientnumber;
+
 
         public patient_search(string docnumber)
         {
             InitializeComponent();
             this.docnumber = docnumber;
-
+            this.patientnumber = docnumber;
 
             Messages messages = new Messages("", "");
             patientInstance = new Patient(messages);
@@ -30,7 +32,8 @@ namespace clinic_system
         private void enterbut_Click(object sender, EventArgs e)
         {
             string number = patient_num.Text.ToString();
-            patientInstance.patient_search(number);
+            
+            patientInstance.patient_search(number,docnumber,this);
         }
 
         private void button2_Click(object sender, EventArgs e)
