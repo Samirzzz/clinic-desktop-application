@@ -1,5 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,26 +11,24 @@ using static clinic_system.classes;
 
 namespace clinic_system
 {
-    public partial class doctor_search : Form
+    public partial class patient_search : Form
     {
         private db dbInstance;
-        private Doctor doctorInstance;
-        public doctor_search()
+        private Patient patientInstance;
+
+        public patient_search()
         {
             InitializeComponent();
-            
+            dbInstance = new db();
 
             Messages messages = new Messages("", "");
-            doctorInstance = new Doctor(messages);
+            patientInstance = new Patient(messages);
         }
 
         private void enterbut_Click(object sender, EventArgs e)
         {
-          
-                string number = doctor_num.Text.ToString();
-                doctorInstance.doctor_search(number,this);
-            
-          
+            string number = patient_num.Text.ToString();
+           patientInstance.patient_search(number);
         }
     }
 }
