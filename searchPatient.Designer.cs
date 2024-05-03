@@ -1,6 +1,6 @@
 ﻿namespace clinic_system
 {
-    partial class ViewPatient
+    partial class searchPatient
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ViewPatient));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(searchPatient));
             label1 = new Label();
             Name_label = new Label();
             Name_textbox = new TextBox();
@@ -111,8 +111,8 @@
             Controls.Add(Name_textbox);
             Controls.Add(Name_label);
             Controls.Add(label1);
-            Name = "ViewPatient";
-            Text = "ViewPatient";
+            Name = "searchPatient";
+            Text = "searchPatient";
             ResumeLayout(false);
             PerformLayout();
         }

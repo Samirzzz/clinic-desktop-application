@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace clinic_system
 {
-    public partial class ViewPatient : Form
+    public partial class searchPatient : Form
     {
-        public ViewPatient()
+        public searchPatient()
         {
             InitializeComponent();
         }

@@ -39,9 +39,9 @@ namespace clinic_system
             this.Hide();
         }
 
-        private void ViewPatient_Click(object sender, EventArgs e)
+        private void searchPatient_Click(object sender, EventArgs e)
         {
-            ViewPatient view_patient = new ViewPatient();
+            searchPatient view_patient = new searchPatient();
             view_patient.Show();
             this.Hide();
         }
