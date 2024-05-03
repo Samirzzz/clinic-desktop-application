@@ -13,11 +13,12 @@ namespace clinic_system
     {
         public class db
         {
-            public string mysqlconn = "server=localhost; user=root; database=clinic-system; password=";
-            public MySqlConnection mysqlconnection;
-            public void connection()
+            private static db instance;
+            private string mysqlconn = "server=localhost; user=root; database=clinic-system; password=";
+            private MySqlConnection mysqlconnection;
+
+            private db()
             {
-                string mysqlconn = "server=localhost; user=root; database=clinic-system; password=";
                 mysqlconnection = new MySqlConnection(mysqlconn);
                 try
                 {
@@ -26,16 +27,29 @@ namespace clinic_system
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
-
                 }
+            }
 
-
+            public static db Instance
+            {
+                get
+                {
+                    if (instance == null)
+                    {
+                        instance = new db();
+                    }
+                    return instance;
+                }
             }
 
             public void ExecuteNonQuery(string query)
             {
                 MySqlCommand mySqlCommand = new MySqlCommand(query, mysqlconnection);
                 mySqlCommand.ExecuteNonQuery();
+            }
+            public MySqlConnection GetConnection()
+            {
+                return mysqlconnection;
             }
         }
         public class Messages
@@ -60,7 +74,6 @@ namespace clinic_system
             public int pid;
             public string name;
             public string number;
-            db d = new db();
             Messages messages;
             public Patient(Messages messages)
             {
@@ -110,11 +123,9 @@ namespace clinic_system
                 try
                 {
 
-                    db dbInstance = new db();
-
-                    dbInstance.connection();
+ 
                     string query = "INSERT INTO patient (name, number) VALUES (@name, @number)";
-                    MySqlCommand mySqlCommand = new MySqlCommand(query, dbInstance.mysqlconnection);
+                    MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
                     mySqlCommand.Parameters.AddWithValue("@name", name);
                     mySqlCommand.Parameters.AddWithValue("@number", number);
                     int rowsAffected = mySqlCommand.ExecuteNonQuery();
@@ -201,14 +212,12 @@ namespace clinic_system
             {
                 try
                 {
-                    db dbInstance = new db();
-
-                    dbInstance.connection();
+       
 
 
                     string query = "INSERT INTO doctor (name, number,spec) VALUES (@name, @number, @spec)";
-                        MySqlCommand mySqlCommand = new MySqlCommand(query, dbInstance.mysqlconnection);
-                        mySqlCommand.Parameters.AddWithValue("@name", name);
+                    MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
+                    mySqlCommand.Parameters.AddWithValue("@name", name);
                         mySqlCommand.Parameters.AddWithValue("@number",number);
                         mySqlCommand.Parameters.AddWithValue("@spec", spec);
 
@@ -236,14 +245,12 @@ namespace clinic_system
             {
                 try
                 {
-                    db dbInstance = new db();
 
-                    dbInstance.connection();
 
 
 
                     string query = "SELECT number FROM doctor WHERE number = @number";
-                    MySqlCommand mySqlCommand = new MySqlCommand(query, dbInstance.mysqlconnection);
+                    MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
                     mySqlCommand.Parameters.AddWithValue("@number", number);
 
 

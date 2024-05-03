@@ -8,12 +8,12 @@ namespace clinic_system
     public partial class patient_registration : Form
     {
        
-        private db dbInstance;
+        
         private Patient patientInstance;
         public patient_registration()
         {
             InitializeComponent();
-            dbInstance = new db();
+            
             Messages messages = new Messages("", "");
             patientInstance = new Patient(messages);
         }

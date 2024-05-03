@@ -7,7 +7,7 @@ namespace clinic_system
 {
     public partial class viewPatients : Form
     {
-        private classes.db db = new classes.db();
+        //private classes.db db = new classes.db();
         DataTable dt = new DataTable();
         public viewPatients()
         {
@@ -44,14 +44,14 @@ namespace clinic_system
             try
             {
                 // Establish database connection
-                db.connection();
+                
 
                 // Query to select all patients
                 string query = "SELECT pid, name, number FROM patient";
 
                 // Execute the query and get the result
                 dt.Clear(); // Clear the DataTable before filling with new data
-                using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, db.mysqlconnection))
+                using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, classes.db.Instance.GetConnection()))
                 {
                     adapter.Fill(dt);
                 }
@@ -86,13 +86,13 @@ namespace clinic_system
             try
             {
                 // Establish database connection
-                db.connection();
+                
 
                 // Query to delete the patient
                 string query = "DELETE FROM patients WHERE pid = @pid";
 
                 // Create and execute the command with parameters
-                using (MySqlCommand cmd = new MySqlCommand(query, db.mysqlconnection))
+                using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
                 {
                     cmd.Parameters.AddWithValue("@pid", patientId);
                     cmd.ExecuteNonQuery();

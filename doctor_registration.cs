@@ -14,12 +14,12 @@ namespace clinic_system
 {
     public partial class doctor_registration : Form
     {
-        private db dbInstance;
+        
         private Doctor doctorInstance;
         public doctor_registration()
         {
             InitializeComponent();
-            dbInstance = new db();
+            
             Messages messages = new Messages("", "");
             doctorInstance = new Doctor(messages);
         }
