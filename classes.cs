@@ -154,14 +154,12 @@ namespace clinic_system
             {
                 try
                 {
-                    db dbInstance = new db();
-
-                    dbInstance.connection();
+     
 
 
 
                     string query = "SELECT number FROM patient WHERE number = @number";
-                    MySqlCommand mySqlCommand = new MySqlCommand(query, dbInstance.mysqlconnection);
+                    MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
                     mySqlCommand.Parameters.AddWithValue("@number", number);
 
 
