@@ -15,11 +15,13 @@ namespace clinic_system
     {
         
         private Patient patientInstance;
+        private string docnumber;
 
-        public patient_search()
+        public patient_search(string docnumber)
         {
             InitializeComponent();
-           
+            this.docnumber = docnumber;
+
 
             Messages messages = new Messages("", "");
             patientInstance = new Patient(messages);
