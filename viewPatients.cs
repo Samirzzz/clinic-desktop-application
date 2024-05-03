@@ -21,8 +21,8 @@ namespace clinic_system
             dataGridView1.DataSource = dt;
             // Attach CellClick event handler
             dataGridView1.CellClick += dataGridView1_CellClick;
-           
 
+            idbox.ReadOnly = true;
             LoadPatients();
             // Set up the DataTable and add it to a container control
 
@@ -31,13 +31,58 @@ namespace clinic_system
         }
 
 
-        private void editbtn_Click(object sender, EventArgs e)
+        private void savebtn_Click(object sender, EventArgs e)
         {
-            // Your logic for editing a patient here
-            MessageBox.Show("Edit button clicked");
+
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a row to delete.");
+                return;
+            }
+
+            
+            int patientId = Convert.ToInt32(idbox.Text);
+            string newName = namebox.Text;
+            string newNumber = numbox.Text;
+
+            try
+            {
+                // Establish database connection
+
+                // Query to update the patient record
+                string query = "UPDATE patient SET name = @name, number = @number WHERE pid = @pid";
+
+                // Create and execute the command with parameters
+                using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
+                {
+                    cmd.Parameters.AddWithValue("@name", newName);
+                    cmd.Parameters.AddWithValue("@number", newNumber);
+                    cmd.Parameters.AddWithValue("@pid", patientId);
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Update the DataTable with the new values
+                DataRow[] rows = dt.Select("pid = " + patientId);
+                if (rows.Length > 0)
+                {
+                    rows[0]["name"] = newName;
+                    rows[0]["number"] = newNumber;
+                }
+
+                // Display success message
+                MessageBox.Show("Edit has been saved.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
         }
 
-     
+    
+
+
+
+
         private void LoadPatients()
         {
             try

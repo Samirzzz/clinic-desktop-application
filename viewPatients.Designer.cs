@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             dataGridView1 = new DataGridView();
-            editbtn = new Button();
+            savebtn = new Button();
             deletebtn = new Button();
             idlbl = new Label();
             namelbl = new Label();
@@ -51,23 +51,23 @@
             dataGridView1.Size = new Size(474, 485);
             dataGridView1.TabIndex = 0;
             // 
-            // editbtn
+            // savebtn
             // 
-            editbtn.BackColor = SystemColors.MenuHighlight;
-            editbtn.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            editbtn.Location = new Point(682, 40);
-            editbtn.Name = "editbtn";
-            editbtn.Size = new Size(201, 64);
-            editbtn.TabIndex = 1;
-            editbtn.Text = "edit";
-            editbtn.UseVisualStyleBackColor = false;
-            editbtn.Click += editbtn_Click;
+            savebtn.BackColor = Color.Chartreuse;
+            savebtn.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            savebtn.Location = new Point(519, 360);
+            savebtn.Name = "savebtn";
+            savebtn.Size = new Size(201, 64);
+            savebtn.TabIndex = 1;
+            savebtn.Text = "save";
+            savebtn.UseVisualStyleBackColor = false;
+            savebtn.Click += savebtn_Click;
             // 
             // deletebtn
             // 
             deletebtn.BackColor = Color.Red;
             deletebtn.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            deletebtn.Location = new Point(682, 375);
+            deletebtn.Location = new Point(799, 363);
             deletebtn.Name = "deletebtn";
             deletebtn.Size = new Size(201, 61);
             deletebtn.TabIndex = 2;
@@ -79,7 +79,7 @@
             // 
             idlbl.AutoSize = true;
             idlbl.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            idlbl.Location = new Point(606, 153);
+            idlbl.Location = new Point(606, 100);
             idlbl.MinimumSize = new Size(50, 30);
             idlbl.Name = "idlbl";
             idlbl.Size = new Size(53, 31);
@@ -91,7 +91,7 @@
             // 
             namelbl.AutoSize = true;
             namelbl.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            namelbl.Location = new Point(571, 223);
+            namelbl.Location = new Point(571, 171);
             namelbl.MinimumSize = new Size(50, 30);
             namelbl.Name = "namelbl";
             namelbl.Size = new Size(88, 31);
@@ -102,7 +102,7 @@
             // 
             numlbl.AutoSize = true;
             numlbl.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numlbl.Location = new Point(588, 282);
+            numlbl.Location = new Point(588, 248);
             numlbl.MinimumSize = new Size(50, 30);
             numlbl.Name = "numlbl";
             numlbl.Size = new Size(71, 31);
@@ -111,7 +111,7 @@
             // 
             // idbox
             // 
-            idbox.Location = new Point(665, 153);
+            idbox.Location = new Point(665, 100);
             idbox.Multiline = true;
             idbox.Name = "idbox";
             idbox.Size = new Size(218, 41);
@@ -119,7 +119,7 @@
             // 
             // namebox
             // 
-            namebox.Location = new Point(665, 223);
+            namebox.Location = new Point(665, 161);
             namebox.Multiline = true;
             namebox.Name = "namebox";
             namebox.Size = new Size(218, 41);
@@ -127,7 +127,7 @@
             // 
             // numbox
             // 
-            numbox.Location = new Point(665, 282);
+            numbox.Location = new Point(665, 238);
             numbox.Multiline = true;
             numbox.Name = "numbox";
             numbox.Size = new Size(218, 41);
@@ -145,7 +145,7 @@
             Controls.Add(namelbl);
             Controls.Add(idlbl);
             Controls.Add(deletebtn);
-            Controls.Add(editbtn);
+            Controls.Add(savebtn);
             Controls.Add(dataGridView1);
             Name = "viewPatients";
             Text = "Form2";
@@ -159,7 +159,7 @@
         #endregion
 
         private DataGridView dataGridView1;
-        private Button editbtn;
+        private Button savebtn;
         private Button deletebtn;
         private Label idlbl;
         private Label namelbl;
