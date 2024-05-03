@@ -12,7 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static clinic_system.classes;
-=*\=mespace clinic_systemp0
+
+namespace clinic_system
 {
     public partial class patient_registration : Form
     {
