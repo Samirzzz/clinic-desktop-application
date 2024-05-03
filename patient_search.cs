@@ -13,7 +13,7 @@ namespace clinic_system
 {
     public partial class patient_search : Form
     {
-        
+
         private Patient patientInstance;
         private string docnumber;
 
@@ -38,6 +38,11 @@ namespace clinic_system
             Form1 form = new Form1();
             form.Show();
             this.Hide();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            label2.Text = docnumber;
         }
     }
 }

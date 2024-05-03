@@ -87,6 +87,7 @@
             label2.Size = new Size(50, 20);
             label2.TabIndex = 20;
             label2.Text = "label2";
+            label2.Click += label2_Click;
             // 
             // patient_search
             // 
