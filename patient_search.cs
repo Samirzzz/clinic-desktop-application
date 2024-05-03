@@ -28,7 +28,14 @@ namespace clinic_system
         private void enterbut_Click(object sender, EventArgs e)
         {
             string number = patient_num.Text.ToString();
-           patientInstance.patient_search(number);
+            patientInstance.patient_search(number);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form1 form = new Form1();
+            form.Show();
+            this.Hide();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace clinic_system
         public patient_registration()
         {
             InitializeComponent();
-            
+
             Messages messages = new Messages("", "");
             patientInstance = new Patient(messages);
         }
@@ -67,10 +67,17 @@ namespace clinic_system
         private void button2_Click(object sender, EventArgs e)
         {
             Form1 form = new Form1();
-          form.Show();
-            this.Hide();    
-            
+            form.Show();
+            this.Hide();
 
+
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            Form1 form = new Form1();
+            form.Show();
+            this.Hide();
         }
     }
 }

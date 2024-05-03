@@ -14,12 +14,12 @@ namespace clinic_system
 {
     public partial class doctor_registration : Form
     {
-        
+
         private Doctor doctorInstance;
         public doctor_registration()
         {
             InitializeComponent();
-            
+
             Messages messages = new Messages("", "");
             doctorInstance = new Doctor(messages);
         }
@@ -38,8 +38,15 @@ namespace clinic_system
             doctorInstance.setspec(spec);
             if (doctorInstance.validatenumber(number))
             {
-                doctorInstance.adddoctor(name, number,spec);
+                doctorInstance.adddoctor(name, number, spec);
             }
-            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form1 form = new Form1();
+            form.Show();
+            this.Hide();
+        }
     }
 }

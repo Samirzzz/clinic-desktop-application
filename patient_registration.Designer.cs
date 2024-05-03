@@ -80,7 +80,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(498, 322);
+            button1.Location = new Point(511, 366);
             button1.Name = "button1";
             button1.Size = new Size(140, 33);
             button1.TabIndex = 4;
@@ -103,13 +103,16 @@
             // 
             // button2
             // 
-            button2.Location = new Point(433, 426);
+            button2.BackColor = Color.Transparent;
+            button2.FlatStyle = FlatStyle.System;
+            button2.Font = new Font("Dungeon", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button2.Location = new Point(79, 49);
             button2.Name = "button2";
-            button2.Size = new Size(293, 58);
-            button2.TabIndex = 6;
-            button2.Text = "homepage";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            button2.Size = new Size(75, 50);
+            button2.TabIndex = 20;
+            button2.Text = "<-";
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click_1;
             // 
             // patient_registration
             // 

@@ -19,7 +19,7 @@ namespace clinic_system
         public doctor_search()
         {
             InitializeComponent();
-            
+
 
             Messages messages = new Messages("", "");
             doctorInstance = new Doctor(messages);
@@ -27,11 +27,18 @@ namespace clinic_system
 
         private void enterbut_Click(object sender, EventArgs e)
         {
-          
-                string number = doctor_num.Text.ToString();
-                doctorInstance.doctor_search(number,this);
-            
-          
+
+            string number = doctor_num.Text.ToString();
+            doctorInstance.doctor_search(number, this);
+
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form1 form = new Form1();
+            form.Show();
+            this.Hide();
         }
     }
 }

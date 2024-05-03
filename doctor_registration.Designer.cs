@@ -39,6 +39,7 @@
             label2 = new Label();
             doctor_spec = new TextBox();
             label4 = new Label();
+            button2 = new Button();
             SuspendLayout();
             // 
             // label3
@@ -140,6 +141,19 @@
             label4.TabIndex = 15;
             label4.Text = "Specialization";
             // 
+            // button2
+            // 
+            button2.BackColor = Color.Transparent;
+            button2.FlatStyle = FlatStyle.System;
+            button2.Font = new Font("Dungeon", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button2.Location = new Point(28, 21);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 50);
+            button2.TabIndex = 16;
+            button2.Text = "<-";
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
+            // 
             // doctor_registration
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -147,6 +161,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1165, 607);
+            Controls.Add(button2);
             Controls.Add(label4);
             Controls.Add(doctor_spec);
             Controls.Add(button1);
@@ -175,5 +190,6 @@
         private Label label2;
         private TextBox doctor_spec;
         private Label label4;
+        private Button button2;
     }
 }

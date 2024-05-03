@@ -32,6 +32,7 @@
             label1 = new Label();
             doctor_num = new TextBox();
             enterbut = new Button();
+            button2 = new Button();
             SuspendLayout();
             // 
             // label1
@@ -64,6 +65,19 @@
             enterbut.UseVisualStyleBackColor = true;
             enterbut.Click += enterbut_Click;
             // 
+            // button2
+            // 
+            button2.BackColor = Color.Transparent;
+            button2.FlatStyle = FlatStyle.System;
+            button2.Font = new Font("Dungeon", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button2.Location = new Point(63, 12);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 50);
+            button2.TabIndex = 20;
+            button2.Text = "<-";
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
+            // 
             // doctor_search
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -71,6 +85,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1122, 490);
+            Controls.Add(button2);
             Controls.Add(enterbut);
             Controls.Add(label1);
             Controls.Add(doctor_num);
@@ -85,5 +100,6 @@
         private Label label1;
         private TextBox doctor_num;
         private Button enterbut;
+        private Button button2;
     }
 }
