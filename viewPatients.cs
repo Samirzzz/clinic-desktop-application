@@ -36,7 +36,7 @@ namespace clinic_system
 
             if (dataGridView1.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Please select a row to delete.");
+                MessageBox.Show("Please select a row to save.");
                 return;
             }
 
@@ -108,22 +108,8 @@ namespace clinic_system
             }
         }
 
-        //private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    // Check if the clicked cell is the edit button
-        //    if (e.ColumnIndex == dataGridView1.Columns["Edit"].Index && e.RowIndex >= 0)
-        //    {
-        //        // Handle edit button click (You can open a new form for editing here)
-        //        MessageBox.Show("Edit button clicked for patient ID: " + dataGridView1.Rows[e.RowIndex].Cells["pid"].Value.ToString());
-        //    }
-        //    // Check if the clicked cell is the delete button
-        //    else if (e.ColumnIndex == dataGridView1.Columns["Delete"].Index && e.RowIndex >= 0)
-        //    {
-        //        // Handle delete button click
-        //        int patientId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["pid"].Value);
-        //        DeletePatient(patientId);
-        //    }
-        //}
+      
+  
         private bool DeletePatient(int patientId)
         {
             try

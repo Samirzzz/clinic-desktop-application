@@ -48,9 +48,16 @@ namespace clinic_system
 
         private void SearchDoctor_Click(object sender, EventArgs e)
         {
-            doctor_search doctor_search_= new doctor_search();
+            doctor_search doctor_search_ = new doctor_search();
             doctor_search_.Show();
             this.Hide();
-         }
+        }
+
+        private void rudpatientbtn_Click(object sender, EventArgs e)
+        {
+            viewPatients viewp = new viewPatients();
+            viewp.Show();   
+            this.Hide();    
+        }
     }
 }
