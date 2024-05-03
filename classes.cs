@@ -78,6 +78,7 @@ namespace clinic_system
             public string name;
             public string number;
             Messages messages;
+            Doctor doc=new Doctor();
             public Patient(Messages messages)
             {
                 this.messages = messages;
@@ -154,10 +155,6 @@ namespace clinic_system
             {
                 try
                 {
-     
-
-
-
                     string query = "SELECT number FROM patient WHERE number = @number";
                     MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
                     mySqlCommand.Parameters.AddWithValue("@number", number);
@@ -192,6 +189,10 @@ namespace clinic_system
             public string number;
             public string spec;
             Messages messages;
+            public Doctor()
+            {
+
+            }
             public Doctor(Messages messages)
             {
                 this.messages = messages;
@@ -282,9 +283,6 @@ namespace clinic_system
                 try
                 {
 
-
-
-
                     string query = "SELECT number FROM doctor WHERE number = @number";
                     MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
                     mySqlCommand.Parameters.AddWithValue("@number", number);
@@ -294,7 +292,7 @@ namespace clinic_system
                     {
                         if (reader.Read())
                         {
-                            patient_search patientform = new patient_search();
+                            patient_search patientform = new patient_search(number);
                             patientform.Show();
                             hide.Hide();
                            

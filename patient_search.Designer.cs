@@ -33,6 +33,7 @@
             patient_num = new TextBox();
             enterbut = new Button();
             button2 = new Button();
+            label2 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -69,7 +70,7 @@
             // 
             button2.BackColor = Color.Transparent;
             button2.FlatStyle = FlatStyle.System;
-            button2.Font = new Font("Dungeon", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button2.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.Location = new Point(59, 29);
             button2.Name = "button2";
             button2.Size = new Size(75, 50);
@@ -78,6 +79,15 @@
             button2.UseVisualStyleBackColor = false;
             button2.Click += button2_Click;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(30, 117);
+            label2.Name = "label2";
+            label2.Size = new Size(50, 20);
+            label2.TabIndex = 20;
+            label2.Text = "label2";
+            // 
             // patient_search
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -85,6 +95,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1130, 467);
+            Controls.Add(label2);
             Controls.Add(button2);
             Controls.Add(enterbut);
             Controls.Add(patient_num);
@@ -101,5 +112,6 @@
         private TextBox patient_num;
         private Button enterbut;
         private Button button2;
+        private Label label2;
     }
 }
