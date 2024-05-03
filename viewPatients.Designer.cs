@@ -73,6 +73,7 @@
             deletebtn.TabIndex = 2;
             deletebtn.Text = "delete";
             deletebtn.UseVisualStyleBackColor = false;
+            deletebtn.Click += deletebtn_Click;
             // 
             // idlbl
             // 

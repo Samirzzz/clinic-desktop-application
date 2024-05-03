@@ -19,7 +19,9 @@ namespace clinic_system
             dt.Columns.Add("name", typeof(string));
             dt.Columns.Add("number", typeof(string));
             dataGridView1.DataSource = dt;
-
+            // Attach CellClick event handler
+            dataGridView1.CellClick += dataGridView1_CellClick;
+           
 
             LoadPatients();
             // Set up the DataTable and add it to a container control
@@ -27,18 +29,15 @@ namespace clinic_system
 
 
         }
+
+
         private void editbtn_Click(object sender, EventArgs e)
         {
             // Your logic for editing a patient here
             MessageBox.Show("Edit button clicked");
         }
 
-        // Define the event handler for the delete button click
-        private void deletebtn_Click(object sender, EventArgs e)
-        {
-            // Your logic for deleting a patient here
-            MessageBox.Show("Delete button clicked");
-        }
+     
         private void LoadPatients()
         {
             try
@@ -64,48 +63,105 @@ namespace clinic_system
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // Check if the clicked cell is the edit button
-            if (e.ColumnIndex == dataGridView1.Columns["Edit"].Index && e.RowIndex >= 0)
-            {
-                // Handle edit button click (You can open a new form for editing here)
-                MessageBox.Show("Edit button clicked for patient ID: " + dataGridView1.Rows[e.RowIndex].Cells["pid"].Value.ToString());
-            }
-            // Check if the clicked cell is the delete button
-            else if (e.ColumnIndex == dataGridView1.Columns["Delete"].Index && e.RowIndex >= 0)
-            {
-                // Handle delete button click
-                int patientId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["pid"].Value);
-                DeletePatient(patientId);
-            }
-        }
-
-        private void DeletePatient(int patientId)
+        //private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    // Check if the clicked cell is the edit button
+        //    if (e.ColumnIndex == dataGridView1.Columns["Edit"].Index && e.RowIndex >= 0)
+        //    {
+        //        // Handle edit button click (You can open a new form for editing here)
+        //        MessageBox.Show("Edit button clicked for patient ID: " + dataGridView1.Rows[e.RowIndex].Cells["pid"].Value.ToString());
+        //    }
+        //    // Check if the clicked cell is the delete button
+        //    else if (e.ColumnIndex == dataGridView1.Columns["Delete"].Index && e.RowIndex >= 0)
+        //    {
+        //        // Handle delete button click
+        //        int patientId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["pid"].Value);
+        //        DeletePatient(patientId);
+        //    }
+        //}
+        private bool DeletePatient(int patientId)
         {
             try
             {
                 // Establish database connection
-                
 
                 // Query to delete the patient
-                string query = "DELETE FROM patients WHERE pid = @pid";
+                string query = "DELETE FROM patient WHERE pid = @pid";
 
                 // Create and execute the command with parameters
                 using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
                 {
                     cmd.Parameters.AddWithValue("@pid", patientId);
-                    cmd.ExecuteNonQuery();
-                }
+                    int rowsAffected = cmd.ExecuteNonQuery();
 
-                // Refresh the DataGridView after deletion
-                LoadPatients();
+                    if (rowsAffected > 0)
+                    {
+                        // Remove the row from the DataTable
+                        DataRow[] rows = dt.Select("pid = " + patientId);
+                        if (rows.Length > 0)
+                        {
+                            dt.Rows.Remove(rows[0]);
+                        }
+                    }
+
+                    return rowsAffected > 0; // Return true if rows were affected (deletion successful)
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
+                return false; // Return false if an exception occurred
             }
         }
+
+
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                // Get the selected row
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                // Populate the text boxes with data from the selected row
+                idbox.Text = row.Cells["pid"].Value.ToString();
+                namebox.Text = row.Cells["name"].Value.ToString();
+                numbox.Text = row.Cells["number"].Value.ToString();
+            }
+        }
+
+
+        private void deletebtn_Click(object sender, EventArgs e)
+        {
+            // Check if there is a selected row in the DataGridView
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a row to delete.");
+                return; // Exit the method
+            }
+
+            // Get the ID of the selected patient from the ID text box
+            int patientId = Convert.ToInt32(idbox.Text);
+
+            // Delete the patient record from the database
+            bool deleteSuccessful = DeletePatient(patientId);
+
+            // Display message based on delete result
+            if (deleteSuccessful)
+            {
+                idbox.Text = "";
+                namebox.Text = "";
+                numbox.Text = "";
+                MessageBox.Show("Patient deleted successfully.");
+            }
+            else
+            {
+                MessageBox.Show("Failed to delete patient.");
+            }
+        }
+
+
+
 
         private void viewPatients_Load(object sender, EventArgs e)
         {
