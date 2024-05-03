@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static clinic_system.classes;
+using static clinic_system.doctor_search;
+using static clinic_system.patient_search;
+
 
 namespace clinic_system
 {
@@ -136,7 +139,42 @@ namespace clinic_system
 
 
             }
+             public void patient_search(string number)
+            {
+                try
+                {
+                    db dbInstance = new db();
 
+                    dbInstance.connection();
+
+
+
+                    string query = "SELECT number FROM patient WHERE number = @number";
+                    MySqlCommand mySqlCommand = new MySqlCommand(query, dbInstance.mysqlconnection);
+                    mySqlCommand.Parameters.AddWithValue("@number", number);
+
+
+                    using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            MessageBox.Show($"Doctor with number {number} is found.");
+
+
+
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Doctor with number {number} not found.");
+                        }
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show("error: " + ex.Message);
+                }
+            }
         }
         public class Doctor
         {
@@ -251,7 +289,10 @@ namespace clinic_system
                     {
                         if (reader.Read())
                         {
-                            MessageBox.Show($"Doctor with number {number} found!");
+                            patient_search patientform = new patient_search();
+                            patientform.Show();
+                           
+                           
                         }
                         else
                         {

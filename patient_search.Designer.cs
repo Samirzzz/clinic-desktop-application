@@ -1,6 +1,6 @@
 ﻿namespace clinic_system
 {
-    partial class doctor_search
+    partial class patient_search
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(doctor_search));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(patient_search));
             label1 = new Label();
-            doctor_num = new TextBox();
+            patient_num = new TextBox();
             enterbut = new Button();
             SuspendLayout();
             // 
@@ -40,42 +40,42 @@
             label1.BackColor = Color.Transparent;
             label1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ButtonHighlight;
-            label1.Location = new Point(458, 92);
+            label1.Location = new Point(458, 139);
             label1.Name = "label1";
-            label1.Size = new Size(215, 41);
-            label1.TabIndex = 15;
-            label1.Text = "Doctor Search";
+            label1.Size = new Size(219, 41);
+            label1.TabIndex = 16;
+            label1.Text = "Patient Search";
             // 
-            // doctor_num
+            // patient_num
             // 
-            doctor_num.Location = new Point(366, 167);
-            doctor_num.Name = "doctor_num";
-            doctor_num.PlaceholderText = "enter doctor's number";
-            doctor_num.Size = new Size(402, 27);
-            doctor_num.TabIndex = 14;
+            patient_num.Location = new Point(364, 220);
+            patient_num.Name = "patient_num";
+            patient_num.PlaceholderText = "enter patient's number";
+            patient_num.Size = new Size(402, 27);
+            patient_num.TabIndex = 17;
             // 
             // enterbut
             // 
-            enterbut.Location = new Point(518, 224);
+            enterbut.Location = new Point(506, 284);
             enterbut.Name = "enterbut";
             enterbut.Size = new Size(94, 29);
-            enterbut.TabIndex = 16;
+            enterbut.TabIndex = 18;
             enterbut.Text = "enter";
             enterbut.UseVisualStyleBackColor = true;
             enterbut.Click += enterbut_Click;
             // 
-            // doctor_search
+            // patient_search
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1122, 490);
+            ClientSize = new Size(1130, 467);
             Controls.Add(enterbut);
+            Controls.Add(patient_num);
             Controls.Add(label1);
-            Controls.Add(doctor_num);
-            Name = "doctor_search";
-            Text = "doctors_search";
+            Name = "patient_search";
+            Text = "patient_search";
             ResumeLayout(false);
             PerformLayout();
         }
@@ -83,7 +83,7 @@
         #endregion
 
         private Label label1;
-        private TextBox doctor_num;
+        private TextBox patient_num;
         private Button enterbut;
     }
 }
