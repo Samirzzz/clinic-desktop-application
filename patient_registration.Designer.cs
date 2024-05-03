@@ -35,6 +35,7 @@
             patient_number = new TextBox();
             button1 = new Button();
             label3 = new Label();
+            button2 = new Button();
             SuspendLayout();
             // 
             // namelbl
@@ -100,6 +101,16 @@
             label3.Text = "Patient Registration";
             label3.Click += label3_Click;
             // 
+            // button2
+            // 
+            button2.Location = new Point(433, 426);
+            button2.Name = "button2";
+            button2.Size = new Size(293, 58);
+            button2.TabIndex = 6;
+            button2.Text = "homepage";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
             // patient_registration
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -108,6 +119,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1121, 594);
+            Controls.Add(button2);
             Controls.Add(label3);
             Controls.Add(button1);
             Controls.Add(patient_number);
@@ -129,5 +141,6 @@
         private TextBox patient_number;
         private Button button1;
         private Label label3;
+        private Button button2;
     }
 }
