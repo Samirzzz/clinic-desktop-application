@@ -40,6 +40,7 @@
             numbox = new TextBox();
             speclbl = new Label();
             specbox = new TextBox();
+            backbtn = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -164,12 +165,24 @@
             specbox.Size = new Size(218, 41);
             specbox.TabIndex = 10;
             // 
+            // backbtn
+            // 
+            backbtn.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            backbtn.Location = new Point(993, 12);
+            backbtn.Name = "backbtn";
+            backbtn.Size = new Size(94, 43);
+            backbtn.TabIndex = 11;
+            backbtn.Text = "<--";
+            backbtn.UseVisualStyleBackColor = true;
+            backbtn.Click += backbtn_Click;
+            // 
             // viewDoctors
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1099, 594);
+            Controls.Add(backbtn);
             Controls.Add(specbox);
             Controls.Add(speclbl);
             Controls.Add(numbox);
@@ -203,5 +216,6 @@
         private TextBox numbox;
         private Label speclbl;
         private TextBox specbox;
+        private Button backbtn;
     }
 }

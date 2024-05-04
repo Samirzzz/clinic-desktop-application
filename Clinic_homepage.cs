@@ -56,8 +56,15 @@ namespace clinic_system
         private void rudpatientbtn_Click(object sender, EventArgs e)
         {
             viewPatients viewp = new viewPatients();
-            viewp.Show();   
-            this.Hide();    
+            viewp.Show();
+            this.Hide();
+        }
+
+        private void doctorRUD_Click(object sender, EventArgs e)
+        {
+            viewDoctors vd = new viewDoctors();
+            vd.Show();
+            this.Hide();
         }
     }
 }

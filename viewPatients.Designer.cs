@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(viewPatients));
             dataGridView1 = new DataGridView();
             savebtn = new Button();
             deletebtn = new Button();
@@ -37,6 +38,7 @@
             idbox = new TextBox();
             namebox = new TextBox();
             numbox = new TextBox();
+            backbtn = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -80,6 +82,7 @@
             // 
             idlbl.AutoSize = true;
             idlbl.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            idlbl.ForeColor = Color.DarkOrange;
             idlbl.Location = new Point(606, 100);
             idlbl.MinimumSize = new Size(50, 30);
             idlbl.Name = "idlbl";
@@ -92,7 +95,8 @@
             // 
             namelbl.AutoSize = true;
             namelbl.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            namelbl.Location = new Point(571, 171);
+            namelbl.ForeColor = Color.DarkOrange;
+            namelbl.Location = new Point(571, 161);
             namelbl.MinimumSize = new Size(50, 30);
             namelbl.Name = "namelbl";
             namelbl.Size = new Size(88, 31);
@@ -103,7 +107,8 @@
             // 
             numlbl.AutoSize = true;
             numlbl.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numlbl.Location = new Point(588, 248);
+            numlbl.ForeColor = Color.DarkOrange;
+            numlbl.Location = new Point(588, 238);
             numlbl.MinimumSize = new Size(50, 30);
             numlbl.Name = "numlbl";
             numlbl.Size = new Size(71, 31);
@@ -134,11 +139,24 @@
             numbox.Size = new Size(218, 41);
             numbox.TabIndex = 8;
             // 
+            // backbtn
+            // 
+            backbtn.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            backbtn.Location = new Point(1002, 12);
+            backbtn.Name = "backbtn";
+            backbtn.Size = new Size(64, 46);
+            backbtn.TabIndex = 9;
+            backbtn.Text = "<--";
+            backbtn.UseVisualStyleBackColor = true;
+            backbtn.Click += backbtn_Click;
+            // 
             // viewPatients
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1078, 527);
+            Controls.Add(backbtn);
             Controls.Add(numbox);
             Controls.Add(namebox);
             Controls.Add(idbox);
@@ -168,5 +186,6 @@
         private TextBox idbox;
         private TextBox namebox;
         private TextBox numbox;
+        private Button backbtn;
     }
 }

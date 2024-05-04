@@ -114,9 +114,7 @@ namespace clinic_system
         {
             try
             {
-                // Establish database connection
-
-                // Query to delete the patient
+                
                 string query = "DELETE FROM patient WHERE pid = @pid";
 
                 // Create and execute the command with parameters
@@ -207,6 +205,13 @@ namespace clinic_system
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void backbtn_Click(object sender, EventArgs e)
+        {
+            Form1 form = new Form1() ;
+            form.Show();
+            this.Hide();
         }
     }
 }
