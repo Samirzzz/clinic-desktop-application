@@ -190,25 +190,22 @@ namespace clinic_system
 
 
 
-                    public void load_patient_details(string number, DataGridView d)
-                  {
-       
+            public void load_patient_details(string number, DataGridView d)
+            {
+                MySqlConnection connection = null;
                 try
                 {
-                     string query = "SELECT * FROM patient WHERE number = @number";
+                    string query = "SELECT * FROM patient WHERE number = @number";
 
                     DataTable dt = new DataTable();
+                    connection = db.Instance.GetConnection();
 
-                    using (MySqlConnection connection = db.Instance.GetConnection())
+                    MySqlCommand mySqlCommand = new MySqlCommand(query, connection);
+                    mySqlCommand.Parameters.AddWithValue("@number", number);
+
+                    using (MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(mySqlCommand))
                     {
-                        using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
-                        {
-                            mySqlCommand.Parameters.AddWithValue("@number", number);
-                            using (MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(mySqlCommand))
-                            {
-                                mySqlDataAdapter.Fill(dt);
-                            }
-                        }
+                        mySqlDataAdapter.Fill(dt);
                     }
 
                     BindingSource bindingSource = new BindingSource();
@@ -219,10 +216,17 @@ namespace clinic_system
                 {
                     MessageBox.Show("Error: " + ex.Message);
                 }
+                finally
+                {
+                    if (connection != null && connection.State == ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
             }
 
 
-            }
+        }
         public class Doctor
         {
             public int did;
@@ -353,7 +357,73 @@ namespace clinic_system
                     MessageBox.Show("error: " + ex.Message);
                 }
             }
-    }
+            public void updateDoctor(string newName , string doctorNumber , string newSpec , DataTable dt)
+            {
+                string query = "UPDATE doctor SET name = @name, spec = @spec WHERE number = @number";
+
+                // Create and execute the command with parameters
+                using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
+                {
+                    cmd.Parameters.AddWithValue("@name", newName);
+                    cmd.Parameters.AddWithValue("@number", doctorNumber);
+                    cmd.Parameters.AddWithValue("@spec", newSpec);
+                    cmd.ExecuteNonQuery();
+                }
+                DataRow[] rows = dt.Select("number = '" + doctorNumber + "'");
+                if (rows.Length > 0)
+                {
+                    rows[0]["name"] = newName;
+                    rows[0]["spec"] = newSpec;
+                }
+            }
+            public static void viewDoctors(DataTable dt) {
+                try
+                {
+                    
+                    string query = "SELECT number, name, spec FROM doctor";
+                    dt.Clear(); 
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, classes.db.Instance.GetConnection()))
+                    {
+                        adapter.Fill(dt);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
+            public bool deleteDoctor(string doctorNumber , DataTable dt)
+            {
+                try
+                {
+                    string query = "DELETE FROM doctor WHERE number = @number";
+
+                   
+                    using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
+                    {
+                        cmd.Parameters.AddWithValue("@number", doctorNumber);
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            // Remove the row from the DataTable
+                            DataRow[] rows = dt.Select("number = '" + doctorNumber + "'");
+                            if (rows.Length > 0)
+                            {
+                                dt.Rows.Remove(rows[0]);
+                            }
+                        }
+
+                        return rowsAffected > 0; // Return true if rows were affected (deletion successful)
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                    return false;
+                }
+            }
+        }
         public interface Treatment
         {
             string getdiagnosis();
@@ -444,7 +514,7 @@ namespace clinic_system
                             mySqlCommand.Parameters.AddWithValue("@pnumber", pnumber);
                             mySqlCommand.Parameters.AddWithValue("@dnumber", dnumber);
                             mySqlCommand.Parameters.AddWithValue("@description", description);
-
+                            connection.Open();
                             int rowsAffected = mySqlCommand.ExecuteNonQuery();
 
                             if (rowsAffected > 0)

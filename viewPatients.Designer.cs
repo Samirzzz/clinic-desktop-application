@@ -32,10 +32,8 @@
             dataGridView1 = new DataGridView();
             savebtn = new Button();
             deletebtn = new Button();
-            idlbl = new Label();
             namelbl = new Label();
             numlbl = new Label();
-            idbox = new TextBox();
             namebox = new TextBox();
             numbox = new TextBox();
             backbtn = new Button();
@@ -52,7 +50,7 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(474, 485);
             dataGridView1.TabIndex = 0;
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+           
             // 
             // savebtn
             // 
@@ -78,25 +76,12 @@
             deletebtn.UseVisualStyleBackColor = false;
             deletebtn.Click += deletebtn_Click;
             // 
-            // idlbl
-            // 
-            idlbl.AutoSize = true;
-            idlbl.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            idlbl.ForeColor = Color.DarkOrange;
-            idlbl.Location = new Point(606, 100);
-            idlbl.MinimumSize = new Size(50, 30);
-            idlbl.Name = "idlbl";
-            idlbl.Size = new Size(53, 31);
-            idlbl.TabIndex = 3;
-            idlbl.Text = "ID : ";
-            idlbl.Click += label1_Click;
-            // 
             // namelbl
             // 
             namelbl.AutoSize = true;
             namelbl.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             namelbl.ForeColor = Color.DarkOrange;
-            namelbl.Location = new Point(571, 161);
+            namelbl.Location = new Point(610, 190);
             namelbl.MinimumSize = new Size(50, 30);
             namelbl.Name = "namelbl";
             namelbl.Size = new Size(88, 31);
@@ -108,24 +93,16 @@
             numlbl.AutoSize = true;
             numlbl.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             numlbl.ForeColor = Color.DarkOrange;
-            numlbl.Location = new Point(588, 238);
+            numlbl.Location = new Point(627, 254);
             numlbl.MinimumSize = new Size(50, 30);
             numlbl.Name = "numlbl";
             numlbl.Size = new Size(71, 31);
             numlbl.TabIndex = 5;
             numlbl.Text = "num :";
             // 
-            // idbox
-            // 
-            idbox.Location = new Point(665, 100);
-            idbox.Multiline = true;
-            idbox.Name = "idbox";
-            idbox.Size = new Size(218, 41);
-            idbox.TabIndex = 6;
-            // 
             // namebox
             // 
-            namebox.Location = new Point(665, 161);
+            namebox.Location = new Point(704, 180);
             namebox.Multiline = true;
             namebox.Name = "namebox";
             namebox.Size = new Size(218, 41);
@@ -133,11 +110,12 @@
             // 
             // numbox
             // 
-            numbox.Location = new Point(665, 238);
+            numbox.Location = new Point(704, 244);
             numbox.Multiline = true;
             numbox.Name = "numbox";
             numbox.Size = new Size(218, 41);
             numbox.TabIndex = 8;
+           
             // 
             // backbtn
             // 
@@ -159,10 +137,8 @@
             Controls.Add(backbtn);
             Controls.Add(numbox);
             Controls.Add(namebox);
-            Controls.Add(idbox);
             Controls.Add(numlbl);
             Controls.Add(namelbl);
-            Controls.Add(idlbl);
             Controls.Add(deletebtn);
             Controls.Add(savebtn);
             Controls.Add(dataGridView1);
@@ -180,10 +156,8 @@
         private DataGridView dataGridView1;
         private Button savebtn;
         private Button deletebtn;
-        private Label idlbl;
         private Label namelbl;
         private Label numlbl;
-        private TextBox idbox;
         private TextBox namebox;
         private TextBox numbox;
         private Button backbtn;
