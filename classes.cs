@@ -357,7 +357,7 @@ namespace clinic_system
                     MessageBox.Show("error: " + ex.Message);
                 }
             }
-            public void updateDoctor(string newName , string doctorNumber , string newSpec)
+            public void updateDoctor(string newName , string doctorNumber , string newSpec , DataTable dt)
             {
                 string query = "UPDATE doctor SET name = @name, spec = @spec WHERE number = @number";
 
@@ -368,6 +368,12 @@ namespace clinic_system
                     cmd.Parameters.AddWithValue("@number", doctorNumber);
                     cmd.Parameters.AddWithValue("@spec", newSpec);
                     cmd.ExecuteNonQuery();
+                }
+                DataRow[] rows = dt.Select("number = '" + doctorNumber + "'");
+                if (rows.Length > 0)
+                {
+                    rows[0]["name"] = newName;
+                    rows[0]["spec"] = newSpec;
                 }
             }
             public static void viewDoctors(DataTable dt) {

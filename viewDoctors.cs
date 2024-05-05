@@ -32,22 +32,14 @@ namespace clinic_system
                 return;
             }
 
-            string doctorNumber = numbox.Text; // Changed from did to number
+            string doctorNumber = numbox.Text;
             string newName = namebox.Text;
             string newSpec = specbox.Text;
 
             try
             {
                 Doctor doc = new Doctor();
-                doc.updateDoctor(newName, doctorNumber, newSpec);
-                    DataRow[] rows = dt.Select("number = '" + doctorNumber + "'");
-                if (rows.Length > 0)
-                {
-                    rows[0]["name"] = newName;
-                    rows[0]["spec"] = newSpec;
-                }
-
-                // Display success message
+                doc.updateDoctor(newName, doctorNumber, newSpec,dt);
                 MessageBox.Show("Edit has been saved.");
             }
             catch (Exception ex)
