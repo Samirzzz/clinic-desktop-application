@@ -152,7 +152,7 @@
             button2.TabIndex = 16;
             button2.Text = "<-";
             button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click;
+            //button2.Click += button2_Click;
             // 
             // doctor_registration
             // 

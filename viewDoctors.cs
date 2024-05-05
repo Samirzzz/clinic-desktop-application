@@ -2,26 +2,26 @@
 using System;
 using System.Data;
 using System.Windows.Forms;
+using clinic_system;
 using static clinic_system.classes;
-
 namespace clinic_system
 {
-    public partial class viewPatients : Form
+    public partial class viewDoctors : Form
     {
         DataTable dt = new DataTable();
 
-        public viewPatients()
+        public viewDoctors()
         {
             InitializeComponent();
             // Set up the DataTable and add it to a container control
             dt.Columns.Add("name", typeof(string));
             dt.Columns.Add("number", typeof(string)); // Primary key
+            dt.Columns.Add("spec", typeof(string));
             dataGridView1.DataSource = dt;
             dataGridView1.CellClick += dataGridView1_CellClick;
             dataGridView1.Columns["number"].ReadOnly = true;
             numbox.ReadOnly = true;
-            dataGridView1.CellClick += dataGridView1_CellClick;
-            Patient.viewPatients(dt);
+            Doctor.viewDoctors(dt);
         }
 
         private void savebtn_Click(object sender, EventArgs e)
@@ -32,14 +32,14 @@ namespace clinic_system
                 return;
             }
 
-            string patientNumber = numbox.Text; // Changed from pid to number
+            string doctorNumber = numbox.Text;
             string newName = namebox.Text;
+            string newSpec = specbox.Text;
 
             try
             {
-
-                Patient p = new Patient();
-                p.editPatient(newName, patientNumber, dt);
+                Doctor doc = new Doctor();
+                doc.updateDoctor(newName, doctorNumber, newSpec,dt);
                 MessageBox.Show("Edit has been saved.");
             }
             catch (Exception ex)
@@ -48,9 +48,9 @@ namespace clinic_system
             }
         }
 
+        
 
-
-
+        
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -62,6 +62,7 @@ namespace clinic_system
                 // Populate the text boxes with data from the selected row
                 namebox.Text = row.Cells["name"].Value.ToString();
                 numbox.Text = row.Cells["number"].Value.ToString();
+                specbox.Text = row.Cells["spec"].Value.ToString();
             }
         }
 
@@ -71,19 +72,23 @@ namespace clinic_system
             if (dataGridView1.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a row to delete.");
-                return;
+                return; // Exit the method
             }
-            string patientNumber = numbox.Text;
-            Patient p = new Patient();
-            if (p.DeletePatient(patientNumber, dt))
+
+            string doctorNumber = numbox.Text;
+
+            Doctor doc = new Doctor();
+           
+            if (doc.deleteDoctor(doctorNumber, dt))
             {
                 namebox.Text = "";
                 numbox.Text = "";
-                MessageBox.Show("Patient deleted successfully.");
+                specbox.Text = "";
+                MessageBox.Show("Doctor deleted successfully.");
             }
             else
             {
-                MessageBox.Show("Failed to delete patient.");
+                MessageBox.Show("Failed to delete doctor.");
             }
         }
 
@@ -92,16 +97,6 @@ namespace clinic_system
             Form1 form = new Form1();
             form.Show();
             this.Hide();
-        }
-
-        private void viewPatients_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void numbox_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

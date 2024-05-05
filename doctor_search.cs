@@ -14,12 +14,12 @@ namespace clinic_system
 {
     public partial class doctor_search : Form
     {
-        
+
         private Doctor doctorInstance;
         public doctor_search()
         {
             InitializeComponent();
-          
+   
 
             Messages messages = new Messages("", "");
             doctorInstance = new Doctor(messages);
@@ -39,6 +39,11 @@ namespace clinic_system
             Form1 form = new Form1();
             form.Show();
             this.Hide();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

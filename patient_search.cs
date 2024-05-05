@@ -13,13 +13,17 @@ namespace clinic_system
 {
     public partial class patient_search : Form
     {
-        
-        private Patient patientInstance;
 
-        public patient_search()
+        private Patient patientInstance;
+        private string docnumber;
+        private string patientnumber;
+
+
+        public patient_search(string docnumber)
         {
             InitializeComponent();
-           
+            this.docnumber = docnumber;
+            this.patientnumber = docnumber;
 
             Messages messages = new Messages("", "");
             patientInstance = new Patient(messages);
@@ -28,7 +32,8 @@ namespace clinic_system
         private void enterbut_Click(object sender, EventArgs e)
         {
             string number = patient_num.Text.ToString();
-            patientInstance.patient_search(number);
+            
+            patientInstance.patient_search(number,docnumber,this);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -36,6 +41,11 @@ namespace clinic_system
             Form1 form = new Form1();
             form.Show();
             this.Hide();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            label2.Text = docnumber;
         }
     }
 }

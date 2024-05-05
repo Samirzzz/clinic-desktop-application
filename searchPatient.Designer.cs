@@ -1,6 +1,6 @@
 ﻿namespace clinic_system
 {
-    partial class ViewPatient
+    partial class searchPatient
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ViewPatient));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(searchPatient));
             label1 = new Label();
             Name_label = new Label();
             Name_textbox = new TextBox();
@@ -67,6 +67,7 @@
             Name_textbox.Name = "Name_textbox";
             Name_textbox.Size = new Size(398, 27);
             Name_textbox.TabIndex = 2;
+            Name_textbox.TextChanged += Name_textbox_TextChanged;
             // 
             // Number_textbox
             // 
@@ -97,8 +98,9 @@
             searchbutton.TabIndex = 5;
             searchbutton.Text = "Search";
             searchbutton.UseVisualStyleBackColor = true;
+            searchbutton.Click += searchbutton_Click;
             // 
-            // ViewPatient
+            // searchPatient
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -111,8 +113,8 @@
             Controls.Add(Name_textbox);
             Controls.Add(Name_label);
             Controls.Add(label1);
-            Name = "ViewPatient";
-            Text = "ViewPatient";
+            Name = "searchPatient";
+            Text = "searchPatient";
             ResumeLayout(false);
             PerformLayout();
         }

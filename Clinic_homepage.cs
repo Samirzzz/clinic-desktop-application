@@ -39,18 +39,32 @@ namespace clinic_system
             this.Hide();
         }
 
-        private void ViewPatient_Click(object sender, EventArgs e)
+        private void searchPatient_Click(object sender, EventArgs e)
         {
-            ViewPatient view_patient = new ViewPatient();
+            searchPatient view_patient = new searchPatient();
             view_patient.Show();
             this.Hide();
         }
 
         private void SearchDoctor_Click(object sender, EventArgs e)
         {
-            doctor_search doctor_search_= new doctor_search();
+            doctor_search doctor_search_ = new doctor_search();
             doctor_search_.Show();
             this.Hide();
-         }
+        }
+
+        private void rudpatientbtn_Click(object sender, EventArgs e)
+        {
+            viewPatients viewp = new viewPatients();
+            viewp.Show();
+            this.Hide();
+        }
+
+        private void doctorRUD_Click(object sender, EventArgs e)
+        {
+            viewDoctors vd = new viewDoctors();
+            vd.Show();
+            this.Hide();
+        }
     }
 }
