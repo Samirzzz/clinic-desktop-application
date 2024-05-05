@@ -301,6 +301,7 @@ namespace clinic_system
             public string name;
             public string number;
             public string spec;
+            public string password;
             Messages messages;
             public Doctor()
             {
@@ -313,6 +314,10 @@ namespace clinic_system
             public string getname()
             {
                 return this.name;
+            }
+            public string getpass()
+            {
+                return this.password;
             }
             public string getnumber()
             {
@@ -334,7 +339,40 @@ namespace clinic_system
             {
                 this.number= number;    
             }
+            public void setpassword(string password)
+            {
+                this.password = password;
+            }
+            public bool IsValidCredentials(string number, string password)
+            {
+                try
+                {
+                    
+                    string query = "SELECT COUNT(*) FROM doctor WHERE number = @number AND password = @password";
+                    using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
+                    {
+                        cmd.Parameters.AddWithValue("@number", number);
+                        cmd.Parameters.AddWithValue("@password", password);
 
+                        
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                        if(count > 0)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                    return false;
+                }
+            }
             public bool validatenumber(string number)
             {
 

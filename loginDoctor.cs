@@ -27,10 +27,12 @@ namespace clinic_system
         {
             string number = txtnumber.Text;
             string password = txtpassword.Text;
-            if (number == "123" && password == "123")
+            classes.Doctor doctor=new classes.Doctor();
+            if (doctor.IsValidCredentials(number,password))
             {
                 Form1 f = new Form1();
                 f.Show();
+                this.Hide();
             }
             else
             {
