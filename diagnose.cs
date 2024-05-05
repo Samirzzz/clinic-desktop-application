@@ -41,7 +41,7 @@ namespace clinic_system
         private void diagnose_Load(object sender, EventArgs e)
         {
 
-          //  patientInstance.load_patient_details(patientnumber, dataGridView1);
+            patientInstance.load_patient_details(patientnumber, dataGridView1);
 
         }
         public void loaddata()
