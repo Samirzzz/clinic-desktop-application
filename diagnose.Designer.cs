@@ -98,6 +98,7 @@
             dataGridView2.RowHeadersWidth = 51;
             dataGridView2.Size = new Size(499, 488);
             dataGridView2.TabIndex = 5;
+            dataGridView2.CellContentClick += dataGridView2_CellContentClick;
             // 
             // button5
             // 
