@@ -7,66 +7,53 @@ namespace clinic_system
 {
     public partial class viewPatients : Form
     {
-        //private classes.db db = new classes.db();
         DataTable dt = new DataTable();
+
         public viewPatients()
         {
             InitializeComponent();
-            // Fetch and display patient records when the form loads
-
             // Set up the DataTable and add it to a container control
-            dt.Columns.Add("pid", typeof(int));
             dt.Columns.Add("name", typeof(string));
-            dt.Columns.Add("number", typeof(string));
+            dt.Columns.Add("number", typeof(string)); // Primary key
             dataGridView1.DataSource = dt;
             // Attach CellClick event handler
             dataGridView1.CellClick += dataGridView1_CellClick;
 
-            idbox.ReadOnly = true;
+            // Make the number field read-only
+            dataGridView1.Columns["number"].ReadOnly = true;
+            numbox.ReadOnly = true;
             LoadPatients();
-            // Set up the DataTable and add it to a container control
-
-
-
         }
-
 
         private void savebtn_Click(object sender, EventArgs e)
         {
-
             if (dataGridView1.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a row to save.");
                 return;
             }
 
-
-            int patientId = Convert.ToInt32(idbox.Text);
+            string patientNumber = numbox.Text; // Changed from pid to number
             string newName = namebox.Text;
-            string newNumber = numbox.Text;
 
             try
             {
-                // Establish database connection
-
                 // Query to update the patient record
-                string query = "UPDATE patient SET name = @name, number = @number WHERE pid = @pid";
+                string query = "UPDATE patient SET name = @name WHERE number = @number";
 
                 // Create and execute the command with parameters
                 using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
                 {
                     cmd.Parameters.AddWithValue("@name", newName);
-                    cmd.Parameters.AddWithValue("@number", newNumber);
-                    cmd.Parameters.AddWithValue("@pid", patientId);
+                    cmd.Parameters.AddWithValue("@number", patientNumber);
                     cmd.ExecuteNonQuery();
                 }
 
                 // Update the DataTable with the new values
-                DataRow[] rows = dt.Select("pid = " + patientId);
+                DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
                 if (rows.Length > 0)
                 {
                     rows[0]["name"] = newName;
-                    rows[0]["number"] = newNumber;
                 }
 
                 // Display success message
@@ -78,30 +65,19 @@ namespace clinic_system
             }
         }
 
-
-
-
-
-
         private void LoadPatients()
         {
             try
             {
-                // Establish database connection
-
-
                 // Query to select all patients
-                string query = "SELECT pid, name, number FROM patient";
+                string query = "SELECT * FROM patient";
 
                 // Execute the query and get the result
                 dt.Clear(); // Clear the DataTable before filling with new data
                 using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, classes.db.Instance.GetConnection()))
                 {
                     adapter.Fill(dt);
-
                 }
-
-
             }
             catch (Exception ex)
             {
@@ -109,25 +85,22 @@ namespace clinic_system
             }
         }
 
-
-
-        private bool DeletePatient(int patientId)
+        private bool DeletePatient(string patientNumber)
         {
             try
             {
-                
-                string query = "DELETE FROM patient WHERE pid = @pid";
+                string query = "DELETE FROM patient WHERE number = @number";
 
                 // Create and execute the command with parameters
                 using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
                 {
-                    cmd.Parameters.AddWithValue("@pid", patientId);
+                    cmd.Parameters.AddWithValue("@number", patientNumber);
                     int rowsAffected = cmd.ExecuteNonQuery();
 
                     if (rowsAffected > 0)
                     {
                         // Remove the row from the DataTable
-                        DataRow[] rows = dt.Select("pid = " + patientId);
+                        DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
                         if (rows.Length > 0)
                         {
                             dt.Rows.Remove(rows[0]);
@@ -144,8 +117,6 @@ namespace clinic_system
             }
         }
 
-
-
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -154,12 +125,10 @@ namespace clinic_system
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
                 // Populate the text boxes with data from the selected row
-                idbox.Text = row.Cells["pid"].Value.ToString();
                 namebox.Text = row.Cells["name"].Value.ToString();
                 numbox.Text = row.Cells["number"].Value.ToString();
             }
         }
-
 
         private void deletebtn_Click(object sender, EventArgs e)
         {
@@ -170,16 +139,15 @@ namespace clinic_system
                 return; // Exit the method
             }
 
-            // Get the ID of the selected patient from the ID text box
-            int patientId = Convert.ToInt32(idbox.Text);
+            // Get the Number of the selected patient from the Number text box
+            string patientNumber = numbox.Text;
 
             // Delete the patient record from the database
-            bool deleteSuccessful = DeletePatient(patientId);
+            bool deleteSuccessful = DeletePatient(patientNumber);
 
             // Display message based on delete result
             if (deleteSuccessful)
             {
-                idbox.Text = "";
                 namebox.Text = "";
                 numbox.Text = "";
                 MessageBox.Show("Patient deleted successfully.");
@@ -190,29 +158,16 @@ namespace clinic_system
             }
         }
 
-
-
+        private void backbtn_Click(object sender, EventArgs e)
+        {
+            Form1 form = new Form1();
+            form.Show();
+            this.Hide();
+        }
 
         private void viewPatients_Load(object sender, EventArgs e)
         {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void backbtn_Click(object sender, EventArgs e)
-        {
-            Form1 form = new Form1() ;
-            form.Show();
-            this.Hide();
+            
         }
     }
 }
