@@ -42,6 +42,7 @@
             Diagnosis.Size = new Size(146, 38);
             Diagnosis.TabIndex = 0;
             Diagnosis.Text = "Diagnosis";
+            Diagnosis.Click += Diagnosis_Click;
             // 
             // textBox1
             // 
@@ -50,6 +51,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(405, 127);
             textBox1.TabIndex = 1;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // save
             // 

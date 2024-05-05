@@ -23,6 +23,7 @@ namespace clinic_system
         public diagnose(string patientnumber, string docnumber)
         {
             InitializeComponent();
+            db.Instance.GetConnection();
             this.patientnumber = patientnumber;
             this.docnumber = docnumber;
             Messages messages = new Messages("", "");
@@ -60,6 +61,7 @@ namespace clinic_system
 
         private void button5_Click(object sender, EventArgs e)
         {
+            db.Instance.CloseConnection();
             patient_search p = new patient_search(patientnumber);
             p.Show();
             this.Hide();

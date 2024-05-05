@@ -7,16 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static clinic_system.classes;
 
 namespace clinic_system
 {
     public partial class Form1 : Form
     {
-        public static Form1 Instance;
+        public static Form1 Instancee;
         public Form1()
         {
             InitializeComponent();
-            Instance = this;
+            db.Instance.GetConnection();
+            Instancee = this;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -65,6 +67,11 @@ namespace clinic_system
             viewDoctors vd = new viewDoctors();
             vd.Show();
             this.Hide();
+        }
+
+        private void WelcomeText_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -22,6 +22,7 @@ namespace clinic_system
         public patient_search(string docnumber)
         {
             InitializeComponent();
+            db.Instance.GetConnection();
             this.docnumber = docnumber;
             this.patientnumber = docnumber;
 
@@ -38,6 +39,7 @@ namespace clinic_system
 
         private void button2_Click(object sender, EventArgs e)
         {
+            db.Instance.CloseConnection();
             Form1 form = new Form1();
             form.Show();
             this.Hide();

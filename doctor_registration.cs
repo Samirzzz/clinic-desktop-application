@@ -19,7 +19,7 @@ namespace clinic_system
         public doctor_registration()
         {
             InitializeComponent();
-
+            db.Instance.GetConnection();
             Messages messages = new Messages("", "");
             doctorInstance = new Doctor(messages);
         }
@@ -40,6 +40,17 @@ namespace clinic_system
             {
                 doctorInstance.adddoctor(name, number, spec);
             }
+        }
+
+        private void doctor_registration_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            db.Instance.CloseConnection();
+
         }
 
         //private void button2_Click(object sender, EventArgs e)

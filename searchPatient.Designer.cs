@@ -48,6 +48,7 @@
             label1.Size = new Size(462, 51);
             label1.TabIndex = 0;
             label1.Text = "Enter Patient Details";
+            label1.Click += label1_Click;
             // 
             // Name_label
             // 

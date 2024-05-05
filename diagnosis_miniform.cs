@@ -19,6 +19,7 @@ namespace clinic_system
         public diagnosis_miniform(string patientnumber, string docnumber)
         {
             InitializeComponent();
+            db.Instance.GetConnection();
             this.patientnumber = patientnumber;
             this.docnumber = docnumber;
             Messages messages = new Messages("", "");
@@ -41,6 +42,14 @@ namespace clinic_system
             this.Close();
         }
 
-       
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Diagnosis_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

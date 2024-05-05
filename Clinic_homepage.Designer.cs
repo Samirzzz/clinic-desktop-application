@@ -124,6 +124,7 @@ namespace clinic_system
             WelcomeText.Size = new Size(218, 64);
             WelcomeText.TabIndex = 5;
             WelcomeText.Text = "Welcome";
+            WelcomeText.TextChanged += WelcomeText_TextChanged;
             // 
             // rudpatientbtn
             // 

@@ -23,7 +23,7 @@ namespace clinic_system
         public class db
         {
             private static db instance;
-            private string mysqlconn = "server=localhost; user=root; database=clinic-system; password=";
+            private string mysqlconn = "server=localhost; user=root; database=clinic-system; password=; pooling=true;";
             private MySqlConnection mysqlconnection;
 
             private db()
@@ -59,6 +59,13 @@ namespace clinic_system
             public MySqlConnection GetConnection()
             {
                 return mysqlconnection;
+            }
+            public void CloseConnection()
+            {
+                if (mysqlconnection != null && mysqlconnection.State == ConnectionState.Open)
+                {
+                    mysqlconnection.Close();
+                }
             }
         }
         public class Messages

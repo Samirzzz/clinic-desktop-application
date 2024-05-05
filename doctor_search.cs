@@ -19,7 +19,7 @@ namespace clinic_system
         public doctor_search()
         {
             InitializeComponent();
-   
+            db.Instance.GetConnection();
 
             Messages messages = new Messages("", "");
             doctorInstance = new Doctor(messages);
@@ -36,6 +36,7 @@ namespace clinic_system
 
         private void button2_Click(object sender, EventArgs e)
         {
+            db.Instance.CloseConnection();
             Form1 form = new Form1();
             form.Show();
             this.Hide();
@@ -43,7 +44,12 @@ namespace clinic_system
 
         private void label2_Click(object sender, EventArgs e)
         {
-            
+
+        }
+
+        private void doctor_search_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

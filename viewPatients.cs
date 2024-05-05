@@ -13,6 +13,8 @@ namespace clinic_system
         public viewPatients()
         {
             InitializeComponent();
+            db.Instance.GetConnection();
+
             // Set up the DataTable and add it to a container control
             dt.Columns.Add("name", typeof(string));
             dt.Columns.Add("number", typeof(string)); // Primary key
@@ -89,6 +91,7 @@ namespace clinic_system
 
         private void backbtn_Click(object sender, EventArgs e)
         {
+            db.Instance.CloseConnection();
             Form1 form = new Form1();
             form.Show();
             this.Hide();
@@ -100,6 +103,11 @@ namespace clinic_system
         }
 
         private void numbox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void namebox_TextChanged(object sender, EventArgs e)
         {
 
         }

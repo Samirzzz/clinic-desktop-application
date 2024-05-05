@@ -91,6 +91,7 @@
             Controls.Add(doctor_num);
             Name = "doctor_search";
             Text = "doctors_search";
+            Load += doctor_search_Load;
             ResumeLayout(false);
             PerformLayout();
         }

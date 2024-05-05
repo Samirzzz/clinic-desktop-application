@@ -18,12 +18,11 @@ namespace clinic_system
     public partial class patient_registration : Form
     {
 
-        private db dbInstance;
         private Patient patientInstance;
         public patient_registration()
         {
             InitializeComponent();
-
+            db.Instance.GetConnection();
             Messages messages = new Messages("", "");
             patientInstance = new Patient(messages);
         }
@@ -75,6 +74,7 @@ namespace clinic_system
 
         private void button2_Click_1(object sender, EventArgs e)
         {
+            db.Instance.CloseConnection();
             Form1 form = new Form1();
             form.Show();
             this.Hide();

@@ -107,6 +107,7 @@
             namebox.Name = "namebox";
             namebox.Size = new Size(218, 41);
             namebox.TabIndex = 7;
+            namebox.TextChanged += namebox_TextChanged;
             // 
             // numbox
             // 

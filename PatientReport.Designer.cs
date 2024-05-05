@@ -53,13 +53,14 @@
             // button1
             // 
             button1.BackColor = Color.Transparent;
-            button1.Font = new Font("hooge 05_55", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button1.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button1.Location = new Point(0, -2);
             button1.Name = "button1";
             button1.Size = new Size(75, 56);
             button1.TabIndex = 0;
             button1.Text = "<--";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // label2
             // 

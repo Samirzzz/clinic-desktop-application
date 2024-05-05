@@ -145,14 +145,14 @@
             // 
             button2.BackColor = Color.Transparent;
             button2.FlatStyle = FlatStyle.System;
-            button2.Font = new Font("Dungeon", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button2.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.Location = new Point(28, 21);
             button2.Name = "button2";
             button2.Size = new Size(75, 50);
             button2.TabIndex = 16;
             button2.Text = "<-";
             button2.UseVisualStyleBackColor = false;
-            //button2.Click += button2_Click;
+            button2.Click += button2_Click;
             // 
             // doctor_registration
             // 
@@ -174,6 +174,7 @@
             Controls.Add(label3);
             Name = "doctor_registration";
             Text = "doctor_registration";
+            Load += doctor_registration_Load;
             ResumeLayout(false);
             PerformLayout();
         }

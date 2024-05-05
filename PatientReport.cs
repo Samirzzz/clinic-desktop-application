@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static clinic_system.classes;
 
 namespace clinic_system
 {
@@ -15,6 +16,8 @@ namespace clinic_system
         public PatientReport()
         {
             InitializeComponent();
+            db.Instance.GetConnection();
+
         }
 
         private void PatientReport_Load(object sender, EventArgs e)
@@ -59,6 +62,12 @@ namespace clinic_system
 
         private void label11_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            db.Instance.CloseConnection();
 
         }
     }
