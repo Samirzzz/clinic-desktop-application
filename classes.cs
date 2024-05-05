@@ -357,7 +357,67 @@ namespace clinic_system
                     MessageBox.Show("error: " + ex.Message);
                 }
             }
-    }
+            public void updateDoctor(string newName , string doctorNumber , string newSpec)
+            {
+                string query = "UPDATE doctor SET name = @name, spec = @spec WHERE number = @number";
+
+                // Create and execute the command with parameters
+                using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
+                {
+                    cmd.Parameters.AddWithValue("@name", newName);
+                    cmd.Parameters.AddWithValue("@number", doctorNumber);
+                    cmd.Parameters.AddWithValue("@spec", newSpec);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            public static void viewDoctors(DataTable dt) {
+                try
+                {
+                    
+                    string query = "SELECT number, name, spec FROM doctor";
+                    dt.Clear(); 
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, classes.db.Instance.GetConnection()))
+                    {
+                        adapter.Fill(dt);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
+            public bool deleteDoctor(string doctorNumber , DataTable dt)
+            {
+                try
+                {
+                    string query = "DELETE FROM doctor WHERE number = @number";
+
+                   
+                    using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
+                    {
+                        cmd.Parameters.AddWithValue("@number", doctorNumber);
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            // Remove the row from the DataTable
+                            DataRow[] rows = dt.Select("number = '" + doctorNumber + "'");
+                            if (rows.Length > 0)
+                            {
+                                dt.Rows.Remove(rows[0]);
+                            }
+                        }
+
+                        return rowsAffected > 0; // Return true if rows were affected (deletion successful)
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                    return false;
+                }
+            }
+        }
         public interface Treatment
         {
             string getdiagnosis();
