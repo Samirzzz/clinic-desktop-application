@@ -17,6 +17,7 @@ namespace clinic_system
             dt.Columns.Add("name", typeof(string));
             dt.Columns.Add("number", typeof(string)); // Primary key
             dataGridView1.DataSource = dt;
+            dataGridView1.CellClick += dataGridView1_CellClick;
             dataGridView1.Columns["number"].ReadOnly = true;
             numbox.ReadOnly = true;
             dataGridView1.CellClick += dataGridView1_CellClick;
@@ -47,9 +48,9 @@ namespace clinic_system
             }
         }
 
-   
 
-       
+
+
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -70,7 +71,7 @@ namespace clinic_system
             if (dataGridView1.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a row to delete.");
-                return; 
+                return;
             }
             string patientNumber = numbox.Text;
             Patient p = new Patient();
@@ -95,7 +96,12 @@ namespace clinic_system
 
         private void viewPatients_Load(object sender, EventArgs e)
         {
-            
+
+        }
+
+        private void numbox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

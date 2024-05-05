@@ -50,7 +50,6 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(474, 485);
             dataGridView1.TabIndex = 0;
-           
             // 
             // savebtn
             // 
@@ -102,6 +101,7 @@
             // 
             // namebox
             // 
+            namebox.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             namebox.Location = new Point(704, 180);
             namebox.Multiline = true;
             namebox.Name = "namebox";
@@ -110,12 +110,13 @@
             // 
             // numbox
             // 
+            numbox.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             numbox.Location = new Point(704, 244);
             numbox.Multiline = true;
             numbox.Name = "numbox";
             numbox.Size = new Size(218, 41);
             numbox.TabIndex = 8;
-           
+            numbox.TextChanged += numbox_TextChanged;
             // 
             // backbtn
             // 
