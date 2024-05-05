@@ -67,6 +67,7 @@
             Name_textbox.Name = "Name_textbox";
             Name_textbox.Size = new Size(398, 27);
             Name_textbox.TabIndex = 2;
+            Name_textbox.TextChanged += Name_textbox_TextChanged;
             // 
             // Number_textbox
             // 
@@ -97,8 +98,9 @@
             searchbutton.TabIndex = 5;
             searchbutton.Text = "Search";
             searchbutton.UseVisualStyleBackColor = true;
+            searchbutton.Click += searchbutton_Click;
             // 
-            // ViewPatient
+            // searchPatient
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
