@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using System.Windows.Forms;
+using static clinic_system.classes;
 
 namespace clinic_system
 {
@@ -16,13 +17,10 @@ namespace clinic_system
             dt.Columns.Add("name", typeof(string));
             dt.Columns.Add("number", typeof(string)); // Primary key
             dataGridView1.DataSource = dt;
-            // Attach CellClick event handler
-            dataGridView1.CellClick += dataGridView1_CellClick;
-
-            // Make the number field read-only
             dataGridView1.Columns["number"].ReadOnly = true;
             numbox.ReadOnly = true;
-            LoadPatients();
+            dataGridView1.CellClick += dataGridView1_CellClick;
+            Patient.viewPatients(dt);
         }
 
         private void savebtn_Click(object sender, EventArgs e)
@@ -38,25 +36,9 @@ namespace clinic_system
 
             try
             {
-                // Query to update the patient record
-                string query = "UPDATE patient SET name = @name WHERE number = @number";
 
-                // Create and execute the command with parameters
-                using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
-                {
-                    cmd.Parameters.AddWithValue("@name", newName);
-                    cmd.Parameters.AddWithValue("@number", patientNumber);
-                    cmd.ExecuteNonQuery();
-                }
-
-                // Update the DataTable with the new values
-                DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
-                if (rows.Length > 0)
-                {
-                    rows[0]["name"] = newName;
-                }
-
-                // Display success message
+                Patient p = new Patient();
+                p.editPatient(newName, patientNumber, dt);
                 MessageBox.Show("Edit has been saved.");
             }
             catch (Exception ex)
@@ -65,57 +47,9 @@ namespace clinic_system
             }
         }
 
-        private void LoadPatients()
-        {
-            try
-            {
-                // Query to select all patients
-                string query = "SELECT * FROM patient";
+   
 
-                // Execute the query and get the result
-                dt.Clear(); // Clear the DataTable before filling with new data
-                using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, classes.db.Instance.GetConnection()))
-                {
-                    adapter.Fill(dt);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-            }
-        }
-
-        private bool DeletePatient(string patientNumber)
-        {
-            try
-            {
-                string query = "DELETE FROM patient WHERE number = @number";
-
-                // Create and execute the command with parameters
-                using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
-                {
-                    cmd.Parameters.AddWithValue("@number", patientNumber);
-                    int rowsAffected = cmd.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        // Remove the row from the DataTable
-                        DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
-                        if (rows.Length > 0)
-                        {
-                            dt.Rows.Remove(rows[0]);
-                        }
-                    }
-
-                    return rowsAffected > 0; // Return true if rows were affected (deletion successful)
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-                return false; // Return false if an exception occurred
-            }
-        }
+       
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -136,17 +70,11 @@ namespace clinic_system
             if (dataGridView1.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a row to delete.");
-                return; // Exit the method
+                return; 
             }
-
-            // Get the Number of the selected patient from the Number text box
             string patientNumber = numbox.Text;
-
-            // Delete the patient record from the database
-            bool deleteSuccessful = DeletePatient(patientNumber);
-
-            // Display message based on delete result
-            if (deleteSuccessful)
+            Patient p = new Patient();
+            if (p.DeletePatient(patientNumber, dt))
             {
                 namebox.Text = "";
                 numbox.Text = "";

@@ -89,6 +89,7 @@ namespace clinic_system
             {
                 this.messages = messages;
             }
+            public Patient() { }
             public string getname()
             {
                 return this.name;
@@ -224,7 +225,74 @@ namespace clinic_system
                     }
                 }
             }
+            public void editPatient(string newName , string patientNumber , DataTable dt)
+            {
+                
+                string query = "UPDATE patient SET name = @name WHERE number = @number";
+                using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
+                {
+                    cmd.Parameters.AddWithValue("@name", newName);
+                    cmd.Parameters.AddWithValue("@number", patientNumber);
+                    cmd.ExecuteNonQuery();
+                }
 
+                // Update the DataTable with the new values
+                DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
+                if (rows.Length > 0)
+                {
+                    rows[0]["name"] = newName;
+                }
+            }
+            public static void viewPatients(DataTable dt)
+            {
+                try
+                {
+
+                    string query = "SELECT * FROM patient";
+
+
+                    dt.Clear();
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, classes.db.Instance.GetConnection()))
+                    {
+                        adapter.Fill(dt);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
+            public bool DeletePatient(string patientNumber , DataTable dt)
+            {
+                try
+                {
+                    string query = "DELETE FROM patient WHERE number = @number";
+
+                    // Create and execute the command with parameters
+                    using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
+                    {
+                        cmd.Parameters.AddWithValue("@number", patientNumber);
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            // Remove the row from the DataTable
+                            DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
+                            if (rows.Length > 0)
+                            {
+                                dt.Rows.Remove(rows[0]);
+                            }
+                        }
+
+                        return rowsAffected > 0; // Return true if rows were affected (deletion successful)
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                    return false; // Return false if an exception occurred
+                }
+            }
 
         }
         public class Doctor
