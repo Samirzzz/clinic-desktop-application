@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 using static clinic_system.classes;
 using static clinic_system.doctor_search;
 using static clinic_system.patient_search;
-using static clinic_system.diagnosis;
+using static clinic_system.diagnose;
+using System.Data;
+using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Xml.Linq;
 
 
 
@@ -63,10 +67,10 @@ namespace clinic_system
             public string title;
 
 
-            public Messages(string message,string title)
+            public Messages(string message, string title)
             {
                 this.message = message;
-                this.title=title;
+                this.title = title;
             }
             public void show_messages()
             {
@@ -75,12 +79,12 @@ namespace clinic_system
         }
         public class Patient
         {
-            
+
             public int pid;
             public string name;
             public string number;
             Messages messages;
-            Doctor doc=new Doctor();
+            Doctor doc = new Doctor();
             public Patient(Messages messages)
             {
                 this.messages = messages;
@@ -116,7 +120,7 @@ namespace clinic_system
                     messages.message = "Number must be at least 11 characters long";
                     messages.title = "Validation error";
                     messages.show_messages();
-                    return false ;
+                    return false;
                 }
                 else
                 {
@@ -124,12 +128,10 @@ namespace clinic_system
                     return true;
                 }
             }
-            public void addpatient(string name,string number)
+            public void addpatient(string name, string number)
             {
                 try
                 {
-
- 
                     string query = "INSERT INTO patient (name, number) VALUES (@name, @number)";
                     MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
                     mySqlCommand.Parameters.AddWithValue("@name", name);
@@ -153,39 +155,74 @@ namespace clinic_system
 
 
             }
-             public void patient_search(string number,string docnumber,Form hide)
+            public void patient_search(string number, string docnumber, Form hide)
             {
                 try
                 {
                     string query = "SELECT number FROM patient WHERE number = @number";
-                    MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
-                    mySqlCommand.Parameters.AddWithValue("@number", number);
-
-
-                    using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
+                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection()))
                     {
-                        if (reader.Read())
-                        {
-                            patient_search doc = new patient_search(docnumber);
-                             diagnosis diagnosis = new diagnosis(number,docnumber);
-                            diagnosis.Show();
-                            hide.Hide();
+                        mySqlCommand.Parameters.AddWithValue("@number", number);
 
-
-                        }
-                        else
+                        using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
                         {
-                            MessageBox.Show($"Doctor with number {number} not found.");
+                            if (reader.Read())
+                            {
+                                reader.Close();
+
+                                patient_search doc = new patient_search(docnumber);
+                                diagnose diagnosis = new diagnose(number, docnumber);
+                                diagnosis.Show();
+                                hide.Hide();
+                            }
+                            else
+                            {
+                                MessageBox.Show($"Doctor with number {number} not found.");
+                            }
                         }
                     }
                 }
-
                 catch (Exception ex)
                 {
-                    MessageBox.Show("error: " + ex.Message);
+                    MessageBox.Show("Error: " + ex.Message);
                 }
             }
-        }
+
+
+
+                    public void load_patient_details(string number, DataGridView d)
+                  {
+       
+                try
+                {
+                     string query = "SELECT * FROM patient WHERE number = @number";
+
+                    DataTable dt = new DataTable();
+
+                    using (MySqlConnection connection = db.Instance.GetConnection())
+                    {
+                        using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
+                        {
+                            mySqlCommand.Parameters.AddWithValue("@number", number);
+                            using (MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(mySqlCommand))
+                            {
+                                mySqlDataAdapter.Fill(dt);
+                            }
+                        }
+                    }
+
+                    BindingSource bindingSource = new BindingSource();
+                    bindingSource.DataSource = dt;
+                    d.DataSource = bindingSource;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
+
+
+            }
         public class Doctor
         {
             public int did;
@@ -288,22 +325,25 @@ namespace clinic_system
                 {
 
                     string query = "SELECT number FROM doctor WHERE number = @number";
-                    MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
-                    mySqlCommand.Parameters.AddWithValue("@number", number);
 
-
-                    using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
+                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection()))
                     {
-                        if (reader.Read())
+                        mySqlCommand.Parameters.AddWithValue("@number", number);
+
+                        using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
                         {
-                            patient_search patientform = new patient_search(number);
-                            patientform.Show();
-                            hide.Hide();
-                           
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Doctor with number {number} not found.");
+                            if (reader.Read())
+                            {
+                                patient_search patientform = new patient_search(number);
+                                patientform.Show();
+                                hide.Hide();
+
+
+                            }
+                            else
+                            {
+                                MessageBox.Show($"Doctor with number {number} not found.");
+                            }
                         }
                     }
                 }
@@ -327,7 +367,7 @@ namespace clinic_system
         }
         public class TreatmentFactory
         {
-public Treatment createTreatment(string diagnosis)
+             public Treatment createTreatment(string diagnosis)
             {
                 switch (diagnosis.ToLower())
                 {
@@ -353,6 +393,12 @@ public Treatment createTreatment(string diagnosis)
             int did;
             int pid;
             string description;
+            
+            Messages messages;
+            public Diagnosis(Messages messages)
+            {
+                this.messages = messages;
+            }
             public int getdiagid()
             {
                 return this.diagid;
@@ -386,7 +432,39 @@ public Treatment createTreatment(string diagnosis)
                 this.description = description;
             }
 
-           
+            public void adddescription(string pnumber, string dnumber, string description)
+            {
+                try
+                {
+                    using (MySqlConnection connection = db.Instance.GetConnection())
+                    {
+                        string query = "INSERT INTO diagnosis (pnumber, dnumber, description) VALUES (@pnumber, @dnumber, @description)";
+                        using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
+                        {
+                            mySqlCommand.Parameters.AddWithValue("@pnumber", pnumber);
+                            mySqlCommand.Parameters.AddWithValue("@dnumber", dnumber);
+                            mySqlCommand.Parameters.AddWithValue("@description", description);
+
+                            int rowsAffected = mySqlCommand.ExecuteNonQuery();
+
+                            if (rowsAffected > 0)
+                            {
+                                MessageBox.Show("Added successfully!");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Failed to add.");
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+
+
+            }
 
 
         }

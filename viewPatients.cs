@@ -98,6 +98,7 @@ namespace clinic_system
                 using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, classes.db.Instance.GetConnection()))
                 {
                     adapter.Fill(dt);
+
                 }
 
 
