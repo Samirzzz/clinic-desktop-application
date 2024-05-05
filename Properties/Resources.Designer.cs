@@ -59,5 +59,25 @@ namespace clinic_system.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GettyImages_1001713236_730x330 {
+            get {
+                object obj = ResourceManager.GetObject("GettyImages-1001713236-730x330", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pexels_pixabay_40568 {
+            get {
+                object obj = ResourceManager.GetObject("pexels-pixabay-40568", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
