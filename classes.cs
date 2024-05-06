@@ -13,6 +13,7 @@ using System.Data;
 using System.Windows.Forms;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Xml.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 
 
@@ -309,6 +310,7 @@ namespace clinic_system
             public string number;
             public string spec;
             public string password;
+            
             Messages messages;
             public Doctor()
             {
@@ -403,39 +405,48 @@ namespace clinic_system
                     return true;
                 }
             }
-            public void adddoctor(string name,string number,string spec)
+            public void adddoctor(string name, string number, string spec, List<string> workdays)
             {
                 try
                 {
-       
-
-
-                    string query = "INSERT INTO doctor (name, number,spec) VALUES (@name, @number, @spec)";
+                    string query = "INSERT INTO doctor (name, number, spec) VALUES (@name, @number, @spec)";
                     MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
                     mySqlCommand.Parameters.AddWithValue("@name", name);
-                        mySqlCommand.Parameters.AddWithValue("@number",number);
-                        mySqlCommand.Parameters.AddWithValue("@spec", spec);
+                    mySqlCommand.Parameters.AddWithValue("@number", number);
+                    mySqlCommand.Parameters.AddWithValue("@spec", spec);
 
-                        int rowsAffected = mySqlCommand.ExecuteNonQuery();
+                    int rowsAffected = mySqlCommand.ExecuteNonQuery();
 
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("User added successfully!");
 
-                        if (rowsAffected > 0)
+                        foreach (string workday in workdays)
                         {
-                            MessageBox.Show("User added successfully!");
-                        }
-                        else
-                        {
-                            MessageBox.Show("Failed to add user.");
-                        }
-                    
+                            query = "INSERT INTO doctor_workdays (did, Wid) SELECT doctor.number, workdays.Wid FROM doctor, workdays WHERE doctor.number = @number AND workdays.Day = @workday";
+                            MySqlCommand workdayCommand = new MySqlCommand(query, db.Instance.GetConnection());
+                            workdayCommand.Parameters.AddWithValue("@number", number);
+                            workdayCommand.Parameters.AddWithValue("@workday", workday);
 
+                            int workdayRowsAffected = workdayCommand.ExecuteNonQuery();
 
+                            if (workdayRowsAffected <= 0)
+                            {
+                                MessageBox.Show("Failed to add workday for doctor.");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to add user.");
+                    }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("error: " + ex.Message);
                 }
             }
+
             public void doctor_search(string number,Form hide)
             {
                 try
@@ -576,6 +587,7 @@ namespace clinic_system
             int did;
             int pid;
             string description;
+           
             
             Messages messages;
             public Diagnosis(Messages messages)
@@ -652,4 +664,93 @@ namespace clinic_system
 
         }
     }
+    //public class Appointment
+    //{
+    //    public string docnumber;
+    //    public string patnumber;
+    //    public DateTime date;
+    //    public string status;
+
+    //    public void addAppointment(string docnumber,string patnumber,DateTime date,string status)
+    //    {
+    //        try
+    //        {
+
+
+
+    //            string query = "INSERT INTO appointment (docnumber, patnumber,date,status) VALUES (@docnumber, @patnumber, @date,@status)";
+    //            MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
+    //            mySqlCommand.Parameters.AddWithValue("@docnumber", docnumber);
+    //            mySqlCommand.Parameters.AddWithValue("@patnumber", patnumber);
+    //            mySqlCommand.Parameters.AddWithValue("@date", date);
+    //            mySqlCommand.Parameters.AddWithValue("@status", status);
+
+
+    //            int rowsAffected = mySqlCommand.ExecuteNonQuery();
+
+
+    //            if (rowsAffected > 0)
+    //            {
+    //                MessageBox.Show("Appointment added successfully!");
+    //            }
+    //            else
+    //            {
+    //                MessageBox.Show("Failed to add appointment.");
+    //            }
+
+
+
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            MessageBox.Show("error: " + ex.Message);
+    //        }
+    //    }
+    //}
+    public class Appointment
+    {
+        private static Dictionary<string, List<DateTime>> appointmentsByDoctorAndDate = new Dictionary<string, List<DateTime>>();
+        private const int MaxAppointmentsPerDay = 4;
+
+        public void AddAppointment(string doctorNumber, string patientNumber, DateTime date, string status)
+        {
+            // Check if the doctor works on the selected day
+            if (!DoctorWorksOnDay(doctorNumber, date.DayOfWeek))
+            {
+                MessageBox.Show("Doctor does not work on this day.");
+                return;
+            }
+
+            // Check if the doctor already has appointments for the selected day
+            if (!appointmentsByDoctorAndDate.ContainsKey(doctorNumber))
+            {
+                appointmentsByDoctorAndDate[doctorNumber] = new List<DateTime>();
+            }
+
+            // Check if the maximum number of appointments per day is reached
+            if (appointmentsByDoctorAndDate[doctorNumber].Count(appDate => appDate.Date == date.Date) >= MaxAppointmentsPerDay)
+            {
+                MessageBox.Show("Doctor already has the maximum number of appointments for this day.");
+                return;
+            }
+
+            // Add the appointment for the selected doctor and date
+            appointmentsByDoctorAndDate[doctorNumber].Add(date.Date);
+            MessageBox.Show("Appointment added successfully!");
+        }
+
+        private bool DoctorWorksOnDay(string doctorNumber, DayOfWeek dayOfWeek)
+        {
+            // Implement your logic here to check if the doctor works on the selected day
+            // For example, if doctor John only works on Wednesdays, Thursdays, and Saturdays:
+            if (doctorNumber == "John")
+            {
+                return dayOfWeek == DayOfWeek.Wednesday || dayOfWeek == DayOfWeek.Thursday || dayOfWeek == DayOfWeek.Saturday;
+            }
+            // If the doctor works every day, return true
+            return true;
+        }
+    }
+
+
 }

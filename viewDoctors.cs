@@ -40,7 +40,7 @@ namespace clinic_system
             try
             {
                 Doctor doc = new Doctor();
-                doc.updateDoctor(newName, doctorNumber, newSpec,dt);
+                doc.updateDoctor(newName, doctorNumber, newSpec, dt);
                 MessageBox.Show("Edit has been saved.");
             }
             catch (Exception ex)
@@ -49,9 +49,9 @@ namespace clinic_system
             }
         }
 
-        
 
-        
+
+
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -79,7 +79,7 @@ namespace clinic_system
             string doctorNumber = numbox.Text;
 
             Doctor doc = new Doctor();
-           
+
             if (doc.deleteDoctor(doctorNumber, dt))
             {
                 namebox.Text = "";
@@ -99,6 +99,11 @@ namespace clinic_system
             Form1 form = new Form1();
             form.Show();
             this.Hide();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

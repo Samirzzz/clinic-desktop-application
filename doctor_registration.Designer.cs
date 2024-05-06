@@ -40,6 +40,8 @@
             doctor_spec = new TextBox();
             label4 = new Label();
             button2 = new Button();
+            label5 = new Label();
+            checkedListBox1 = new CheckedListBox();
             SuspendLayout();
             // 
             // label3
@@ -76,9 +78,9 @@
             // 
             // button1
             // 
-            button1.Location = new Point(497, 371);
+            button1.Location = new Point(388, 519);
             button1.Name = "button1";
-            button1.Size = new Size(140, 33);
+            button1.Size = new Size(402, 33);
             button1.TabIndex = 13;
             button1.Text = "save";
             button1.UseVisualStyleBackColor = true;
@@ -128,6 +130,7 @@
             doctor_spec.Name = "doctor_spec";
             doctor_spec.Size = new Size(402, 27);
             doctor_spec.TabIndex = 14;
+            doctor_spec.TextChanged += doctor_spec_TextChanged;
             // 
             // label4
             // 
@@ -154,6 +157,29 @@
             button2.UseVisualStyleBackColor = false;
             button2.Click += button2_Click;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.BackColor = Color.Transparent;
+            label5.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.ForeColor = SystemColors.ControlLightLight;
+            label5.Location = new Point(259, 397);
+            label5.Name = "label5";
+            label5.Size = new Size(200, 31);
+            label5.TabIndex = 23;
+            label5.Text = "Doctor Workdays";
+            // 
+            // checkedListBox1
+            // 
+            checkedListBox1.BackColor = SystemColors.GradientActiveCaption;
+            checkedListBox1.FormattingEnabled = true;
+            checkedListBox1.Items.AddRange(new object[] { "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday" });
+            checkedListBox1.Location = new Point(477, 349);
+            checkedListBox1.Name = "checkedListBox1";
+            checkedListBox1.Size = new Size(137, 136);
+            checkedListBox1.TabIndex = 24;
+            checkedListBox1.SelectedIndexChanged += checkedListBox1_SelectedIndexChanged;
+            // 
             // doctor_registration
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -161,6 +187,8 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1165, 607);
+            Controls.Add(checkedListBox1);
+            Controls.Add(label5);
             Controls.Add(button2);
             Controls.Add(label4);
             Controls.Add(doctor_spec);
@@ -192,5 +220,7 @@
         private TextBox doctor_spec;
         private Label label4;
         private Button button2;
+        private Label label5;
+        private CheckedListBox checkedListBox1;
     }
 }

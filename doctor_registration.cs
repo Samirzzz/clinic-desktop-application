@@ -36,11 +36,21 @@ namespace clinic_system
             string spec = doctor_spec.Text.ToString();
             doctorInstance.setname(name);
             doctorInstance.setspec(spec);
+
+            List<string> selectedWorkdays = new List<string>();
+
+            foreach (var item in checkedListBox1.CheckedItems)
+            {
+                selectedWorkdays.Add(item.ToString());
+            }
+
+
             if (doctorInstance.validatenumber(number))
             {
-                doctorInstance.adddoctor(name, number, spec);
+                doctorInstance.adddoctor(name, number, spec, selectedWorkdays);
             }
         }
+
 
         private void doctor_registration_Load(object sender, EventArgs e)
         {
@@ -50,6 +60,16 @@ namespace clinic_system
         private void button2_Click(object sender, EventArgs e)
         {
             db.Instance.CloseConnection();
+
+        }
+
+        private void doctor_spec_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
 

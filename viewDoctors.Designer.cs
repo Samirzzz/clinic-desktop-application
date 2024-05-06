@@ -51,7 +51,7 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(554, 565);
             dataGridView1.TabIndex = 0;
-            //dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // savebtn
             // 
@@ -88,7 +88,6 @@
             namelbl.Size = new Size(92, 31);
             namelbl.TabIndex = 4;
             namelbl.Text = "Name : ";
-            //namelbl.Click += namelbl_Click;
             // 
             // numlbl
             // 
@@ -131,7 +130,6 @@
             speclbl.Size = new Size(166, 31);
             speclbl.TabIndex = 9;
             speclbl.Text = "Specialization :";
-            //speclbl.Click += speclbl_Click;
             // 
             // specbox
             // 
@@ -171,7 +169,6 @@
             Controls.Add(dataGridView1);
             Name = "viewDoctors";
             Text = "View Doctors";
-            //Load += viewDoctors_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
