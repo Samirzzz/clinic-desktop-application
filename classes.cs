@@ -709,48 +709,93 @@ namespace clinic_system
     //}
     public class Appointment
     {
-        private static Dictionary<string, List<DateTime>> appointmentsByDoctorAndDate = new Dictionary<string, List<DateTime>>();
         private const int MaxAppointmentsPerDay = 4;
 
-        public void AddAppointment(string doctorNumber, string patientNumber, DateTime date, string status)
+        public void bookAppointment(string doctorNumber, string patientNumber, DateTime date)
         {
-            // Check if the doctor works on the selected day
-            if (!DoctorWorksOnDay(doctorNumber, date.DayOfWeek))
+            if (!DoctorWorksOnDay(doctorNumber, date.DayOfWeek.ToString()))
             {
                 MessageBox.Show("Doctor does not work on this day.");
                 return;
             }
 
-            // Check if the doctor already has appointments for the selected day
-            if (!appointmentsByDoctorAndDate.ContainsKey(doctorNumber))
-            {
-                appointmentsByDoctorAndDate[doctorNumber] = new List<DateTime>();
-            }
-
-            // Check if the maximum number of appointments per day is reached
-            if (appointmentsByDoctorAndDate[doctorNumber].Count(appDate => appDate.Date == date.Date) >= MaxAppointmentsPerDay)
+            if (IsMaxAppointmentsReached(doctorNumber, date.Date))
             {
                 MessageBox.Show("Doctor already has the maximum number of appointments for this day.");
                 return;
             }
 
-            // Add the appointment for the selected doctor and date
-            appointmentsByDoctorAndDate[doctorNumber].Add(date.Date);
-            MessageBox.Show("Appointment added successfully!");
+            string query = "INSERT INTO appointment (docnumber, patnumber, date) VALUES (@doctorNumber, @patientNumber, @date)";
+            using (MySqlCommand cmd = new MySqlCommand(query, db.Instance.GetConnection()))
+            {
+                cmd.Parameters.AddWithValue("@doctorNumber", doctorNumber);
+                cmd.Parameters.AddWithValue("@patientNumber", patientNumber);
+                cmd.Parameters.AddWithValue("@date", date);
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("Appointment added successfully!");
+                }
+                else
+                {
+                    MessageBox.Show("Failed to add appointment.");
+                }
+            }
         }
 
-        private bool DoctorWorksOnDay(string doctorNumber, DayOfWeek dayOfWeek)
+        private bool DoctorWorksOnDay(string doctorNumber, string selectedDay)
         {
-            // Implement your logic here to check if the doctor works on the selected day
-            // For example, if doctor John only works on Wednesdays, Thursdays, and Saturdays:
-            if (doctorNumber == "John")
+            List<string> workdays = GetDoctorWorkdays(doctorNumber);
+            return workdays.Contains(selectedDay);
+        }
+
+        private List<string> GetDoctorWorkdays(string doctorNumber)
+        {
+            List<string> workdays = new List<string>();
+
+            string query = "SELECT Day FROM workdays WHERE Wid IN (SELECT Wid FROM doctor_workdays WHERE did = @doctorNumber)";
+            using (MySqlCommand cmd = new MySqlCommand(query, db.Instance.GetConnection()))
             {
-                return dayOfWeek == DayOfWeek.Wednesday || dayOfWeek == DayOfWeek.Thursday || dayOfWeek == DayOfWeek.Saturday;
+                cmd.Parameters.AddWithValue("@doctorNumber", doctorNumber);
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string day = reader.GetString("Day");
+                        workdays.Add(day);
+                    }
+                }
             }
-            // If the doctor works every day, return true
-            return true;
+
+            return workdays;
+        }
+
+        private bool IsMaxAppointmentsReached(string doctorNumber, DateTime date)
+        {
+            string query = "SELECT COUNT(*) AS NumAppointments FROM appointment WHERE docnumber = @doctorNumber AND date = @date";
+            using (MySqlCommand cmd = new MySqlCommand(query, db.Instance.GetConnection()))
+            {
+                cmd.Parameters.AddWithValue("@doctorNumber", doctorNumber);
+                cmd.Parameters.AddWithValue("@date", date);
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        int numAppointments = reader.GetInt32("NumAppointments");
+                        if(numAppointments>MaxAppointmentsPerDay)
+                        {
+                            return false;
+                        }
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
+
 
 
 }

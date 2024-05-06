@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,7 @@ namespace clinic_system
     public partial class appointmentBooking : Form
     {
         DataTable dt = new DataTable();
+        private Appointment appointment=new Appointment();
 
         public appointmentBooking()
         {
@@ -28,6 +30,10 @@ namespace clinic_system
                 string doctorName = row["name"].ToString();
                 comboBox1.Items.Add(doctorName);
             }
+
+           
+
+
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
@@ -37,6 +43,31 @@ namespace clinic_system
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string selectedDoctor = comboBox1.SelectedItem.ToString();
+            string doctorNumber = null;
+
+            string query = "SELECT number FROM doctor WHERE name = @name";
+            using (MySqlCommand cmd = new MySqlCommand(query, db.Instance.GetConnection()))
+            {
+                cmd.Parameters.AddWithValue("@name", selectedDoctor);
+                doctorNumber = cmd.ExecuteScalar()?.ToString();
+            }
+
+            if (!string.IsNullOrEmpty(doctorNumber))
+            {
+                MessageBox.Show($"Doctor Number: {doctorNumber}");
+            }
+            else
+            {
+                MessageBox.Show("Doctor not found.");
+            }
+
+            appointment.bookAppointment(doctorNumber,textBox1.Text,datee.Value);
 
         }
     }
