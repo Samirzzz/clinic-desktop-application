@@ -20,6 +20,8 @@ namespace clinic_system
         private Patient patientInstance;
         private Diagnosis diagnosisInstance;
 
+      
+
         public diagnose(string patientnumber, string docnumber)
         {
             InitializeComponent();
@@ -70,6 +72,14 @@ namespace clinic_system
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            PatientReport patientReport = new PatientReport();  
+            patientReport.curr_number = patientnumber;
+          
+            patientReport.Show();   
         }
     }
 }

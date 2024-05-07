@@ -12,7 +12,18 @@ using static clinic_system.classes;
 namespace clinic_system
 {
     public partial class PatientReport : Form
-    {
+    { 
+        public List<int> diagnoses_ids= new List<int>();
+        private Patient patientInstance = new Patient();
+        private Diagnosis diagnosesInstance=new Diagnosis();
+
+        public string curr_number { get; set; }
+
+
+
+
+
+
         public PatientReport()
         {
             InitializeComponent();
@@ -22,6 +33,21 @@ namespace clinic_system
 
         private void PatientReport_Load(object sender, EventArgs e)
         {
+            Patient curr_patient = patientInstance.findbypatientnumber(curr_number);
+            Name_textbox.Text = curr_patient.getname();
+            textBox1.Text = curr_patient.getnumber();
+            
+            diagnoses_ids.Clear();  
+            diagnoses_ids=diagnosesInstance.GetDiagnosesIDs(curr_patient.getnumber());
+            int counter = 0;
+            while( diagnoses_ids.Count > 0 )
+            {
+                comboBox1.Items.Add(diagnoses_ids[counter] );
+                counter++;
+            }
+
+
+            textBox5.Text=diagnosesInstance.FindDescription(1, curr_patient.getnumber());
 
         }
 
@@ -68,6 +94,12 @@ namespace clinic_system
         private void button1_Click(object sender, EventArgs e)
         {
             db.Instance.CloseConnection();
+
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
 
         }
     }

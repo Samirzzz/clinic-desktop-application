@@ -97,7 +97,12 @@ namespace clinic_system
             {
                 this.messages = messages;
             }
-            public Patient() { }
+
+
+            public Patient()
+            {
+
+            }
             public string getname()
             {
                 return this.name;
@@ -162,9 +167,46 @@ namespace clinic_system
                     MessageBox.Show("error: " + ex.Message);
                 }
 
-
             }
-            public void patient_search(string number, string docnumber, Form hide)
+
+
+            public Patient findbypatientnumber(string number)
+            {
+                Patient curr_patient = new Patient();
+                string query = "SELECT number, name FROM patient WHERE number = @number";
+
+                using (MySqlConnection conn = db.Instance.GetConnection())
+                {
+                    conn.Open();
+                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, conn))
+                    {
+                        mySqlCommand.Parameters.AddWithValue("@number", number);
+
+                        using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                string name = reader.GetString("name");
+                                string patientNum = reader.GetString("number");
+
+                                curr_patient.setname(name);
+                                curr_patient.setnumber(number);
+                            }
+                            else
+                            {
+                                MessageBox.Show($"Patient with number {number} not found.");
+                            }
+                        }
+                    }
+                }
+
+                return curr_patient;
+            }
+
+        
+
+
+        public void patient_search(string number, string docnumber, Form hide)
             {
                 try
                 {
@@ -177,6 +219,7 @@ namespace clinic_system
                         {
                             if (reader.Read())
                             {
+
                                 reader.Close();
 
                                 patient_search doc = new patient_search(docnumber);
@@ -202,6 +245,7 @@ namespace clinic_system
             public void load_patient_details(string number, DataGridView d)
             {
                 MySqlConnection connection = null;
+
                 try
                 {
                     string query = "SELECT * FROM patient WHERE number = @number";
@@ -217,6 +261,7 @@ namespace clinic_system
                         mySqlDataAdapter.Fill(dt);
                     }
 
+
                     BindingSource bindingSource = new BindingSource();
                     bindingSource.DataSource = dt;
                     d.DataSource = bindingSource;
@@ -225,6 +270,7 @@ namespace clinic_system
                 {
                     MessageBox.Show("Error: " + ex.Message);
                 }
+
                 finally
                 {
                     if (connection != null && connection.State == ConnectionState.Open)
@@ -233,9 +279,9 @@ namespace clinic_system
                     }
                 }
             }
-            public void editPatient(string newName , string patientNumber , DataTable dt)
+            public void editPatient(string newName, string patientNumber, DataTable dt)
             {
-                
+
                 string query = "UPDATE patient SET name = @name WHERE number = @number";
                 using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
                 {
@@ -270,7 +316,7 @@ namespace clinic_system
                     MessageBox.Show("Error: " + ex.Message);
                 }
             }
-            public bool DeletePatient(string patientNumber , DataTable dt)
+            public bool DeletePatient(string patientNumber, DataTable dt)
             {
                 try
                 {
@@ -310,7 +356,7 @@ namespace clinic_system
             public string number;
             public string spec;
             public string password;
-            
+
             Messages messages;
             public Doctor()
             {
@@ -346,7 +392,7 @@ namespace clinic_system
             }
             public void setnumber(string number)
             {
-                this.number= number;    
+                this.number = number;
             }
             public void setpassword(string password)
             {
@@ -356,17 +402,17 @@ namespace clinic_system
             {
                 try
                 {
-                    
+
                     string query = "SELECT COUNT(*) FROM doctor WHERE number = @number AND password = @password";
                     using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
                     {
                         cmd.Parameters.AddWithValue("@number", number);
                         cmd.Parameters.AddWithValue("@password", password);
 
-                        
+
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
 
-                        if(count > 0)
+                        if (count > 0)
                         {
                             return true;
                         }
@@ -447,7 +493,7 @@ namespace clinic_system
                 }
             }
 
-            public void doctor_search(string number,Form hide)
+            public void doctor_search(string number, Form hide)
             {
                 try
                 {
@@ -481,7 +527,7 @@ namespace clinic_system
                     MessageBox.Show("error: " + ex.Message);
                 }
             }
-            public void updateDoctor(string newName , string doctorNumber , string newSpec , DataTable dt)
+            public void updateDoctor(string newName, string doctorNumber, string newSpec, DataTable dt)
             {
                 string query = "UPDATE doctor SET name = @name, spec = @spec WHERE number = @number";
 
@@ -500,12 +546,13 @@ namespace clinic_system
                     rows[0]["spec"] = newSpec;
                 }
             }
-            public static void viewDoctors(DataTable dt) {
+            public static void viewDoctors(DataTable dt)
+            {
                 try
                 {
-                    
+
                     string query = "SELECT number, name, spec FROM doctor";
-                    dt.Clear(); 
+                    dt.Clear();
                     using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, classes.db.Instance.GetConnection()))
                     {
                         adapter.Fill(dt);
@@ -516,13 +563,13 @@ namespace clinic_system
                     MessageBox.Show("Error: " + ex.Message);
                 }
             }
-            public bool deleteDoctor(string doctorNumber , DataTable dt)
+            public bool deleteDoctor(string doctorNumber, DataTable dt)
             {
                 try
                 {
                     string query = "DELETE FROM doctor WHERE number = @number";
 
-                   
+
                     using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
                     {
                         cmd.Parameters.AddWithValue("@number", doctorNumber);
@@ -548,6 +595,7 @@ namespace clinic_system
                 }
             }
         }
+
         public interface Treatment
         {
             string getdiagnosis();
@@ -561,7 +609,7 @@ namespace clinic_system
         }
         public class TreatmentFactory
         {
-             public Treatment createTreatment(string diagnosis)
+            public Treatment createTreatment(string diagnosis)
             {
                 switch (diagnosis.ToLower())
                 {
@@ -575,7 +623,7 @@ namespace clinic_system
 
             public string setxray()
             {
-                return "X-ray reserved"; 
+                return "X-ray reserved";
             }
 
 
@@ -587,8 +635,9 @@ namespace clinic_system
             int did;
             int pid;
             string description;
-           
-            
+
+            public Diagnosis() { }
+
             Messages messages;
             public Diagnosis(Messages messages)
             {
@@ -627,7 +676,86 @@ namespace clinic_system
                 this.description = description;
             }
 
-            public void adddescription(string pnumber, string dnumber, string description)
+            public List<int> GetDiagnosesIDs(string pnumber)
+            {
+
+
+                    List<int> diagnosisIds = new List<int>();
+
+                    string query = "SELECT diagid FROM diagnoses WHERE pnumber = @pnumber";
+
+                    using (MySqlConnection connection = new MySqlConnection("your_connection_string"))
+                    {
+                        using (MySqlCommand command = new MySqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@patientNumber", pnumber);
+
+                            try
+                            {
+                                connection.Open();
+
+                                using (MySqlDataReader reader = command.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        int diagnosisId = reader.GetInt32("diagid");
+                                        diagnosisIds.Add(diagnosisId);
+                                    }
+                                }
+                            }
+                            catch (MySqlException ex)
+                            {
+                                
+                                Console.WriteLine("Error: " + ex.Message);
+                            }
+                        }
+                    }
+
+            
+                    return diagnosisIds;
+
+            
+
+        }
+
+
+
+
+        public string FindDescription(int Diagnoses_id, string Patient_Number)
+            {
+                string query = "SELECT description FROM diagnoses WHERE diagid = @Diagnoses_id AND pnumber = @Patient_Number";
+
+                using (MySqlConnection conn = db.Instance.GetConnection())
+                {
+                    conn.Open();
+                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, conn))
+                    {
+                        mySqlCommand.Parameters.AddWithValue("@Diagnoses_id", Diagnoses_id);
+                        mySqlCommand.Parameters.AddWithValue("@Patient_Number", Patient_Number);
+
+                        string curr_description = null;
+
+                        using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                curr_description = reader.GetString("description");
+                            }
+                            else
+                            {
+                                MessageBox.Show($"Diagnosis with ID {Diagnoses_id} not found.");
+                            }
+                        }
+
+                        return curr_description;
+                    }
+                }
+            }
+
+        
+
+
+        public void adddescription(string pnumber, string dnumber, string description)
             {
                 try
                 {
@@ -663,139 +791,138 @@ namespace clinic_system
 
 
         }
-    }
-    //public class Appointment
-    //{
-    //    public string docnumber;
-    //    public string patnumber;
-    //    public DateTime date;
-    //    public string status;
 
-    //    public void addAppointment(string docnumber,string patnumber,DateTime date,string status)
-    //    {
-    //        try
-    //        {
+        //public class Appointment
+        //{
+        //    public string docnumber;
+        //    public string patnumber;
+        //    public DateTime date;
+        //    public string status;
 
-
-
-    //            string query = "INSERT INTO appointment (docnumber, patnumber,date,status) VALUES (@docnumber, @patnumber, @date,@status)";
-    //            MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
-    //            mySqlCommand.Parameters.AddWithValue("@docnumber", docnumber);
-    //            mySqlCommand.Parameters.AddWithValue("@patnumber", patnumber);
-    //            mySqlCommand.Parameters.AddWithValue("@date", date);
-    //            mySqlCommand.Parameters.AddWithValue("@status", status);
-
-
-    //            int rowsAffected = mySqlCommand.ExecuteNonQuery();
-
-
-    //            if (rowsAffected > 0)
-    //            {
-    //                MessageBox.Show("Appointment added successfully!");
-    //            }
-    //            else
-    //            {
-    //                MessageBox.Show("Failed to add appointment.");
-    //            }
+        //    public void addAppointment(string docnumber,string patnumber,DateTime date,string status)
+        //    {
+        //        try
+        //        {
 
 
 
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            MessageBox.Show("error: " + ex.Message);
-    //        }
-    //    }
-    //}
-    public class Appointment
-    {
-        private const int MaxAppointmentsPerDay = 4;
+        //            string query = "INSERT INTO appointment (docnumber, patnumber,date,status) VALUES (@docnumber, @patnumber, @date,@status)";
+        //            MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
+        //            mySqlCommand.Parameters.AddWithValue("@docnumber", docnumber);
+        //            mySqlCommand.Parameters.AddWithValue("@patnumber", patnumber);
+        //            mySqlCommand.Parameters.AddWithValue("@date", date);
+        //            mySqlCommand.Parameters.AddWithValue("@status", status);
 
-        public void bookAppointment(string doctorNumber, string patientNumber, DateTime date)
+
+        //            int rowsAffected = mySqlCommand.ExecuteNonQuery();
+
+
+        //            if (rowsAffected > 0)
+        //            {
+        //                MessageBox.Show("Appointment added successfully!");
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show("Failed to add appointment.");
+        //            }
+
+
+
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show("error: " + ex.Message);
+        //        }
+        //    }
+        //}    }
+        public class Appointment
         {
-            if (!DoctorWorksOnDay(doctorNumber, date.DayOfWeek.ToString()))
-            {
-                MessageBox.Show("Doctor does not work on this day.");
-                return;
-            }
+            private const int MaxAppointmentsPerDay = 4;
 
-            if (IsMaxAppointmentsReached(doctorNumber, date.Date))
+            public void bookAppointment(string doctorNumber, string patientNumber, DateTime date)
             {
-                MessageBox.Show("Doctor already has the maximum number of appointments for this day.");
-                return;
-            }
-
-            string query = "INSERT INTO appointment (docnumber, patnumber, date) VALUES (@doctorNumber, @patientNumber, @date)";
-            using (MySqlCommand cmd = new MySqlCommand(query, db.Instance.GetConnection()))
-            {
-                cmd.Parameters.AddWithValue("@doctorNumber", doctorNumber);
-                cmd.Parameters.AddWithValue("@patientNumber", patientNumber);
-                cmd.Parameters.AddWithValue("@date", date);
-                int rowsAffected = cmd.ExecuteNonQuery();
-
-                if (rowsAffected > 0)
+                if (!DoctorWorksOnDay(doctorNumber, date.DayOfWeek.ToString()))
                 {
-                    MessageBox.Show("Appointment added successfully!");
+                    MessageBox.Show("Doctor does not work on this day.");
+                    return;
                 }
-                else
+
+                if (IsMaxAppointmentsReached(doctorNumber, date.Date))
                 {
-                    MessageBox.Show("Failed to add appointment.");
+                    MessageBox.Show("Doctor already has the maximum number of appointments for this day.");
+                    return;
                 }
-            }
-        }
 
-        private bool DoctorWorksOnDay(string doctorNumber, string selectedDay)
-        {
-            List<string> workdays = GetDoctorWorkdays(doctorNumber);
-            return workdays.Contains(selectedDay);
-        }
-
-        private List<string> GetDoctorWorkdays(string doctorNumber)
-        {
-            List<string> workdays = new List<string>();
-
-            string query = "SELECT Day FROM workdays WHERE Wid IN (SELECT Wid FROM doctor_workdays WHERE did = @doctorNumber)";
-            using (MySqlCommand cmd = new MySqlCommand(query, db.Instance.GetConnection()))
-            {
-                cmd.Parameters.AddWithValue("@doctorNumber", doctorNumber);
-                using (MySqlDataReader reader = cmd.ExecuteReader())
+                string query = "INSERT INTO appointment (docnumber, patnumber, date) VALUES (@doctorNumber, @patientNumber, @date)";
+                using (MySqlCommand cmd = new MySqlCommand(query, db.Instance.GetConnection()))
                 {
-                    while (reader.Read())
+                    cmd.Parameters.AddWithValue("@doctorNumber", doctorNumber);
+                    cmd.Parameters.AddWithValue("@patientNumber", patientNumber);
+                    cmd.Parameters.AddWithValue("@date", date);
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
                     {
-                        string day = reader.GetString("Day");
-                        workdays.Add(day);
+                        MessageBox.Show("Appointment added successfully!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to add appointment.");
                     }
                 }
             }
 
-            return workdays;
-        }
-
-        private bool IsMaxAppointmentsReached(string doctorNumber, DateTime date)
-        {
-            string query = "SELECT COUNT(*) AS NumAppointments FROM appointment WHERE docnumber = @doctorNumber AND date = @date";
-            using (MySqlCommand cmd = new MySqlCommand(query, db.Instance.GetConnection()))
+            private bool DoctorWorksOnDay(string doctorNumber, string selectedDay)
             {
-                cmd.Parameters.AddWithValue("@doctorNumber", doctorNumber);
-                cmd.Parameters.AddWithValue("@date", date);
-                using (MySqlDataReader reader = cmd.ExecuteReader())
+                List<string> workdays = GetDoctorWorkdays(doctorNumber);
+                return workdays.Contains(selectedDay);
+            }
+
+            private List<string> GetDoctorWorkdays(string doctorNumber)
+            {
+                List<string> workdays = new List<string>();
+
+                string query = "SELECT Day FROM workdays WHERE Wid IN (SELECT Wid FROM doctor_workdays WHERE did = @doctorNumber)";
+                using (MySqlCommand cmd = new MySqlCommand(query, db.Instance.GetConnection()))
                 {
-                    if (reader.Read())
+                    cmd.Parameters.AddWithValue("@doctorNumber", doctorNumber);
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        int numAppointments = reader.GetInt32("NumAppointments");
-                        if(numAppointments>MaxAppointmentsPerDay)
+                        while (reader.Read())
                         {
-                            return false;
+                            string day = reader.GetString("Day");
+                            workdays.Add(day);
                         }
-                        return true;
                     }
                 }
+
+                return workdays;
             }
 
-            return false;
+            private bool IsMaxAppointmentsReached(string doctorNumber, DateTime date)
+            {
+                string query = "SELECT COUNT(*) AS NumAppointments FROM appointment WHERE docnumber = @doctorNumber AND date = @date";
+                using (MySqlCommand cmd = new MySqlCommand(query, db.Instance.GetConnection()))
+                {
+                    cmd.Parameters.AddWithValue("@doctorNumber", doctorNumber);
+                    cmd.Parameters.AddWithValue("@date", date);
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            int numAppointments = reader.GetInt32("NumAppointments");
+                            if (numAppointments > MaxAppointmentsPerDay)
+                            {
+                                return false;
+                            }
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
         }
     }
-
-
-
 }
+

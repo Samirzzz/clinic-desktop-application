@@ -48,6 +48,8 @@
             label10 = new Label();
             label11 = new Label();
             textBox6 = new TextBox();
+            comboBox1 = new ComboBox();
+            label12 = new Label();
             SuspendLayout();
             // 
             // button1
@@ -184,7 +186,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Arial Rounded MT Bold", 12F, FontStyle.Underline, GraphicsUnit.Point, 0);
-            label8.Location = new Point(72, 606);
+            label8.Location = new Point(55, 594);
             label8.Name = "label8";
             label8.Size = new Size(119, 23);
             label8.TabIndex = 16;
@@ -192,11 +194,12 @@
             // 
             // textBox5
             // 
-            textBox5.Location = new Point(88, 642);
+            textBox5.Location = new Point(180, 631);
             textBox5.Multiline = true;
             textBox5.Name = "textBox5";
             textBox5.Size = new Size(484, 184);
             textBox5.TabIndex = 17;
+            textBox5.TextChanged += textBox5_TextChanged;
             // 
             // label9
             // 
@@ -235,11 +238,31 @@
             textBox6.Size = new Size(298, 27);
             textBox6.TabIndex = 21;
             // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(72, 631);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(85, 28);
+            comboBox1.TabIndex = 22;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Arial Rounded MT Bold", 12F, FontStyle.Underline, GraphicsUnit.Point, 0);
+            label12.Location = new Point(29, 636);
+            label12.Name = "label12";
+            label12.Size = new Size(37, 23);
+            label12.TabIndex = 23;
+            label12.Text = "ID:";
+            // 
             // PatientReport
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(728, 960);
+            Controls.Add(label12);
+            Controls.Add(comboBox1);
             Controls.Add(textBox6);
             Controls.Add(label11);
             Controls.Add(label10);
@@ -289,5 +312,7 @@
         private Label label10;
         private Label label11;
         private TextBox textBox6;
+        private ComboBox comboBox1;
+        private Label label12;
     }
 }

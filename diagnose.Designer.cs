@@ -36,6 +36,7 @@
             button4 = new Button();
             dataGridView2 = new DataGridView();
             button5 = new Button();
+            button6 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
@@ -112,6 +113,16 @@
             button5.UseVisualStyleBackColor = true;
             button5.Click += button5_Click;
             // 
+            // button6
+            // 
+            button6.Location = new Point(12, 424);
+            button6.Name = "button6";
+            button6.Size = new Size(142, 30);
+            button6.TabIndex = 7;
+            button6.Text = "Report";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
+            // 
             // diagnose
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -119,6 +130,7 @@
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(1132, 661);
+            Controls.Add(button6);
             Controls.Add(button5);
             Controls.Add(dataGridView2);
             Controls.Add(button4);
@@ -143,5 +155,6 @@
         private Button button4;
         private DataGridView dataGridView2;
         private Button button5;
+        private Button button6;
     }
 }
