@@ -71,5 +71,12 @@ namespace clinic_system
         {
 
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+           treatment miniForm = new treatment(patientnumber, docnumber);
+
+            miniForm.Show();
+        }
     }
 }

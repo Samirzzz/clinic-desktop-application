@@ -9,6 +9,8 @@ using static clinic_system.classes;
 using static clinic_system.doctor_search;
 using static clinic_system.patient_search;
 using static clinic_system.diagnose;
+using static clinic_system.treatment;
+
 using System.Data;
 using System.Windows.Forms;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -181,6 +183,7 @@ namespace clinic_system
 
                                 patient_search doc = new patient_search(docnumber);
                                 diagnose diagnosis = new diagnose(number, docnumber);
+                                treatment treat=new treatment(number, docnumber);
                                 diagnosis.Show();
                                 hide.Hide();
                             }
@@ -244,7 +247,6 @@ namespace clinic_system
                     cmd.ExecuteNonQuery();
                 }
 
-                // Update the DataTable with the new values
                 DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
                 if (rows.Length > 0)
                 {
@@ -276,7 +278,6 @@ namespace clinic_system
                 {
                     string query = "DELETE FROM patient WHERE number = @number";
 
-                    // Create and execute the command with parameters
                     using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
                     {
                         cmd.Parameters.AddWithValue("@number", patientNumber);
@@ -284,7 +285,6 @@ namespace clinic_system
 
                         if (rowsAffected > 0)
                         {
-                            // Remove the row from the DataTable
                             DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
                             if (rows.Length > 0)
                             {
@@ -292,13 +292,13 @@ namespace clinic_system
                             }
                         }
 
-                        return rowsAffected > 0; // Return true if rows were affected (deletion successful)
+                        return rowsAffected > 0; 
                     }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error: " + ex.Message);
-                    return false; // Return false if an exception occurred
+                    return false; 
                 }
             }
 
@@ -451,9 +451,7 @@ namespace clinic_system
             {
                 try
                 {
-
                     string query = "SELECT number FROM doctor WHERE number = @number";
-
                     using (MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection()))
                     {
                         mySqlCommand.Parameters.AddWithValue("@number", number);
@@ -484,8 +482,6 @@ namespace clinic_system
             public void updateDoctor(string newName , string doctorNumber , string newSpec , DataTable dt)
             {
                 string query = "UPDATE doctor SET name = @name, spec = @spec WHERE number = @number";
-
-                // Create and execute the command with parameters
                 using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
                 {
                     cmd.Parameters.AddWithValue("@name", newName);
@@ -530,7 +526,6 @@ namespace clinic_system
 
                         if (rowsAffected > 0)
                         {
-                            // Remove the row from the DataTable
                             DataRow[] rows = dt.Select("number = '" + doctorNumber + "'");
                             if (rows.Length > 0)
                             {
@@ -538,7 +533,7 @@ namespace clinic_system
                             }
                         }
 
-                        return rowsAffected > 0; // Return true if rows were affected (deletion successful)
+                        return rowsAffected > 0; 
                     }
                 }
                 catch (Exception ex)
@@ -551,35 +546,91 @@ namespace clinic_system
         public interface Treatment
         {
             string getdiagnosis();
+            void setdiagnosis(string diagnosis);
+            void treatment(CheckBox rb1, CheckBox rb2);
+           
         }
         public class BoneTreatment : Treatment
         {
+           
             public string getdiagnosis()
             {
                 return "Bone related diagnosis";
+                
+            }
+           
+
+            public void setdiagnosis(string diagnosis)
+            {
+                diagnosis = "Bone";
+            }
+            public void treatment(CheckBox rb1, CheckBox rb2)
+            {
+
+                rb1.Text = "X-ray";
+                rb2.Text = "MRI";
+
             }
         }
-        public class TreatmentFactory
+        public class cancerTreatment : Treatment
         {
-             public Treatment createTreatment(string diagnosis)
+            public string getdiagnosis()
             {
-                switch (diagnosis.ToLower())
-                {
-                    case "bone":
-                        return new BoneTreatment();
-                    default:
-                        throw new ArgumentException("Invalid diagnosis");
-                }
-
+                return "cancer related diagnosis";
+            }
+            public void setdiagnosis(string diagnosis)
+            {
+                diagnosis = "Cancer";
             }
 
-            public string setxray()
+            public void treatment(CheckBox rb1, CheckBox rb2)
             {
-                return "X-ray reserved"; 
+
+                rb1.Text = "Chemotherapy";
+                rb2.Text = "Radiotherapy";
+               
             }
+            //public void savtetodb()
+            //{
+            //    try
+            //    {
+            //        using (MySqlConnection connection = db.Instance.GetConnection())
+            //        {
+            //            string query = "INSERT INTO treatment (dnumber, pnumber, description) VALUES (@dnumber, @pnumber, @description)";
+            //            using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
+            //            {
 
+            //                mySqlCommand.Parameters.AddWithValue("@description", rb1);
+            //                mySqlCommand.Parameters.AddWithValue("@description", rb2);
 
+            //                connection.Open();
+            //                int rowsAffected = mySqlCommand.ExecuteNonQuery();
+
+            //                if (rowsAffected > 0)
+            //                {
+            //                    MessageBox.Show("Added successfully!");
+            //                }
+            //                else
+            //                {
+            //                    MessageBox.Show("Failed to add.");
+            //                }
+            //            }
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show("Error: " + ex.Message);
+            //    }
+
+            //}
         }
+        
+          
+
+            
+
+
+        
 
         public class Diagnosis
         {
@@ -799,3 +850,4 @@ namespace clinic_system
 
 
 }
+    
