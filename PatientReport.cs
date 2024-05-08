@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,8 +16,9 @@ namespace clinic_system
     { 
         public List<int> diagnoses_ids= new List<int>();
         private Patient patientInstance = new Patient();
+        Patient found_patient = new Patient();
         private Diagnosis diagnosesInstance=new Diagnosis();
-
+       
         public string curr_number { get; set; }
 
 
@@ -32,22 +34,44 @@ namespace clinic_system
         }
 
         private void PatientReport_Load(object sender, EventArgs e)
-        {
-            Patient curr_patient = patientInstance.findbypatientnumber(curr_number);
-            Name_textbox.Text = curr_patient.getname();
-            textBox1.Text = curr_patient.getnumber();
-            
-            diagnoses_ids.Clear();  
-            diagnoses_ids=diagnosesInstance.GetDiagnosesIDs(curr_patient.getnumber());
+        { 
             int counter = 0;
-            while( diagnoses_ids.Count > 0 )
+            using (MySqlConnection conn = db.Instance.GetConnection())
             {
-                comboBox1.Items.Add(diagnoses_ids[counter] );
-                counter++;
+                conn.Open();
+
+                // Call functions with the same database connection
+             found_patient = patientInstance.FindByPatientNumber(curr_number,conn);
+                Name_textbox.Text = found_patient.getname();
+                textBox1.Text = found_patient.getnumber();
+
+                diagnoses_ids.Clear();
+                diagnoses_ids = diagnosesInstance.GetDiagnosesIDs(found_patient.getnumber());
+               
+                while (diagnoses_ids.Count > 0)
+                {
+                    comboBox1.Items.Add(diagnoses_ids[counter]);
+                    counter++;
+                }
+
+
+                textBox5.Text = diagnosesInstance.FindDescription(1, found_patient.getnumber(),conn);
             }
+            //Patient curr_patient = patientInstance.findbypatientnumber(curr_number);
+            //Name_textbox.Text = curr_patient.getname();
+            //textBox1.Text = curr_patient.getnumber();
+            
+            //diagnoses_ids.Clear();  
+            //diagnoses_ids=diagnosesInstance.GetDiagnosesIDs(curr_patient.getnumber());
+            //int counter = 0;
+            //while( diagnoses_ids.Count > 0 )
+            //{
+            //    comboBox1.Items.Add(diagnoses_ids[counter] );
+            //    counter++;
+            //}
 
 
-            textBox5.Text=diagnosesInstance.FindDescription(1, curr_patient.getnumber());
+            //textBox5.Text=diagnosesInstance.FindDescription(1, curr_patient.getnumber());
 
         }
 

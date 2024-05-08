@@ -172,32 +172,28 @@ namespace clinic_system
             }
 
 
-            public Patient findbypatientnumber(string number)
+            public Patient FindByPatientNumber(string number, MySqlConnection conn)
             {
                 Patient curr_patient = new Patient();
                 string query = "SELECT number, name FROM patient WHERE number = @number";
 
-                using (MySqlConnection conn = db.Instance.GetConnection())
+                using (MySqlCommand mySqlCommand = new MySqlCommand(query, conn))
                 {
-                    conn.Open();
-                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, conn))
+                    mySqlCommand.Parameters.AddWithValue("@number", number);
+
+                    using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
                     {
-                        mySqlCommand.Parameters.AddWithValue("@number", number);
-
-                        using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
+                        if (reader.Read())
                         {
-                            if (reader.Read())
-                            {
-                                string name = reader.GetString("name");
-                                string patientNum = reader.GetString("number");
+                            string name = reader.GetString("name");
+                            string patientNum = reader.GetString("number");
 
-                                curr_patient.setname(name);
-                                curr_patient.setnumber(number);
-                            }
-                            else
-                            {
-                                MessageBox.Show($"Patient with number {number} not found.");
-                            }
+                            curr_patient.setname(name);
+                            curr_patient.setnumber(number);
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Patient with number {number} not found.");
                         }
                     }
                 }
@@ -205,10 +201,10 @@ namespace clinic_system
                 return curr_patient;
             }
 
-        
 
 
-        public void patient_search(string number, string docnumber, Form hide)
+
+            public void patient_search(string number, string docnumber, Form hide)
             {
                 try
                 {
@@ -769,41 +765,37 @@ namespace clinic_system
 
 
 
-        public string FindDescription(int Diagnoses_id, string Patient_Number)
+            public string FindDescription(int Diagnoses_id, string Patient_Number, MySqlConnection conn)
             {
                 string query = "SELECT description FROM diagnoses WHERE diagid = @Diagnoses_id AND pnumber = @Patient_Number";
 
-                using (MySqlConnection conn = db.Instance.GetConnection())
+                using (MySqlCommand mySqlCommand = new MySqlCommand(query, conn))
                 {
-                    conn.Open();
-                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, conn))
+                    mySqlCommand.Parameters.AddWithValue("@Diagnoses_id", Diagnoses_id);
+                    mySqlCommand.Parameters.AddWithValue("@Patient_Number", Patient_Number);
+
+                    string curr_description = null;
+
+                    using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
                     {
-                        mySqlCommand.Parameters.AddWithValue("@Diagnoses_id", Diagnoses_id);
-                        mySqlCommand.Parameters.AddWithValue("@Patient_Number", Patient_Number);
-
-                        string curr_description = null;
-
-                        using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
+                        if (reader.Read())
                         {
-                            if (reader.Read())
-                            {
-                                curr_description = reader.GetString("description");
-                            }
-                            else
-                            {
-                                MessageBox.Show($"Diagnosis with ID {Diagnoses_id} not found.");
-                            }
+                            curr_description = reader.GetString("description");
                         }
-
-                        return curr_description;
+                        else
+                        {
+                            MessageBox.Show($"Diagnosis with ID {Diagnoses_id} not found.");
+                        }
                     }
+
+                    return curr_description;
                 }
             }
 
-        
 
 
-        public void adddescription(string pnumber, string dnumber, string description)
+
+            public void adddescription(string pnumber, string dnumber, string description)
             {
                 try
                 {
@@ -976,4 +968,3 @@ namespace clinic_system
 
 
 
-}
