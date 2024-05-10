@@ -67,6 +67,7 @@ namespace clinic_system
                 Datebox.Text = "";
                 dnumBox.Text = "";
                 PnumBox.Text = "";
+                appointbox.Text = "";
                 MessageBox.Show("Appointment deleted successfully.");
             }
             else
