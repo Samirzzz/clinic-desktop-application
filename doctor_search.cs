@@ -60,6 +60,10 @@ namespace clinic_system
 
         private void button5_Click(object sender, EventArgs e)
         {
+            
+           
+
+            this.Close();
             Form1 form = new Form1();
             form.Show();
             this.Hide();

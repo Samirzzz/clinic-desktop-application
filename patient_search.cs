@@ -63,7 +63,7 @@ namespace clinic_system
 
         private void button5_Click(object sender, EventArgs e)
         {
-                        connection.Open();
+           connection.Open();
 
             this.Hide();
             doctor_search d = new doctor_search();

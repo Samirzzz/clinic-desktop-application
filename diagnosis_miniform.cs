@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,9 +14,11 @@ namespace clinic_system
 {
     public partial class diagnosis_miniform : Form
     {
+        private Diagnosis diagnosisInstance;
+        private MySqlConnection connection;
+
         private string patientnumber;
         private string docnumber;
-        private Diagnosis diagnosisInstance;
         public diagnosis_miniform(string patientnumber, string docnumber)
         {
             InitializeComponent();
@@ -24,6 +27,8 @@ namespace clinic_system
             this.docnumber = docnumber;
             Messages messages = new Messages("", "");
             diagnosisInstance = new Diagnosis(messages);
+            connection = db.Instance.GetConnection();
+
         }
 
         private void save_Click(object sender, EventArgs e)
@@ -31,15 +36,13 @@ namespace clinic_system
         {
             string desc = textBox1.Text.ToString();
             diagnosisInstance.setdescription(desc);
-            diagnosisInstance.adddescription(patientnumber, docnumber, desc);
+            diagnosisInstance.adddescription(patientnumber, docnumber, desc,connection);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
 
-            diagnose d = new diagnose(patientnumber, docnumber);
-            d.Show();
-            this.Close();
+           
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -49,6 +52,20 @@ namespace clinic_system
 
         private void Diagnosis_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void button5_Click_1(object sender, EventArgs e)
+        {
+            if (connection != null && connection.State == ConnectionState.Open)
+            {
+                connection.Close();
+            }
+            this.Hide();
+            diagnose d = new diagnose(patientnumber, docnumber);
+            d.ShowDialog();
+
+            this.Close();
 
         }
     }

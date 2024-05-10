@@ -57,7 +57,7 @@ namespace clinic_system
         private void button1_Click(object sender, EventArgs e)
         {
             diagnosis_miniform miniForm = new diagnosis_miniform(patientnumber, docnumber);
-
+            this.Hide();
             miniForm.Show();
         }
 

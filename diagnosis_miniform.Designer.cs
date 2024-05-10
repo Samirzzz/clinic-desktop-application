@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(diagnosis_miniform));
             Diagnosis = new Label();
             textBox1 = new TextBox();
             save = new Button();
+            button5 = new Button();
             SuspendLayout();
             // 
             // Diagnosis
@@ -63,11 +65,24 @@
             save.UseVisualStyleBackColor = true;
             save.Click += save_Click;
             // 
+            // button5
+            // 
+            button5.BackgroundImage = (Image)resources.GetObject("button5.BackgroundImage");
+            button5.BackgroundImageLayout = ImageLayout.Stretch;
+            button5.Location = new Point(21, 16);
+            button5.Name = "button5";
+            button5.Size = new Size(46, 47);
+            button5.TabIndex = 7;
+            button5.Text = "\r\n";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click_1;
+            // 
             // diagnosis_miniform
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(640, 365);
+            Controls.Add(button5);
             Controls.Add(save);
             Controls.Add(textBox1);
             Controls.Add(Diagnosis);
@@ -82,5 +97,6 @@
         private Label Diagnosis;
         private TextBox textBox1;
         private Button save;
+        private Button button5;
     }
 }

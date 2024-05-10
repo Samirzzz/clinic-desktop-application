@@ -767,12 +767,11 @@ namespace clinic_system
 
 
 
-            public void adddescription(string pnumber, string dnumber, string description)
+            public void adddescription(string pnumber, string dnumber, string description, MySqlConnection connection)
             {
                 try
                 {
-                    using (MySqlConnection connection = db.Instance.GetConnection())
-                    {
+                    
                         string query = "INSERT INTO diagnosis (pnumber, dnumber, description) VALUES (@pnumber, @dnumber, @description)";
                         using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
                         {
@@ -791,7 +790,7 @@ namespace clinic_system
                                 MessageBox.Show("Failed to add.");
                             }
                         }
-                    }
+                    
                 }
                 catch (Exception ex)
                 {
