@@ -43,7 +43,7 @@ namespace clinic_system
 
         private void diagnose_Load(object sender, EventArgs e)
         {
-
+            MySqlConnection connection = db.Instance.GetConnection();
             patientInstance.load_patient_details(patientnumber, dataGridView1);
 
         }
@@ -63,7 +63,6 @@ namespace clinic_system
 
         private void button5_Click(object sender, EventArgs e)
         {
-            db.Instance.CloseConnection();
             patient_search p = new patient_search(patientnumber);
             p.Show();
             this.Hide();
@@ -76,17 +75,19 @@ namespace clinic_system
 
         private void button6_Click(object sender, EventArgs e)
         {
-            PatientReport patientReport = new PatientReport();  
-            patientReport.curr_number = patientnumber;
+            PatientReport patientReport = new PatientReport(patientnumber,docnumber);  
           
             patientReport.Show();   
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-           treatment miniForm = new treatment(patientnumber, docnumber);
+            MySqlConnection connection=db.Instance.GetConnection();
+            connection.Open();
+            treatment miniForm = new treatment(patientnumber, docnumber);
 
             miniForm.Show();
+            this.Hide();
         }
     }
 }

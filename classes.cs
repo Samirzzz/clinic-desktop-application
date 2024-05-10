@@ -204,12 +204,15 @@ namespace clinic_system
 
 
 
-            public void patient_search(string number, string docnumber, Form hide)
+            public void patient_search(string number, string docnumber, Form hide )
             {
                 try
                 {
+                    MySqlConnection connection = null;
                     string query = "SELECT number FROM patient WHERE number = @number";
-                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection()))
+                    connection = db.Instance.GetConnection();
+
+                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
                     {
                         mySqlCommand.Parameters.AddWithValue("@number", number);
 
@@ -223,6 +226,7 @@ namespace clinic_system
                                 patient_search doc = new patient_search(docnumber);
                                 diagnose diagnosis = new diagnose(number, docnumber);
                                 treatment treat=new treatment(number, docnumber);
+                                PatientReport rep = new PatientReport(number,docnumber);
                                 diagnosis.Show();
                                 hide.Hide();
                             }
@@ -489,13 +493,13 @@ namespace clinic_system
                 }
             }
 
-            public void doctor_search(string number, Form hide)
+            public void doctor_search(string number, Form hide, MySqlConnection connection)
             {
                 try
                 {
                     string query = "SELECT number FROM doctor WHERE number = @number";
-                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection()))
-                    {
+                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
+                       {
                         mySqlCommand.Parameters.AddWithValue("@number", number);
 
                         using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
@@ -629,41 +633,12 @@ namespace clinic_system
 
             public void treatment(CheckBox rb1, CheckBox rb2)
             {
-                return "X-ray reserved"; 
+
+                rb1.Text = "Chemotherapy";
+                rb2.Text = "Radiotherapy";
+
             }
-            //public void savtetodb()
-            //{
-            //    try
-            //    {
-            //        using (MySqlConnection connection = db.Instance.GetConnection())
-            //        {
-            //            string query = "INSERT INTO treatment (dnumber, pnumber, description) VALUES (@dnumber, @pnumber, @description)";
-            //            using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
-            //            {
-
-            //                mySqlCommand.Parameters.AddWithValue("@description", rb1);
-            //                mySqlCommand.Parameters.AddWithValue("@description", rb2);
-
-            //                connection.Open();
-            //                int rowsAffected = mySqlCommand.ExecuteNonQuery();
-
-            //                if (rowsAffected > 0)
-            //                {
-            //                    MessageBox.Show("Added successfully!");
-            //                }
-            //                else
-            //                {
-            //                    MessageBox.Show("Failed to add.");
-            //                }
-            //            }
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show("Error: " + ex.Message);
-            //    }
-
-            //}
+           
         }
         
           
@@ -720,23 +695,21 @@ namespace clinic_system
                 this.description = description;
             }
 
-            public List<int> GetDiagnosesIDs(string pnumber)
+            public List<int> GetDiagnosesIDs(string pnumber, MySqlConnection connection)
             {
 
 
                     List<int> diagnosisIds = new List<int>();
 
-                    string query = "SELECT diagid FROM diagnoses WHERE pnumber = @pnumber";
+                    string query = "SELECT diagid FROM diagnosis WHERE pnumber = @pnumber";
 
-                    using (MySqlConnection connection = new MySqlConnection("your_connection_string"))
-                    {
+               
                         using (MySqlCommand command = new MySqlCommand(query, connection))
                         {
                             command.Parameters.AddWithValue("@patientNumber", pnumber);
 
                             try
                             {
-                                connection.Open();
 
                                 using (MySqlDataReader reader = command.ExecuteReader())
                                 {
@@ -752,7 +725,7 @@ namespace clinic_system
                                 
                                 Console.WriteLine("Error: " + ex.Message);
                             }
-                        }
+                        
                     }
 
             
@@ -767,7 +740,7 @@ namespace clinic_system
 
             public string FindDescription(int Diagnoses_id, string Patient_Number, MySqlConnection conn)
             {
-                string query = "SELECT description FROM diagnoses WHERE diagid = @Diagnoses_id AND pnumber = @Patient_Number";
+                string query = "SELECT description FROM diagnosis WHERE diagid = @Diagnoses_id AND pnumber = @Patient_Number";
 
                 using (MySqlCommand mySqlCommand = new MySqlCommand(query, conn))
                 {

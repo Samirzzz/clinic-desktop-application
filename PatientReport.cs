@@ -13,41 +13,46 @@ using static clinic_system.classes;
 namespace clinic_system
 {
     public partial class PatientReport : Form
-    { 
-        public List<int> diagnoses_ids= new List<int>();
-        private Patient patientInstance = new Patient();
+    {
+        public List<int> diagnoses_ids = new List<int>();
         Patient found_patient = new Patient();
-        private Diagnosis diagnosesInstance=new Diagnosis();
-       
-        public string curr_number { get; set; }
+        private Patient patientInstance;
+
+        private Diagnosis diagnosesInstance = new Diagnosis();
+        private string patientnumber;
+        private string docnumber;
 
 
 
 
 
 
-        public PatientReport()
+
+
+        public PatientReport(string patientnumber,string docnumber)
         {
             InitializeComponent();
-            db.Instance.GetConnection();
-
+            this.patientnumber = patientnumber;
+            this.docnumber = docnumber;
+            Messages messages = new Messages("", "");
+            patientInstance = new Patient(messages);
         }
 
         private void PatientReport_Load(object sender, EventArgs e)
-        { 
+        {
             int counter = 0;
             using (MySqlConnection conn = db.Instance.GetConnection())
             {
                 conn.Open();
 
                 // Call functions with the same database connection
-             found_patient = patientInstance.FindByPatientNumber(curr_number,conn);
+                found_patient = patientInstance.FindByPatientNumber(patientnumber, conn);
                 Name_textbox.Text = found_patient.getname();
                 textBox1.Text = found_patient.getnumber();
 
                 diagnoses_ids.Clear();
-                diagnoses_ids = diagnosesInstance.GetDiagnosesIDs(found_patient.getnumber());
-               
+                diagnoses_ids = diagnosesInstance.GetDiagnosesIDs(found_patient.getnumber(),conn);
+
                 while (diagnoses_ids.Count > 0)
                 {
                     comboBox1.Items.Add(diagnoses_ids[counter]);
@@ -55,12 +60,12 @@ namespace clinic_system
                 }
 
 
-                textBox5.Text = diagnosesInstance.FindDescription(1, found_patient.getnumber(),conn);
+                textBox5.Text = diagnosesInstance.FindDescription(1, found_patient.getnumber(), conn);
             }
             //Patient curr_patient = patientInstance.findbypatientnumber(curr_number);
             //Name_textbox.Text = curr_patient.getname();
             //textBox1.Text = curr_patient.getnumber();
-            
+
             //diagnoses_ids.Clear();  
             //diagnoses_ids=diagnosesInstance.GetDiagnosesIDs(curr_patient.getnumber());
             //int counter = 0;
@@ -117,13 +122,18 @@ namespace clinic_system
 
         private void button1_Click(object sender, EventArgs e)
         {
-            db.Instance.CloseConnection();
+//            db.Instance.CloseConnection();
 
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
 
+
+        }
+
+        private void Name_textbox_TextChanged(object sender, EventArgs e)
+        {
 
         }
     }

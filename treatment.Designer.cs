@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(treatment));
             save = new Button();
             Diagnosis = new Label();
             comboBox1 = new ComboBox();
@@ -35,6 +36,7 @@
             customtreatment = new TextBox();
             customsave = new Button();
             label1 = new Label();
+            button5 = new Button();
             SuspendLayout();
             // 
             // save
@@ -51,7 +53,7 @@
             // 
             Diagnosis.AutoSize = true;
             Diagnosis.Font = new Font("Segoe UI Historic", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            Diagnosis.Location = new Point(40, 30);
+            Diagnosis.Location = new Point(52, 42);
             Diagnosis.Name = "Diagnosis";
             Diagnosis.Size = new Size(153, 38);
             Diagnosis.TabIndex = 3;
@@ -81,6 +83,7 @@
             customtreatment.Name = "customtreatment";
             customtreatment.Size = new Size(222, 129);
             customtreatment.TabIndex = 8;
+            customtreatment.TextChanged += customtreatment_TextChanged;
             // 
             // customsave
             // 
@@ -90,6 +93,7 @@
             customsave.TabIndex = 9;
             customsave.Text = "save";
             customsave.UseVisualStyleBackColor = true;
+            customsave.Click += customsave_Click;
             // 
             // label1
             // 
@@ -102,11 +106,25 @@
             label1.Text = "Enter treatment manually";
             label1.Click += label1_Click;
             // 
+            // button5
+            // 
+            button5.BackColor = Color.Transparent;
+            button5.BackgroundImage = (Image)resources.GetObject("button5.BackgroundImage");
+            button5.BackgroundImageLayout = ImageLayout.Stretch;
+            button5.Location = new Point(12, 12);
+            button5.Name = "button5";
+            button5.Size = new Size(46, 47);
+            button5.TabIndex = 11;
+            button5.Text = "\r\n";
+            button5.UseVisualStyleBackColor = false;
+            button5.Click += button5_Click;
+            // 
             // treatment
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1116, 496);
+            Controls.Add(button5);
             Controls.Add(label1);
             Controls.Add(customsave);
             Controls.Add(customtreatment);
@@ -130,5 +148,6 @@
         private TextBox customtreatment;
         private Button customsave;
         private Label label1;
+        private Button button5;
     }
 }

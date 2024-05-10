@@ -81,6 +81,7 @@
             Name_textbox.Name = "Name_textbox";
             Name_textbox.Size = new Size(360, 27);
             Name_textbox.TabIndex = 4;
+            Name_textbox.TextChanged += Name_textbox_TextChanged;
             // 
             // textBox1
             // 

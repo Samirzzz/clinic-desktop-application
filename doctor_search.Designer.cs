@@ -54,6 +54,7 @@
             doctor_num.PlaceholderText = "enter doctor's number";
             doctor_num.Size = new Size(402, 27);
             doctor_num.TabIndex = 14;
+            doctor_num.TextChanged += doctor_num_TextChanged;
             // 
             // enterbut
             // 

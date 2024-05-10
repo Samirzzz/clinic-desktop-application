@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,7 +23,6 @@ namespace clinic_system
         public patient_search(string docnumber)
         {
             InitializeComponent();
-            db.Instance.GetConnection();
             this.docnumber = docnumber;
             this.patientnumber = docnumber;
 
@@ -33,21 +33,29 @@ namespace clinic_system
         private void enterbut_Click(object sender, EventArgs e)
         {
             string number = patient_num.Text.ToString();
-            
-            patientInstance.patient_search(number,docnumber,this);
+
+
+            patientInstance.patient_search(number, docnumber, this);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            db.Instance.CloseConnection();
             Form1 form = new Form1();
             form.Show();
             this.Hide();
         }
 
-        private void label2_Click(object sender, EventArgs e)
+
+
+        private void patient_search_Load(object sender, EventArgs e)
         {
-            label2.Text = docnumber;
+            //MySqlConnection connection = db.Instance.GetConnection();
+            //connection.Open();
+        }
+
+        private void patient_num_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
