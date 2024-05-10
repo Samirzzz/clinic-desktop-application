@@ -224,7 +224,7 @@ namespace clinic_system
                                 patient_search doc = new patient_search(docnumber);
                                 diagnose diagnosis = new diagnose(number, docnumber);
                                 treatment treat=new treatment(number, docnumber);
-                                PatientReport rep = new PatientReport(number,docnumber);
+                                //PatientReport rep = new PatientReport(number,docnumber);
                                 diagnosis.Show();
                                 hide.Hide();
                                 connection.Close();
@@ -451,12 +451,12 @@ namespace clinic_system
                     return true;
                 }
             }
-            public void adddoctor(string name, string number, string spec, List<string> workdays)
+            public void adddoctor(string name, string number, string spec, List<string> workdays,MySqlConnection connection)
             {
                 try
                 {
                     string query = "INSERT INTO doctor (name, number, spec) VALUES (@name, @number, @spec)";
-                    MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
+                    MySqlCommand mySqlCommand = new MySqlCommand(query,connection);
                     mySqlCommand.Parameters.AddWithValue("@name", name);
                     mySqlCommand.Parameters.AddWithValue("@number", number);
                     mySqlCommand.Parameters.AddWithValue("@spec", spec);
@@ -470,12 +470,12 @@ namespace clinic_system
                         foreach (string workday in workdays)
                         {
                             query = "INSERT INTO doctor_workdays (did, Wid) SELECT doctor.number, workdays.Wid FROM doctor, workdays WHERE doctor.number = @number AND workdays.Day = @workday";
-                            MySqlCommand workdayCommand = new MySqlCommand(query, db.Instance.GetConnection());
+                            MySqlCommand workdayCommand = new MySqlCommand(query, connection);
                             workdayCommand.Parameters.AddWithValue("@number", number);
                             workdayCommand.Parameters.AddWithValue("@workday", workday);
 
                             int workdayRowsAffected = workdayCommand.ExecuteNonQuery();
-
+                            connection.Close();
                             if (workdayRowsAffected <= 0)
                             {
                                 MessageBox.Show("Failed to add workday for doctor.");
@@ -936,22 +936,22 @@ namespace clinic_system
         {
             private const int MaxAppointmentsPerDay = 4;
 
-            public void bookAppointment(string doctorNumber, string patientNumber, DateTime date)
+            public void bookAppointment(string doctorNumber, string patientNumber, DateTime date,MySqlConnection connection)
             {
-                if (!DoctorWorksOnDay(doctorNumber, date.DayOfWeek.ToString()))
+                if (!DoctorWorksOnDay(doctorNumber, date.DayOfWeek.ToString(),connection))
                 {
                     MessageBox.Show("Doctor does not work on this day.");
                     return;
                 }
 
-                if (IsMaxAppointmentsReached(doctorNumber, date.Date))
+                if (IsMaxAppointmentsReached(doctorNumber, date.Date,connection))
                 {
                     MessageBox.Show("Doctor already has the maximum number of appointments for this day.");
                     return;
                 }
 
                 string query = "INSERT INTO appointment (docnumber, patnumber, date) VALUES (@doctorNumber, @patientNumber, @date)";
-                using (MySqlCommand cmd = new MySqlCommand(query, db.Instance.GetConnection()))
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
                 {
                     cmd.Parameters.AddWithValue("@doctorNumber", doctorNumber);
                     cmd.Parameters.AddWithValue("@patientNumber", patientNumber);
@@ -961,6 +961,7 @@ namespace clinic_system
                     if (rowsAffected > 0)
                     {
                         MessageBox.Show("Appointment added successfully!");
+                        connection.Close();
                     }
                     else
                     {
@@ -969,18 +970,18 @@ namespace clinic_system
                 }
             }
 
-            private bool DoctorWorksOnDay(string doctorNumber, string selectedDay)
+            private bool DoctorWorksOnDay(string doctorNumber, string selectedDay,MySqlConnection connection)
             {
-                List<string> workdays = GetDoctorWorkdays(doctorNumber);
+                List<string> workdays = GetDoctorWorkdays(doctorNumber,connection);
                 return workdays.Contains(selectedDay);
             }
 
-            private List<string> GetDoctorWorkdays(string doctorNumber)
+            private List<string> GetDoctorWorkdays(string doctorNumber,MySqlConnection connection)
             {
                 List<string> workdays = new List<string>();
 
                 string query = "SELECT Day FROM workdays WHERE Wid IN (SELECT Wid FROM doctor_workdays WHERE did = @doctorNumber)";
-                using (MySqlCommand cmd = new MySqlCommand(query, db.Instance.GetConnection()))
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
                 {
                     cmd.Parameters.AddWithValue("@doctorNumber", doctorNumber);
                     using (MySqlDataReader reader = cmd.ExecuteReader())
@@ -996,10 +997,10 @@ namespace clinic_system
                 return workdays;
             }
 
-            private bool IsMaxAppointmentsReached(string doctorNumber, DateTime date)
+            private bool IsMaxAppointmentsReached(string doctorNumber, DateTime date,MySqlConnection connection)
             {
                 string query = "SELECT COUNT(*) AS NumAppointments FROM appointment WHERE docnumber = @doctorNumber AND date = @date";
-                using (MySqlCommand cmd = new MySqlCommand(query, db.Instance.GetConnection()))
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
                 {
                     cmd.Parameters.AddWithValue("@doctorNumber", doctorNumber);
                     cmd.Parameters.AddWithValue("@date", date);

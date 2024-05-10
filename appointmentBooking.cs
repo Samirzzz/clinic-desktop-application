@@ -17,12 +17,13 @@ namespace clinic_system
     {
         DataTable dt = new DataTable();
         private Appointment appointment=new Appointment();
+        private MySqlConnection connection;
+
 
         public appointmentBooking()
         {
             InitializeComponent();
             db.Instance.GetConnection();
-            // Set up the DataTable and add it to a container control
             dt.Columns.Add("name", typeof(string));
             Doctor.viewDoctors(dt);
             foreach (DataRow row in dt.Rows)
@@ -30,6 +31,7 @@ namespace clinic_system
                 string doctorName = row["name"].ToString();
                 comboBox1.Items.Add(doctorName);
             }
+            db.Instance.CloseConnection();
 
            
 
@@ -67,7 +69,7 @@ namespace clinic_system
                 MessageBox.Show("Doctor not found.");
             }
 
-            appointment.bookAppointment(doctorNumber,textBox1.Text,datee.Value);
+            appointment.bookAppointment(doctorNumber,textBox1.Text,datee.Value,connection);
 
         }
     }
