@@ -39,6 +39,7 @@ namespace clinic_system
             rudpatientbtn = new Button();
             doctorRUD = new Button();
             button1 = new Button();
+            button2 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -169,13 +170,26 @@ namespace clinic_system
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click_1;
             // 
+            // button2
+            // 
+            button2.BackColor = Color.Turquoise;
+            button2.Font = new Font("Arial Rounded MT Bold", 13.8F);
+            button2.Location = new Point(781, 702);
+            button2.Name = "button2";
+            button2.Size = new Size(257, 62);
+            button2.TabIndex = 9;
+            button2.Text = "view-edit-delete appointments";
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BackColor = Color.White;
-            ClientSize = new Size(1069, 680);
+            ClientSize = new Size(1083, 734);
+            Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(doctorRUD);
             Controls.Add(rudpatientbtn);
@@ -209,5 +223,6 @@ namespace clinic_system
         private Button rudpatientbtn;
         private Button doctorRUD;
         private Button button1;
+        private Button button2;
     }
 }

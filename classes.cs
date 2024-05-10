@@ -935,7 +935,54 @@ namespace clinic_system
         public class Appointment
         {
             private const int MaxAppointmentsPerDay = 4;
+            public static bool deleteAppointment(int AppointID, DataTable dt)
+            {
+                try
+                {
+                    string query = "DELETE FROM appointment WHERE Appid = @Appid";
 
+                    using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
+                    {
+                        cmd.Parameters.AddWithValue("@Appid", AppointID);
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            // Remove the deleted appointment from the DataTable
+                            DataRow[] rows = dt.Select("Appid = " + AppointID);
+                            if (rows.Length > 0)
+                            {
+                                dt.Rows.Remove(rows[0]);
+                            }
+                        }
+
+                        return rowsAffected > 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                    return false;
+                }
+            }
+
+            public static void viewAppointments(DataTable dt)
+            {
+                try
+                {
+
+                    string query = "SELECT docnumber, patnumber, date,Appid FROM appointment";
+                    dt.Clear();
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, classes.db.Instance.GetConnection()))
+                    {
+                        adapter.Fill(dt);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
             public void bookAppointment(string doctorNumber, string patientNumber, DateTime date,MySqlConnection connection)
             {
                 if (!DoctorWorksOnDay(doctorNumber, date.DayOfWeek.ToString(),connection))
@@ -1011,9 +1058,8 @@ namespace clinic_system
                             int numAppointments = reader.GetInt32("NumAppointments");
                             if (numAppointments > MaxAppointmentsPerDay)
                             {
-                                return false;
+                                return true;
                             }
-                            return true;
                         }
                     }
                 }

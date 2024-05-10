@@ -83,5 +83,12 @@ namespace clinic_system
             viewp.Show();
             this.Hide();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            viewAppointments viewp = new viewAppointments();
+            viewp.Show();
+            this.Hide();
+        }
     }
 }
