@@ -34,17 +34,22 @@
             button2 = new Button();
             button3 = new Button();
             button4 = new Button();
-            dataGridView2 = new DataGridView();
+            display = new DataGridView();
             button5 = new Button();
             button6 = new Button();
+            button7 = new Button();
+            button8 = new Button();
+            button9 = new Button();
+            button10 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)display).BeginInit();
             SuspendLayout();
             // 
             // dataGridView1
             // 
             dataGridView1.AllowUserToOrderColumns = true;
             dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = SystemColors.ActiveCaption;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(78, 28);
@@ -72,7 +77,6 @@
             button2.TabIndex = 2;
             button2.Text = "Treatment";
             button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
             // 
             // button3
             // 
@@ -92,15 +96,22 @@
             button4.Text = "Medications";
             button4.UseVisualStyleBackColor = true;
             // 
-            // dataGridView2
+            // display
             // 
-            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Location = new Point(611, 151);
-            dataGridView2.Name = "dataGridView2";
-            dataGridView2.RowHeadersWidth = 51;
-            dataGridView2.Size = new Size(499, 488);
-            dataGridView2.TabIndex = 5;
-            dataGridView2.CellContentClick += dataGridView2_CellContentClick;
+            display.AllowUserToAddRows = false;
+            display.AllowUserToDeleteRows = false;
+            display.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            display.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            display.Location = new Point(611, 151);
+            display.Name = "display";
+            display.ReadOnly = true;
+            display.RowHeadersWidth = 51;
+            display.ShowCellErrors = false;
+            display.ShowCellToolTips = false;
+            display.ShowRowErrors = false;
+            display.Size = new Size(521, 510);
+            display.TabIndex = 5;
+            display.CellContentClick += dataGridView2_CellContentClick;
             // 
             // button5
             // 
@@ -124,6 +135,46 @@
             button6.UseVisualStyleBackColor = true;
             button6.Click += button6_Click;
             // 
+            // button7
+            // 
+            button7.Location = new Point(514, 151);
+            button7.Name = "button7";
+            button7.Size = new Size(91, 35);
+            button7.TabIndex = 8;
+            button7.Text = "Diagnosis";
+            button7.UseVisualStyleBackColor = true;
+            button7.Click += button7_Click;
+            // 
+            // button8
+            // 
+            button8.Location = new Point(514, 192);
+            button8.Name = "button8";
+            button8.Size = new Size(91, 33);
+            button8.TabIndex = 9;
+            button8.Text = "Treatment";
+            button8.UseVisualStyleBackColor = true;
+            button8.Click += button8_Click;
+            // 
+            // button9
+            // 
+            button9.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button9.Location = new Point(514, 231);
+            button9.Name = "button9";
+            button9.Size = new Size(91, 32);
+            button9.TabIndex = 10;
+            button9.Text = "Investigation";
+            button9.UseVisualStyleBackColor = true;
+            // 
+            // button10
+            // 
+            button10.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button10.Location = new Point(514, 269);
+            button10.Name = "button10";
+            button10.Size = new Size(91, 27);
+            button10.TabIndex = 11;
+            button10.Text = "Medications";
+            button10.UseVisualStyleBackColor = true;
+            // 
             // diagnose
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -131,9 +182,13 @@
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(1132, 661);
+            Controls.Add(button10);
+            Controls.Add(button9);
+            Controls.Add(button8);
+            Controls.Add(button7);
             Controls.Add(button6);
             Controls.Add(button5);
-            Controls.Add(dataGridView2);
+            Controls.Add(display);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(button2);
@@ -143,7 +198,7 @@
             Text = "diagnose";
             Load += diagnose_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)display).EndInit();
             ResumeLayout(false);
         }
 
@@ -154,8 +209,12 @@
         private Button button2;
         private Button button3;
         private Button button4;
-        private DataGridView dataGridView2;
+        private DataGridView display;
         private Button button5;
         private Button button6;
+        private Button button7;
+        private Button button8;
+        private Button button9;
+        private Button button10;
     }
 }

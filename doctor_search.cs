@@ -31,7 +31,6 @@ namespace clinic_system
         private void enterbut_Click(object sender, EventArgs e)
         {
             MySqlConnection connection = db.Instance.GetConnection();
-
             string number = doctor_num.Text.ToString();
             doctorInstance.doctor_search(number, this, connection);
 

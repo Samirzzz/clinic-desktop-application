@@ -74,24 +74,45 @@ namespace clinic_system
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex >= 0 && e.ColumnIndex == display.Columns["description"].Index)
+            {
+                // Get the value of the "description" cell
+                string description = display.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
 
+                // Open the mini-form to display the description
+                showdescription miniForm = new showdescription(description);
+
+                miniForm.ShowDialog();
+            }
         }
-
         private void button6_Click(object sender, EventArgs e)
         {
-            PatientReport patientReport = new PatientReport(patientnumber,docnumber);  
-          
-            patientReport.Show();   
+            PatientReport patientReport = new PatientReport(patientnumber, docnumber);
+
+            patientReport.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            MySqlConnection connection=db.Instance.GetConnection();
+            MySqlConnection connection = db.Instance.GetConnection();
             connection.Open();
             treatment miniForm = new treatment(patientnumber, docnumber);
 
             miniForm.Show();
             this.Hide();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
+
+            diagnosisInstance.display_diagnosis(patientnumber, display);
+
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            diagnosisInstance.display_treatment(patientnumber, display);
         }
     }
 }

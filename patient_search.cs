@@ -27,7 +27,6 @@ namespace clinic_system
             this.docnumber = docnumber;
             this.patientnumber = docnumber;
             connection = db.Instance.GetConnection();
-
             Messages messages = new Messages("", "");
             patientInstance = new Patient(messages);
         }
@@ -35,9 +34,11 @@ namespace clinic_system
         private void enterbut_Click(object sender, EventArgs e)
         {
             string number = patient_num.Text.ToString();
-            MySqlConnection connection = db.Instance.GetConnection();
-            connection.Open();
 
+            if (connection.State != ConnectionState.Open)
+            {
+                connection.Open();
+            }
             patientInstance.patient_search(number, docnumber, this, connection);
         }
 

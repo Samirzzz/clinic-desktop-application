@@ -227,6 +227,8 @@ namespace clinic_system
                                 PatientReport rep = new PatientReport(number,docnumber);
                                 diagnosis.Show();
                                 hide.Hide();
+                                connection.Close();
+
                             }
                             else
                             {
@@ -694,7 +696,91 @@ namespace clinic_system
                 this.description = description;
             }
 
-            public List<int> GetDiagnosesIDs(string pnumber, MySqlConnection connection)
+            public void display_diagnosis(string number, DataGridView d)
+            {
+
+                MySqlConnection connection = null;
+
+                try
+                {
+                    
+                        string query = "SELECT diagid as id,pnumber,description FROM diagnosis WHERE pnumber = @number ORDER BY diagid DESC";
+
+                        DataTable dt = new DataTable();
+                        connection = db.Instance.GetConnection();
+
+                        MySqlCommand mySqlCommand = new MySqlCommand(query, connection);
+                        mySqlCommand.Parameters.AddWithValue("@number", number);
+
+                        using (MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(mySqlCommand))
+                        {
+                            mySqlDataAdapter.Fill(dt);
+                        }
+
+
+                        BindingSource bindingSource = new BindingSource();
+                        bindingSource.DataSource = dt;
+                        d.DataSource = bindingSource;
+                }
+                
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+
+                finally
+                {
+                    if (connection != null && connection.State == ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+
+            public void display_treatment(string number, DataGridView d)
+            {
+
+                MySqlConnection connection = null;
+
+                try
+                {
+
+                    string query = "SELECT tid as id,pnumber,description FROM treatment WHERE pnumber = @number ORDER BY tid DESC";
+
+                    DataTable dt = new DataTable();
+                    connection = db.Instance.GetConnection();
+
+                    MySqlCommand mySqlCommand = new MySqlCommand(query, connection);
+                    mySqlCommand.Parameters.AddWithValue("@number", number);
+
+                    using (MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(mySqlCommand))
+                    {
+                        mySqlDataAdapter.Fill(dt);
+                    }
+
+
+                    BindingSource bindingSource = new BindingSource();
+                    bindingSource.DataSource = dt;
+                    d.DataSource = bindingSource;
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+
+                finally
+                {
+                    if (connection != null && connection.State == ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+
+                public List<int> GetDiagnosesIDs(string pnumber, MySqlConnection connection)
             {
 
 
