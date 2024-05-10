@@ -9,13 +9,14 @@ using static clinic_system.classes;
 using static clinic_system.doctor_search;
 using static clinic_system.patient_search;
 using static clinic_system.diagnose;
-using static clinic_system.treatment;
+using static clinic_system.investigation;
 
 using System.Data;
 using System.Windows.Forms;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Xml.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Numerics;
 
 
 
@@ -223,7 +224,7 @@ namespace clinic_system
 
                                 patient_search doc = new patient_search(docnumber);
                                 diagnose diagnosis = new diagnose(number, docnumber);
-                                treatment treat=new treatment(number, docnumber);
+                                investigation treat=new investigation(number, docnumber);
                                 PatientReport rep = new PatientReport(number,docnumber);
                                 diagnosis.Show();
                                 hide.Hide();
@@ -641,15 +642,129 @@ namespace clinic_system
             }
            
         }
-        
-          
 
-            
+        public class Medication
+        {
+            int iid;
+            int did;
+            int pid;
+            string description;
+
+            public Medication() { }
+
+            Messages messages;
+            public Medication(Messages messages)
+            {
+                this.messages = messages;
+            }
+
+            public int getdid()
+            {
+                return this.did;
+            }
+            public void setdid(int did)
+            {
+                this.did = did;
+            }
+            public int getpid()
+            {
+                return this.pid;
+            }
+            public void setpid(int pid)
+            {
+                this.pid = pid;
+            }
+            public string getdescription()
+            {
+                return this.description;
+            }
+            public void setdescription(string description)
+            {
+                this.description = description;
+            }
+
+            public void add_description(string pnumber, string dnumber, string description, MySqlConnection connection)
+            {
+                try
+                {
+
+                    string query = "INSERT INTO medication (pnumber, dnumber, description) VALUES (@pnumber, @dnumber, @description)";
+                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
+                    {
+                        mySqlCommand.Parameters.AddWithValue("@pnumber", pnumber);
+                        mySqlCommand.Parameters.AddWithValue("@dnumber", dnumber);
+                        mySqlCommand.Parameters.AddWithValue("@description", description);
+                        connection.Open();
+                        int rowsAffected = mySqlCommand.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Added successfully!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Failed to add.");
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+
+            }
+            public void display_investigation(string number, DataGridView d)
+            {
+                MySqlConnection connection = null;
+
+                try
+                {
+
+                    string query = "SELECT mid as id,pnumber,description FROM medication WHERE pnumber = @number ORDER BY mid DESC";
+
+                    DataTable dt = new DataTable();
+                    connection = db.Instance.GetConnection();
+
+                    MySqlCommand mySqlCommand = new MySqlCommand(query, connection);
+                    mySqlCommand.Parameters.AddWithValue("@number", number);
+
+                    using (MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(mySqlCommand))
+                    {
+                        mySqlDataAdapter.Fill(dt);
+                    }
 
 
-        
+                    BindingSource bindingSource = new BindingSource();
+                    bindingSource.DataSource = dt;
+                    d.DataSource = bindingSource;
+                }
 
-        public class Diagnosis
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+
+                finally
+                {
+                    if (connection != null && connection.State == ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+
+
+
+        }
+
+
+
+
+
+
+            public class Diagnosis
         {
             int diagid;
             int did;
@@ -780,7 +895,7 @@ namespace clinic_system
             }
 
 
-                public List<int> GetDiagnosesIDs(string pnumber, MySqlConnection connection)
+             public List<int> GetDiagnosesIDs(string pnumber, MySqlConnection connection)
             {
 
 

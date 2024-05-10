@@ -19,6 +19,8 @@ namespace clinic_system
         private string docnumber;
         private Patient patientInstance;
         private Diagnosis diagnosisInstance;
+        private Medication investigationInstance;
+
         private MySqlConnection connection;
 
 
@@ -32,7 +34,7 @@ namespace clinic_system
             patientInstance = new Patient(messages);
             diagnosisInstance = new Diagnosis(messages);
             connection = db.Instance.GetConnection();
-
+            investigationInstance = new Medication(messages);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -92,15 +94,15 @@ namespace clinic_system
             patientReport.Show();
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            MySqlConnection connection = db.Instance.GetConnection();
-            connection.Open();
-            treatment miniForm = new treatment(patientnumber, docnumber);
+        //private void button2_Click(object sender, EventArgs e)
+        //{
+        //    MySqlConnection connection = db.Instance.GetConnection();
+        //    connection.Open();
+        //    treatment miniForm = new treatment(patientnumber, docnumber);
 
-            miniForm.Show();
-            this.Hide();
-        }
+        //    miniForm.Show();
+        //    this.Hide();
+        //}
 
         private void button7_Click(object sender, EventArgs e)
         {
@@ -113,6 +115,28 @@ namespace clinic_system
         private void button8_Click(object sender, EventArgs e)
         {
             diagnosisInstance.display_treatment(patientnumber, display);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            add_medication miniForm = new add_medication(patientnumber, docnumber);
+            this.Hide();
+            miniForm.Show();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            investigationInstance.display_investigation(patientnumber, display);
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            MySqlConnection connection = db.Instance.GetConnection();
+            connection.Open();
+            investigation miniForm = new investigation(patientnumber, docnumber);
+
+            miniForm.Show();
+            this.Hide();
         }
     }
 }

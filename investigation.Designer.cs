@@ -1,6 +1,6 @@
 ﻿namespace clinic_system
 {
-    partial class treatment
+    partial class investigation
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(treatment));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(investigation));
             save = new Button();
             Diagnosis = new Label();
             comboBox1 = new ComboBox();
@@ -55,9 +55,9 @@
             Diagnosis.Font = new Font("Segoe UI Historic", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Diagnosis.Location = new Point(52, 42);
             Diagnosis.Name = "Diagnosis";
-            Diagnosis.Size = new Size(153, 38);
+            Diagnosis.Size = new Size(187, 38);
             Diagnosis.TabIndex = 3;
-            Diagnosis.Text = "Treatment";
+            Diagnosis.Text = "Investigation";
             Diagnosis.Click += Diagnosis_Click;
             // 
             // comboBox1
@@ -101,9 +101,9 @@
             label1.Font = new Font("Segoe UI", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(850, 226);
             label1.Name = "label1";
-            label1.Size = new Size(166, 17);
+            label1.Size = new Size(186, 17);
             label1.TabIndex = 10;
-            label1.Text = "Enter treatment manually";
+            label1.Text = "Enter investigation manually";
             label1.Click += label1_Click;
             // 
             // button5

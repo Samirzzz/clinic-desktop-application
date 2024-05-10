@@ -14,13 +14,13 @@ using static clinic_system.diagnose;
 
 namespace clinic_system
 {
-    public partial class treatment : Form
+    public partial class investigation : Form
     {
         private MySqlConnection connection;
         private string patientnumber;
         private string docnumber;
         private List<string> selectedTreatments = new List<string>();
-        public treatment(string patientnumber, string docnumber)
+        public investigation(string patientnumber, string docnumber)
         {
             InitializeComponent();
             this.patientnumber = patientnumber;

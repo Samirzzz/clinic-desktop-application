@@ -33,14 +33,12 @@
             button1 = new Button();
             button2 = new Button();
             button3 = new Button();
-            button4 = new Button();
             display = new DataGridView();
             button5 = new Button();
             button6 = new Button();
             button7 = new Button();
             button8 = new Button();
             button9 = new Button();
-            button10 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)display).BeginInit();
             SuspendLayout();
@@ -75,8 +73,9 @@
             button2.Name = "button2";
             button2.Size = new Size(142, 33);
             button2.TabIndex = 2;
-            button2.Text = "Treatment";
+            button2.Text = "Investigation";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click_1;
             // 
             // button3
             // 
@@ -84,17 +83,9 @@
             button3.Name = "button3";
             button3.Size = new Size(142, 32);
             button3.TabIndex = 3;
-            button3.Text = "Investigation";
+            button3.Text = "Medication";
             button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            button4.Location = new Point(12, 356);
-            button4.Name = "button4";
-            button4.Size = new Size(142, 30);
-            button4.TabIndex = 4;
-            button4.Text = "Medications";
-            button4.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // display
             // 
@@ -127,7 +118,7 @@
             // 
             // button6
             // 
-            button6.Location = new Point(12, 424);
+            button6.Location = new Point(12, 354);
             button6.Name = "button6";
             button6.Size = new Size(142, 30);
             button6.TabIndex = 7;
@@ -147,11 +138,12 @@
             // 
             // button8
             // 
+            button8.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button8.Location = new Point(514, 192);
             button8.Name = "button8";
             button8.Size = new Size(91, 33);
             button8.TabIndex = 9;
-            button8.Text = "Treatment";
+            button8.Text = "Investigation";
             button8.UseVisualStyleBackColor = true;
             button8.Click += button8_Click;
             // 
@@ -162,18 +154,9 @@
             button9.Name = "button9";
             button9.Size = new Size(91, 32);
             button9.TabIndex = 10;
-            button9.Text = "Investigation";
+            button9.Text = "Medication";
             button9.UseVisualStyleBackColor = true;
-            // 
-            // button10
-            // 
-            button10.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button10.Location = new Point(514, 269);
-            button10.Name = "button10";
-            button10.Size = new Size(91, 27);
-            button10.TabIndex = 11;
-            button10.Text = "Medications";
-            button10.UseVisualStyleBackColor = true;
+            button9.Click += button9_Click;
             // 
             // diagnose
             // 
@@ -182,14 +165,12 @@
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(1132, 661);
-            Controls.Add(button10);
             Controls.Add(button9);
             Controls.Add(button8);
             Controls.Add(button7);
             Controls.Add(button6);
             Controls.Add(button5);
             Controls.Add(display);
-            Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
@@ -208,13 +189,11 @@
         private Button button1;
         private Button button2;
         private Button button3;
-        private Button button4;
         private DataGridView display;
         private Button button5;
         private Button button6;
         private Button button7;
         private Button button8;
         private Button button9;
-        private Button button10;
     }
 }
