@@ -19,18 +19,19 @@ namespace clinic_system
         private string docnumber;
         private Patient patientInstance;
         private Diagnosis diagnosisInstance;
+        private MySqlConnection connection;
 
-      
+
 
         public diagnose(string patientnumber, string docnumber)
         {
             InitializeComponent();
-            db.Instance.GetConnection();
             this.patientnumber = patientnumber;
             this.docnumber = docnumber;
             Messages messages = new Messages("", "");
             patientInstance = new Patient(messages);
             diagnosisInstance = new Diagnosis(messages);
+            connection = db.Instance.GetConnection();
 
         }
 
@@ -43,7 +44,6 @@ namespace clinic_system
 
         private void diagnose_Load(object sender, EventArgs e)
         {
-            MySqlConnection connection = db.Instance.GetConnection();
             patientInstance.load_patient_details(patientnumber, dataGridView1);
 
         }
@@ -63,9 +63,13 @@ namespace clinic_system
 
         private void button5_Click(object sender, EventArgs e)
         {
+            if (connection != null && connection.State == ConnectionState.Open)
+            {
+                connection.Close();
+            }
             patient_search p = new patient_search(patientnumber);
             p.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)

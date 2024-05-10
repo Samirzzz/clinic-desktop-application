@@ -14,6 +14,7 @@ namespace clinic_system
 {
     public partial class patient_search : Form
     {
+        private MySqlConnection connection;
 
         private Patient patientInstance;
         private string docnumber;
@@ -25,6 +26,7 @@ namespace clinic_system
             InitializeComponent();
             this.docnumber = docnumber;
             this.patientnumber = docnumber;
+            connection = db.Instance.GetConnection();
 
             Messages messages = new Messages("", "");
             patientInstance = new Patient(messages);
@@ -33,9 +35,10 @@ namespace clinic_system
         private void enterbut_Click(object sender, EventArgs e)
         {
             string number = patient_num.Text.ToString();
+            MySqlConnection connection = db.Instance.GetConnection();
+            connection.Open();
 
-
-            patientInstance.patient_search(number, docnumber, this);
+            patientInstance.patient_search(number, docnumber, this, connection);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -56,6 +59,17 @@ namespace clinic_system
         private void patient_num_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+                        connection.Open();
+
+            this.Hide();
+            doctor_search d = new doctor_search();
+            d.ShowDialog();
+
+            this.Close();
         }
     }
 }

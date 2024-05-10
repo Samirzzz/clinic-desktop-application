@@ -16,12 +16,16 @@ namespace clinic_system
     {
 
         private Doctor doctorInstance;
+        private MySqlConnection connection;
+
         public doctor_search()
         {
             InitializeComponent();
 
             Messages messages = new Messages("", "");
             doctorInstance = new Doctor(messages);
+            connection = db.Instance.GetConnection();
+
         }
 
         private void enterbut_Click(object sender, EventArgs e)
@@ -36,9 +40,7 @@ namespace clinic_system
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form1 form = new Form1();
-            form.Show();
-            this.Hide();
+          
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -48,12 +50,19 @@ namespace clinic_system
 
         private void doctor_search_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void doctor_num_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Form1 form = new Form1();
+            form.Show();
+            this.Hide();
         }
     }
 }

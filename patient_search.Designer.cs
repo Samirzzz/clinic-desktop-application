@@ -32,7 +32,7 @@
             label1 = new Label();
             patient_num = new TextBox();
             enterbut = new Button();
-            button2 = new Button();
+            button5 = new Button();
             SuspendLayout();
             // 
             // label1
@@ -66,18 +66,18 @@
             enterbut.UseVisualStyleBackColor = true;
             enterbut.Click += enterbut_Click;
             // 
-            // button2
+            // button5
             // 
-            button2.BackColor = Color.Transparent;
-            button2.FlatStyle = FlatStyle.System;
-            button2.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.Location = new Point(59, 29);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 50);
-            button2.TabIndex = 19;
-            button2.Text = "<-";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click;
+            button5.BackColor = Color.Transparent;
+            button5.BackgroundImage = (Image)resources.GetObject("button5.BackgroundImage");
+            button5.BackgroundImageLayout = ImageLayout.Stretch;
+            button5.Location = new Point(46, 35);
+            button5.Name = "button5";
+            button5.Size = new Size(46, 47);
+            button5.TabIndex = 19;
+            button5.Text = "\r\n";
+            button5.UseVisualStyleBackColor = false;
+            button5.Click += button5_Click;
             // 
             // patient_search
             // 
@@ -86,7 +86,7 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1130, 467);
-            Controls.Add(button2);
+            Controls.Add(button5);
             Controls.Add(enterbut);
             Controls.Add(patient_num);
             Controls.Add(label1);
@@ -102,6 +102,6 @@
         private Label label1;
         private TextBox patient_num;
         private Button enterbut;
-        private Button button2;
+        private Button button5;
     }
 }

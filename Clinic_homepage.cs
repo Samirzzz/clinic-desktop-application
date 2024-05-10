@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -36,6 +37,8 @@ namespace clinic_system
 
         private void AddDoctor_Click(object sender, EventArgs e)
         {
+            MySqlConnection connection = db.Instance.GetConnection();
+            connection.Open();
             doctor_registration doctor_reg_form = new doctor_registration();
             doctor_reg_form.Show();
             this.Hide();

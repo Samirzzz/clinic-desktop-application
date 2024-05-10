@@ -204,13 +204,11 @@ namespace clinic_system
 
 
 
-            public void patient_search(string number, string docnumber, Form hide )
+            public void patient_search(string number, string docnumber, Form hide, MySqlConnection connection)
             {
                 try
                 {
-                    MySqlConnection connection = null;
                     string query = "SELECT number FROM patient WHERE number = @number";
-                    connection = db.Instance.GetConnection();
 
                     using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
                     {
@@ -509,6 +507,7 @@ namespace clinic_system
                                 patient_search patientform = new patient_search(number);
                                 patientform.Show();
                                 hide.Hide();
+                                connection.Close();
 
 
                             }
