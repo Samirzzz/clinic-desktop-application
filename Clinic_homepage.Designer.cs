@@ -38,6 +38,8 @@ namespace clinic_system
             WelcomeText = new TextBox();
             rudpatientbtn = new Button();
             doctorRUD = new Button();
+            button1 = new Button();
+            button2 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -61,9 +63,9 @@ namespace clinic_system
             AddPatient.FlatAppearance.MouseDownBackColor = Color.Black;
             AddPatient.FlatStyle = FlatStyle.Flat;
             AddPatient.Font = new Font("Arial Rounded MT Bold", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            AddPatient.Location = new Point(800, 102);
+            AddPatient.Location = new Point(781, 102);
             AddPatient.Name = "AddPatient";
-            AddPatient.Size = new Size(207, 53);
+            AddPatient.Size = new Size(257, 53);
             AddPatient.TabIndex = 1;
             AddPatient.Text = "Add Patient";
             AddPatient.UseVisualStyleBackColor = false;
@@ -76,9 +78,9 @@ namespace clinic_system
             AddDoctor.FlatAppearance.MouseDownBackColor = Color.Black;
             AddDoctor.FlatStyle = FlatStyle.Flat;
             AddDoctor.Font = new Font("Arial Rounded MT Bold", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            AddDoctor.Location = new Point(800, 371);
+            AddDoctor.Location = new Point(781, 371);
             AddDoctor.Name = "AddDoctor";
-            AddDoctor.Size = new Size(207, 53);
+            AddDoctor.Size = new Size(257, 53);
             AddDoctor.TabIndex = 2;
             AddDoctor.Text = "Add Doctor";
             AddDoctor.UseVisualStyleBackColor = false;
@@ -133,9 +135,9 @@ namespace clinic_system
             rudpatientbtn.FlatAppearance.MouseDownBackColor = Color.Black;
             rudpatientbtn.FlatStyle = FlatStyle.Flat;
             rudpatientbtn.Font = new Font("Arial Rounded MT Bold", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            rudpatientbtn.Location = new Point(789, 261);
+            rudpatientbtn.Location = new Point(781, 261);
             rudpatientbtn.Name = "rudpatientbtn";
-            rudpatientbtn.Size = new Size(238, 70);
+            rudpatientbtn.Size = new Size(257, 70);
             rudpatientbtn.TabIndex = 6;
             rudpatientbtn.Text = "view-edit-delete patients";
             rudpatientbtn.UseVisualStyleBackColor = false;
@@ -148,13 +150,37 @@ namespace clinic_system
             doctorRUD.FlatAppearance.MouseDownBackColor = Color.Black;
             doctorRUD.FlatStyle = FlatStyle.Flat;
             doctorRUD.Font = new Font("Arial Rounded MT Bold", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            doctorRUD.Location = new Point(789, 534);
+            doctorRUD.Location = new Point(781, 534);
             doctorRUD.Name = "doctorRUD";
-            doctorRUD.Size = new Size(238, 67);
+            doctorRUD.Size = new Size(257, 67);
             doctorRUD.TabIndex = 7;
             doctorRUD.Text = "view-edit-delete doctors\r\n\r\n";
             doctorRUD.UseVisualStyleBackColor = false;
             doctorRUD.Click += doctorRUD_Click;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.Turquoise;
+            button1.Font = new Font("Arial Rounded MT Bold", 13.8F);
+            button1.Location = new Point(781, 623);
+            button1.Name = "button1";
+            button1.Size = new Size(257, 56);
+            button1.TabIndex = 8;
+            button1.Text = "Book Appointment";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click_1;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.Turquoise;
+            button2.Font = new Font("Arial Rounded MT Bold", 13.8F);
+            button2.Location = new Point(781, 702);
+            button2.Name = "button2";
+            button2.Size = new Size(257, 62);
+            button2.TabIndex = 9;
+            button2.Text = "view-edit-delete appointments";
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // Form1
             // 
@@ -162,7 +188,9 @@ namespace clinic_system
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BackColor = Color.White;
-            ClientSize = new Size(1069, 680);
+            ClientSize = new Size(1083, 734);
+            Controls.Add(button2);
+            Controls.Add(button1);
             Controls.Add(doctorRUD);
             Controls.Add(rudpatientbtn);
             Controls.Add(WelcomeText);
@@ -194,5 +222,7 @@ namespace clinic_system
         private TextBox WelcomeText;
         private Button rudpatientbtn;
         private Button doctorRUD;
+        private Button button1;
+        private Button button2;
     }
 }

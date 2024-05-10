@@ -35,6 +35,7 @@
             comboBox1 = new ComboBox();
             datee = new DateTimePicker();
             button1 = new Button();
+            backbtn = new Button();
             SuspendLayout();
             // 
             // label1
@@ -101,11 +102,23 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // backbtn
+            // 
+            backbtn.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            backbtn.Location = new Point(710, 24);
+            backbtn.Name = "backbtn";
+            backbtn.Size = new Size(64, 46);
+            backbtn.TabIndex = 18;
+            backbtn.Text = "<--";
+            backbtn.UseVisualStyleBackColor = true;
+            backbtn.Click += backbtn_Click;
+            // 
             // appointmentBooking
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(backbtn);
             Controls.Add(button1);
             Controls.Add(datee);
             Controls.Add(comboBox1);
@@ -128,5 +141,6 @@
         private ComboBox comboBox1;
         private DateTimePicker datee;
         private Button button1;
+        private Button backbtn;
     }
 }

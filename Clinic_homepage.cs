@@ -76,5 +76,19 @@ namespace clinic_system
         {
 
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            appointmentBooking viewp = new appointmentBooking();
+            viewp.Show();
+            this.Hide();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            viewAppointments viewp = new viewAppointments();
+            viewp.Show();
+            this.Hide();
+        }
     }
 }

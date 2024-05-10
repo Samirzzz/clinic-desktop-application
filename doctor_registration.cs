@@ -16,10 +16,12 @@ namespace clinic_system
     {
 
         private Doctor doctorInstance;
+        private MySqlConnection connection;
+
         public doctor_registration()
         {
             InitializeComponent();
-            db.Instance.GetConnection();
+           connection= db.Instance.GetConnection();
             Messages messages = new Messages("", "");
             doctorInstance = new Doctor(messages);
         }
@@ -47,7 +49,7 @@ namespace clinic_system
 
             if (doctorInstance.validatenumber(number))
             {
-                doctorInstance.adddoctor(name, number, spec, selectedWorkdays);
+                doctorInstance.adddoctor(name, number, spec, selectedWorkdays,connection);
             }
         }
 

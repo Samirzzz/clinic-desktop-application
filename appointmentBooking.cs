@@ -16,13 +16,14 @@ namespace clinic_system
     public partial class appointmentBooking : Form
     {
         DataTable dt = new DataTable();
-        private Appointment appointment=new Appointment();
+        private Appointment appointment = new Appointment();
+        private MySqlConnection connection;
+
 
         public appointmentBooking()
         {
             InitializeComponent();
-            db.Instance.GetConnection();
-            // Set up the DataTable and add it to a container control
+            connection= db.Instance.GetConnection();
             dt.Columns.Add("name", typeof(string));
             Doctor.viewDoctors(dt);
             foreach (DataRow row in dt.Rows)
@@ -30,10 +31,6 @@ namespace clinic_system
                 string doctorName = row["name"].ToString();
                 comboBox1.Items.Add(doctorName);
             }
-
-           
-
-
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
@@ -52,7 +49,7 @@ namespace clinic_system
             string doctorNumber = null;
 
             string query = "SELECT number FROM doctor WHERE name = @name";
-            using (MySqlCommand cmd = new MySqlCommand(query, db.Instance.GetConnection()))
+            using (MySqlCommand cmd = new MySqlCommand(query, connection))
             {
                 cmd.Parameters.AddWithValue("@name", selectedDoctor);
                 doctorNumber = cmd.ExecuteScalar()?.ToString();
@@ -67,8 +64,15 @@ namespace clinic_system
                 MessageBox.Show("Doctor not found.");
             }
 
-            appointment.bookAppointment(doctorNumber,textBox1.Text,datee.Value);
+            appointment.bookAppointment(doctorNumber, textBox1.Text, datee.Value, connection);
 
+        }
+
+        private void backbtn_Click(object sender, EventArgs e)
+        {
+            Form1 form = new Form1();
+            form.Show();
+            this.Hide();
         }
     }
 }
