@@ -22,6 +22,7 @@ namespace clinic_system
         private string patientnumber;
         private string docnumber;
 
+        MySqlConnection conn = db.Instance.GetConnection();
 
 
 
@@ -29,7 +30,7 @@ namespace clinic_system
 
 
 
-        public PatientReport(string patientnumber,string docnumber)
+        public PatientReport(string patientnumber, string docnumber)
         {
             InitializeComponent();
             this.patientnumber = patientnumber;
@@ -38,10 +39,11 @@ namespace clinic_system
             patientInstance = new Patient(messages);
         }
 
+
         private void PatientReport_Load(object sender, EventArgs e)
         {
             int counter = 0;
-            using (MySqlConnection conn = db.Instance.GetConnection())
+            using (conn)
             {
                 conn.Open();
 
@@ -50,36 +52,31 @@ namespace clinic_system
                 Name_textbox.Text = found_patient.getname();
                 textBox1.Text = found_patient.getnumber();
 
-                diagnoses_ids.Clear();
-                diagnoses_ids = diagnosesInstance.GetDiagnosesIDs(found_patient.getnumber(),conn);
 
-                while (diagnoses_ids.Count > 0)
+                diagnoses_ids = diagnosesInstance.GetDiagnosesIDs(found_patient.getnumber(), conn);
+
+                foreach (int id in diagnoses_ids)
                 {
-                    comboBox1.Items.Add(diagnoses_ids[counter]);
-                    counter++;
+                    Console.WriteLine(id);
                 }
+                comboBox1.Items.Add("1");
+                textBox5.Text = diagnosesInstance.FindDescription(diagnoses_ids[1], found_patient.getnumber(), conn);
+                comboBox1.Items.AddRange(diagnoses_ids.Select(i => i.ToString()).ToArray());
 
-
-                textBox5.Text = diagnosesInstance.FindDescription(1, found_patient.getnumber(), conn);
             }
-            //Patient curr_patient = patientInstance.findbypatientnumber(curr_number);
-            //Name_textbox.Text = curr_patient.getname();
-            //textBox1.Text = curr_patient.getnumber();
-
-            //diagnoses_ids.Clear();  
-            //diagnoses_ids=diagnosesInstance.GetDiagnosesIDs(curr_patient.getnumber());
-            //int counter = 0;
-            //while( diagnoses_ids.Count > 0 )
-            //{
-            //    comboBox1.Items.Add(diagnoses_ids[counter] );
-            //    counter++;
-            //}
-
-
-            //textBox5.Text=diagnosesInstance.FindDescription(1, curr_patient.getnumber());
+               
 
         }
+       void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine(comboBox1.SelectedText);
+            using (MySqlConnection newconn = db.Instance.GetConnection())
 
+            {
+                newconn.Open();
+                textBox5.Text = diagnosesInstance.FindDescription(comboBox1.SelectedIndex, found_patient.getnumber(), conn);
+            }
+        }
         private void REPORT_Click(object sender, EventArgs e)
         {
 
@@ -122,7 +119,7 @@ namespace clinic_system
 
         private void button1_Click(object sender, EventArgs e)
         {
-//            db.Instance.CloseConnection();
+            //            db.Instance.CloseConnection();
 
         }
 
@@ -136,5 +133,7 @@ namespace clinic_system
         {
 
         }
+
+
     }
 }

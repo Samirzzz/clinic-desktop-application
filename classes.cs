@@ -906,7 +906,7 @@ namespace clinic_system
                
                         using (MySqlCommand command = new MySqlCommand(query, connection))
                         {
-                            command.Parameters.AddWithValue("@patientNumber", pnumber);
+                            command.Parameters.AddWithValue("@pnumber", pnumber);
 
                             try
                             {
