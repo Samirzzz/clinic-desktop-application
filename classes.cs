@@ -348,7 +348,57 @@ namespace clinic_system
                     return false; 
                 }
             }
+            public void addcheifcompliant(string pnumber, string complaint, MySqlConnection connection)
+            {
+                try
+                {
 
+                    string query = "UPDATE patient SET complaint = @complaint WHERE number = @pnumber";
+                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
+                    {
+                        mySqlCommand.Parameters.AddWithValue("@pnumber", pnumber);
+                        mySqlCommand.Parameters.AddWithValue("@complaint", complaint);
+                        int rowsAffected = mySqlCommand.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Added successfully!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Failed to add.");
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+
+            }
+            public void displaycheifcomplaint(string pnumber,TextBox b, MySqlConnection connection)
+            {
+                string complaint = null;
+                try
+                {
+                    string query = "SELECT complaint FROM patient WHERE number = @pnumber";
+                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
+                    {
+                        mySqlCommand.Parameters.AddWithValue("@pnumber", pnumber);
+                        object result = mySqlCommand.ExecuteScalar();
+                        if (result != null)
+                        {
+                            complaint = result.ToString();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+                b.Text = complaint;
+            }
         }
         public class Doctor
         {
@@ -591,6 +641,32 @@ namespace clinic_system
                     return false;
                 }
             }
+            public void getdocname(string docNumber, MySqlConnection connection,TextBox b)
+            {
+                string doctorName = "";
+                try
+                {
+
+                    string query = "SELECT name FROM doctor WHERE number = @docNumber";
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@docNumber", docNumber);
+                        object result = command.ExecuteScalar();
+                        if (result != null)
+                        {
+                            doctorName = result.ToString();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+             
+               b.Text = doctorName;
+
+
+            }
         }
 
         public interface Treatment
@@ -754,7 +830,71 @@ namespace clinic_system
                 }
             }
 
+            public List<int> GetmedicationIDs(string pnumber, MySqlConnection connection)
+            {
 
+
+                List<int> diagnosisIds = new List<int>();
+
+                string query = "SELECT mid FROM medication WHERE pnumber = @pnumber";
+
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@pnumber", pnumber);
+
+                    try
+                    {
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int diagnosisId = reader.GetInt32("mid");
+                                diagnosisIds.Add(diagnosisId);
+                            }
+                        }
+                    }
+                    catch (MySqlException ex)
+                    {
+
+                        Console.WriteLine("Error: " + ex.Message);
+                    }
+
+                }
+
+
+                return diagnosisIds;
+
+
+
+            }
+            public string Findmedicationdecription(int Diagnoses_id, string Patient_Number, MySqlConnection conn)
+            {
+                string query = "SELECT description FROM medication WHERE mid = @Diagnoses_id AND pnumber = @Patient_Number";
+
+                using (MySqlCommand mySqlCommand = new MySqlCommand(query, conn))
+                {
+                    mySqlCommand.Parameters.AddWithValue("@Diagnoses_id", Diagnoses_id);
+                    mySqlCommand.Parameters.AddWithValue("@Patient_Number", Patient_Number);
+
+                    string curr_description = null;
+
+                    using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            curr_description = reader.GetString("description");
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Diagnosis with ID {Diagnoses_id} not found.");
+                        }
+                    }
+
+                    return curr_description;
+                }
+            }
 
 
         }
@@ -894,8 +1034,73 @@ namespace clinic_system
                 }
             }
 
+            public List<int> GetinvestigationIDs(string pnumber, MySqlConnection connection)
+            {
 
-             public List<int> GetDiagnosesIDs(string pnumber, MySqlConnection connection)
+
+                List<int> diagnosisIds = new List<int>();
+
+                string query = "SELECT tid FROM treatment WHERE pnumber = @pnumber";
+
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@pnumber", pnumber);
+
+                    try
+                    {
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int diagnosisId = reader.GetInt32("tid");
+                                diagnosisIds.Add(diagnosisId);
+                            }
+                        }
+                    }
+                    catch (MySqlException ex)
+                    {
+
+                        Console.WriteLine("Error: " + ex.Message);
+                    }
+
+                }
+
+
+                return diagnosisIds;
+
+
+
+            }
+            public string Findtreatmentdecription(int Diagnoses_id, string Patient_Number, MySqlConnection conn)
+            {
+                string query = "SELECT description FROM treatment WHERE tid = @Diagnoses_id AND pnumber = @Patient_Number";
+
+                using (MySqlCommand mySqlCommand = new MySqlCommand(query, conn))
+                {
+                    mySqlCommand.Parameters.AddWithValue("@Diagnoses_id", Diagnoses_id);
+                    mySqlCommand.Parameters.AddWithValue("@Patient_Number", Patient_Number);
+
+                    string curr_description = null;
+
+                    using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            curr_description = reader.GetString("description");
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Diagnosis with ID {Diagnoses_id} not found.");
+                        }
+                    }
+
+                    return curr_description;
+                }
+            }
+
+            public List<int> GetDiagnosesIDs(string pnumber, MySqlConnection connection)
             {
 
 

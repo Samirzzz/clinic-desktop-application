@@ -39,6 +39,7 @@
             button7 = new Button();
             button8 = new Button();
             button9 = new Button();
+            button4 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)display).BeginInit();
             SuspendLayout();
@@ -59,7 +60,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(12, 160);
+            button1.Location = new Point(12, 215);
             button1.Name = "button1";
             button1.Size = new Size(142, 35);
             button1.TabIndex = 1;
@@ -69,7 +70,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(12, 223);
+            button2.Location = new Point(13, 279);
             button2.Name = "button2";
             button2.Size = new Size(142, 33);
             button2.TabIndex = 2;
@@ -79,7 +80,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(12, 287);
+            button3.Location = new Point(12, 345);
             button3.Name = "button3";
             button3.Size = new Size(142, 32);
             button3.TabIndex = 3;
@@ -118,7 +119,7 @@
             // 
             // button6
             // 
-            button6.Location = new Point(12, 354);
+            button6.Location = new Point(12, 409);
             button6.Name = "button6";
             button6.Size = new Size(142, 30);
             button6.TabIndex = 7;
@@ -158,6 +159,16 @@
             button9.UseVisualStyleBackColor = true;
             button9.Click += button9_Click;
             // 
+            // button4
+            // 
+            button4.Location = new Point(13, 151);
+            button4.Name = "button4";
+            button4.Size = new Size(142, 35);
+            button4.TabIndex = 11;
+            button4.Text = "Cheif Complaint";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
             // diagnose
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -165,6 +176,7 @@
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(1132, 661);
+            Controls.Add(button4);
             Controls.Add(button9);
             Controls.Add(button8);
             Controls.Add(button7);
@@ -195,5 +207,6 @@
         private Button button7;
         private Button button8;
         private Button button9;
+        private Button button4;
     }
 }

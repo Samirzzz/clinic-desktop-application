@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PatientReport));
             label2 = new Label();
             Name_textbox = new TextBox();
             textBox1 = new TextBox();
@@ -40,7 +40,6 @@
             label5 = new Label();
             label6 = new Label();
             textBox3 = new TextBox();
-            textBox4 = new TextBox();
             label7 = new Label();
             label8 = new Label();
             textBox5 = new TextBox();
@@ -50,19 +49,21 @@
             textBox6 = new TextBox();
             comboBox1 = new ComboBox();
             label12 = new Label();
+            button5 = new Button();
+            header = new Panel();
+            controlbox = new Panel();
+            close = new Button();
+            label13 = new Label();
+            comboBox2 = new ComboBox();
+            textBox4 = new TextBox();
+            comboBox3 = new ComboBox();
+            label14 = new Label();
+            printDocument1 = new System.Drawing.Printing.PrintDocument();
+            printPreviewDialog1 = new PrintPreviewDialog();
+            print = new Button();
+            header.SuspendLayout();
+            controlbox.SuspendLayout();
             SuspendLayout();
-            // 
-            // button1
-            // 
-            button1.BackColor = Color.Transparent;
-            button1.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.Location = new Point(0, -2);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 56);
-            button1.TabIndex = 0;
-            button1.Text = "<--";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
             // 
             // label2
             // 
@@ -139,6 +140,7 @@
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(484, 184);
             textBox2.TabIndex = 10;
+            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // label5
             // 
@@ -153,7 +155,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Arial Rounded MT Bold", 12F, FontStyle.Underline, GraphicsUnit.Point, 0);
-            label6.Location = new Point(72, 468);
+            label6.Location = new Point(44, 458);
             label6.Name = "label6";
             label6.Size = new Size(141, 23);
             label6.TabIndex = 12;
@@ -162,22 +164,16 @@
             // 
             // textBox3
             // 
-            textBox3.Location = new Point(72, 505);
+            textBox3.Location = new Point(180, 505);
+            textBox3.Multiline = true;
             textBox3.Name = "textBox3";
-            textBox3.Size = new Size(570, 27);
+            textBox3.Size = new Size(484, 128);
             textBox3.TabIndex = 13;
-            // 
-            // textBox4
-            // 
-            textBox4.Location = new Point(72, 544);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(570, 27);
-            textBox4.TabIndex = 14;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(29, 574);
+            label7.Location = new Point(29, 628);
             label7.Name = "label7";
             label7.Size = new Size(675, 20);
             label7.TabIndex = 15;
@@ -187,7 +183,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Arial Rounded MT Bold", 12F, FontStyle.Underline, GraphicsUnit.Point, 0);
-            label8.Location = new Point(55, 594);
+            label8.Location = new Point(55, 659);
             label8.Name = "label8";
             label8.Size = new Size(119, 23);
             label8.TabIndex = 16;
@@ -195,37 +191,39 @@
             // 
             // textBox5
             // 
-            textBox5.Location = new Point(180, 631);
+            textBox5.Location = new Point(180, 696);
             textBox5.Multiline = true;
             textBox5.Name = "textBox5";
-            textBox5.Size = new Size(484, 184);
+            textBox5.ScrollBars = ScrollBars.Vertical;
+            textBox5.Size = new Size(484, 88);
             textBox5.TabIndex = 17;
             textBox5.TextChanged += textBox5_TextChanged;
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(12, 829);
+            label9.Location = new Point(12, 787);
             label9.Name = "label9";
             label9.Size = new Size(675, 20);
             label9.TabIndex = 18;
             label9.Text = "_______________________________________________________________________________________________________________";
+            label9.Click += label9_Click;
             // 
             // label10
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Arial Rounded MT Bold", 12F, FontStyle.Underline, GraphicsUnit.Point, 0);
-            label10.Location = new Point(62, 851);
+            label10.Location = new Point(40, 807);
             label10.Name = "label10";
-            label10.Size = new Size(123, 23);
+            label10.Size = new Size(134, 23);
             label10.TabIndex = 19;
-            label10.Text = "Medication:";
+            label10.Text = "Medications:";
             // 
             // label11
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Arial Rounded MT Bold", 12F, FontStyle.Underline, GraphicsUnit.Point, 0);
-            label11.Location = new Point(29, 892);
+            label11.Location = new Point(40, 914);
             label11.Name = "label11";
             label11.Size = new Size(145, 23);
             label11.TabIndex = 20;
@@ -234,15 +232,16 @@
             // 
             // textBox6
             // 
-            textBox6.Location = new Point(180, 892);
+            textBox6.Location = new Point(180, 843);
+            textBox6.Multiline = true;
             textBox6.Name = "textBox6";
-            textBox6.Size = new Size(298, 27);
+            textBox6.Size = new Size(484, 56);
             textBox6.TabIndex = 21;
             // 
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(72, 631);
+            comboBox1.Location = new Point(72, 696);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(85, 28);
             comboBox1.TabIndex = 22;
@@ -252,17 +251,142 @@
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Arial Rounded MT Bold", 12F, FontStyle.Underline, GraphicsUnit.Point, 0);
-            label12.Location = new Point(29, 636);
+            label12.Location = new Point(29, 696);
             label12.Name = "label12";
             label12.Size = new Size(37, 23);
             label12.TabIndex = 23;
             label12.Text = "ID:";
             // 
+            // button5
+            // 
+            button5.BackgroundImage = (Image)resources.GetObject("button5.BackgroundImage");
+            button5.BackgroundImageLayout = ImageLayout.Stretch;
+            button5.Location = new Point(0, 0);
+            button5.Name = "button5";
+            button5.Size = new Size(46, 47);
+            button5.TabIndex = 24;
+            button5.Text = "\r\n";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+            // 
+            // header
+            // 
+            header.AutoScroll = true;
+            header.BackColor = SystemColors.ActiveCaption;
+            header.Controls.Add(controlbox);
+            header.Controls.Add(button5);
+            header.Location = new Point(0, -4);
+            header.Name = "header";
+            header.Size = new Size(761, 46);
+            header.TabIndex = 25;
+            header.Paint += header_Paint;
+            // 
+            // controlbox
+            // 
+            controlbox.BackColor = SystemColors.ActiveCaption;
+            controlbox.Controls.Add(close);
+            controlbox.Dock = DockStyle.Right;
+            controlbox.Location = new Point(662, 0);
+            controlbox.Name = "controlbox";
+            controlbox.Size = new Size(78, 47);
+            controlbox.TabIndex = 25;
+            // 
+            // close
+            // 
+            close.BackColor = SystemColors.ActiveBorder;
+            close.BackgroundImage = (Image)resources.GetObject("close.BackgroundImage");
+            close.BackgroundImageLayout = ImageLayout.Stretch;
+            close.Location = new Point(22, 7);
+            close.Name = "close";
+            close.Size = new Size(38, 33);
+            close.TabIndex = 0;
+            close.UseVisualStyleBackColor = false;
+            close.Click += close_Click;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Arial Rounded MT Bold", 12F, FontStyle.Underline, GraphicsUnit.Point, 0);
+            label13.Location = new Point(29, 505);
+            label13.Name = "label13";
+            label13.Size = new Size(37, 23);
+            label13.TabIndex = 26;
+            label13.Text = "ID:";
+            // 
+            // comboBox2
+            // 
+            comboBox2.FormattingEnabled = true;
+            comboBox2.Location = new Point(72, 505);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new Size(85, 28);
+            comboBox2.TabIndex = 27;
+            comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
+            // 
+            // textBox4
+            // 
+            textBox4.Location = new Point(191, 914);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new Size(227, 27);
+            textBox4.TabIndex = 29;
+            textBox4.TextChanged += textBox4_TextChanged;
+            // 
+            // comboBox3
+            // 
+            comboBox3.FormattingEnabled = true;
+            comboBox3.Location = new Point(72, 843);
+            comboBox3.Name = "comboBox3";
+            comboBox3.Size = new Size(85, 28);
+            comboBox3.TabIndex = 30;
+            comboBox3.SelectedIndexChanged += comboBox3_SelectedIndexChanged;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Arial Rounded MT Bold", 12F, FontStyle.Underline, GraphicsUnit.Point, 0);
+            label14.Location = new Point(29, 843);
+            label14.Name = "label14";
+            label14.Size = new Size(37, 23);
+            label14.TabIndex = 31;
+            label14.Text = "ID:";
+            // 
+            // printDocument1
+            // 
+            printDocument1.PrintPage += printDocument1_PrintPage;
+            // 
+            // printPreviewDialog1
+            // 
+            printPreviewDialog1.AutoScrollMargin = new Size(0, 0);
+            printPreviewDialog1.AutoScrollMinSize = new Size(0, 0);
+            printPreviewDialog1.ClientSize = new Size(400, 300);
+            printPreviewDialog1.Document = printDocument1;
+            printPreviewDialog1.Enabled = true;
+            printPreviewDialog1.Icon = (Icon)resources.GetObject("printPreviewDialog1.Icon");
+            printPreviewDialog1.Name = "printPreviewDialog1";
+            printPreviewDialog1.Visible = false;
+            // 
+            // print
+            // 
+            print.Location = new Point(582, 913);
+            print.Name = "print";
+            print.Size = new Size(94, 29);
+            print.TabIndex = 32;
+            print.Text = "print";
+            print.UseVisualStyleBackColor = true;
+            print.Click += print_Click;
+            // 
             // PatientReport
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
             ClientSize = new Size(728, 960);
+            Controls.Add(print);
+            Controls.Add(label14);
+            Controls.Add(comboBox3);
+            Controls.Add(textBox4);
+            Controls.Add(comboBox2);
+            Controls.Add(label13);
+            Controls.Add(header);
             Controls.Add(label12);
             Controls.Add(comboBox1);
             Controls.Add(textBox6);
@@ -272,7 +396,6 @@
             Controls.Add(textBox5);
             Controls.Add(label8);
             Controls.Add(label7);
-            Controls.Add(textBox4);
             Controls.Add(textBox3);
             Controls.Add(label6);
             Controls.Add(label5);
@@ -284,17 +407,19 @@
             Controls.Add(label1);
             Controls.Add(Name_textbox);
             Controls.Add(label2);
-            Controls.Add(button1);
+            FormBorderStyle = FormBorderStyle.None;
+            MinimizeBox = false;
             Name = "PatientReport";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "PatientReport";
             Load += PatientReport_Load;
+            header.ResumeLayout(false);
+            controlbox.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private Button button1;
         private Label label2;
         private TextBox Name_textbox;
         private TextBox textBox1;
@@ -306,7 +431,6 @@
         private Label label5;
         private Label label6;
         private TextBox textBox3;
-        private TextBox textBox4;
         private Label label7;
         private Label label8;
         private TextBox textBox5;
@@ -316,5 +440,17 @@
         private TextBox textBox6;
         private ComboBox comboBox1;
         private Label label12;
+        private Button button5;
+        private Panel header;
+        private Panel controlbox;
+        private Button close;
+        private Label label13;
+        private ComboBox comboBox2;
+        private TextBox textBox4;
+        private ComboBox comboBox3;
+        private Label label14;
+        private System.Drawing.Printing.PrintDocument printDocument1;
+        private PrintPreviewDialog printPreviewDialog1;
+        private Button print;
     }
 }

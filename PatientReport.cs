@@ -15,14 +15,23 @@ namespace clinic_system
     public partial class PatientReport : Form
     {
         public List<int> diagnoses_ids = new List<int>();
+        public List<int> investigation_ids = new List<int>();
+        public List<int> medication_ids = new List<int>();
+
+
         Patient found_patient = new Patient();
         private Patient patientInstance;
+        private Doctor drInstance;
+
+        private MySqlConnection connection;
 
         private Diagnosis diagnosesInstance = new Diagnosis();
+        private Medication medicationInstance;
+
+
         private string patientnumber;
         private string docnumber;
 
-        MySqlConnection conn = db.Instance.GetConnection();
 
 
 
@@ -37,45 +46,49 @@ namespace clinic_system
             this.docnumber = docnumber;
             Messages messages = new Messages("", "");
             patientInstance = new Patient(messages);
+            drInstance = new Doctor(messages);
+
+            connection = db.Instance.GetConnection();
+            medicationInstance = new Medication(messages);
         }
 
 
         private void PatientReport_Load(object sender, EventArgs e)
         {
             int counter = 0;
-            using (conn)
+            patientInstance.displaycheifcomplaint(patientnumber, textBox2, connection);
+
+            drInstance.getdocname(docnumber, connection,textBox4);
+            found_patient = patientInstance.FindByPatientNumber(patientnumber, connection);
+            Name_textbox.Text = found_patient.getname();
+            textBox1.Text = found_patient.getnumber();
+
+
+            diagnoses_ids = diagnosesInstance.GetDiagnosesIDs(found_patient.getnumber(), connection);
+            investigation_ids = diagnosesInstance.GetinvestigationIDs(found_patient.getnumber(), connection);
+            medication_ids = medicationInstance.GetmedicationIDs(found_patient.getnumber(), connection);
+            foreach (int id in diagnoses_ids)
             {
-                conn.Open();
-
-                // Call functions with the same database connection
-                found_patient = patientInstance.FindByPatientNumber(patientnumber, conn);
-                Name_textbox.Text = found_patient.getname();
-                textBox1.Text = found_patient.getnumber();
-
-
-                diagnoses_ids = diagnosesInstance.GetDiagnosesIDs(found_patient.getnumber(), conn);
-
-                foreach (int id in diagnoses_ids)
-                {
-                    Console.WriteLine(id);
-                }
-                comboBox1.Items.Add("1");
-                textBox5.Text = diagnosesInstance.FindDescription(diagnoses_ids[1], found_patient.getnumber(), conn);
-                comboBox1.Items.AddRange(diagnoses_ids.Select(i => i.ToString()).ToArray());
-
+                Console.WriteLine(id);
             }
-               
+            comboBox1.Items.Add("choose");
+            comboBox1.Items.AddRange(diagnoses_ids.Select(i => i.ToString()).ToArray());
+            comboBox2.Items.Add("choose");
+            comboBox2.Items.AddRange(investigation_ids.Select(i => i.ToString()).ToArray());
+            comboBox3.Items.Add("choose");
+            comboBox3.Items.AddRange(medication_ids.Select(i => i.ToString()).ToArray());
+
+
 
         }
-       void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Console.WriteLine(comboBox1.SelectedText);
-            using (MySqlConnection newconn = db.Instance.GetConnection())
-
+            if (comboBox1.SelectedIndex > 0)
             {
-                newconn.Open();
-                textBox5.Text = diagnosesInstance.FindDescription(comboBox1.SelectedIndex, found_patient.getnumber(), conn);
+                int selectedDiagnosisId = int.Parse(comboBox1.SelectedItem.ToString());
+                textBox5.Text = diagnosesInstance.FindDescription(selectedDiagnosisId, found_patient.getnumber(), connection);
             }
+
         }
         private void REPORT_Click(object sender, EventArgs e)
         {
@@ -119,7 +132,7 @@ namespace clinic_system
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //            db.Instance.CloseConnection();
+            //            db.Instance.Closeconnectionection();
 
         }
 
@@ -134,6 +147,105 @@ namespace clinic_system
 
         }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (connection != null && connection.State == ConnectionState.Open)
+            {
+                connection.Close();
+            }
+            diagnose p = new diagnose(patientnumber, docnumber);
+            this.Hide();
 
+        }
+
+        private void close_Click(object sender, EventArgs e)
+        {
+            if (connection != null && connection.State == ConnectionState.Open)
+            {
+                connection.Close();
+            }
+            this.Close();
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void header_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox2.SelectedIndex > 0)
+            {
+                int selectedDiagnosisId = int.Parse(comboBox2.SelectedItem.ToString());
+                textBox3.Text = diagnosesInstance.Findtreatmentdecription(selectedDiagnosisId, found_patient.getnumber(), connection);
+            }
+        }
+
+
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox3.SelectedIndex > 0)
+            {
+                int selectedDiagnosisId = int.Parse(comboBox3.SelectedItem.ToString());
+                textBox6.Text = medicationInstance.Findmedicationdecription(selectedDiagnosisId, found_patient.getnumber(), connection);
+            }
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            e.Graphics.DrawString("Patient Details:", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new PointF(100, 100));
+            e.Graphics.DrawString("Name:  ", new Font("Arial", 10, FontStyle.Bold), Brushes.Black, new PointF(100, 120));
+            e.Graphics.DrawString(Name_textbox.Text, new Font("Arial", 10), Brushes.Black, new PointF(145, 120));
+
+            e.Graphics.DrawString("Patient Number:  ", new Font("Arial", 10, FontStyle.Bold), Brushes.Black, new PointF(100, 140));
+            e.Graphics.DrawString(textBox1.Text, new Font("Arial", 10), Brushes.Black, new PointF(205, 140));
+
+            e.Graphics.DrawString("Chief Complaint:", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new PointF(100, 180));
+            e.Graphics.DrawString(textBox2.Text, new Font("Arial", 10), Brushes.Black, new RectangleF(100, 200, 500, 50));
+
+            e.Graphics.DrawString("Diagnosis Description:", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new PointF(100, 280));
+            e.Graphics.DrawString(textBox5.Text, new Font("Arial", 10), Brushes.Black, new RectangleF(100, 300, 500, 50));
+
+            e.Graphics.DrawString("Investigation:", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new PointF(100, 380));
+            e.Graphics.DrawString(textBox3.Text, new Font("Arial", 10), Brushes.Black, new RectangleF(100, 400, 500, 50));
+
+            e.Graphics.DrawString("Medications:", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new PointF(100, 480));
+            e.Graphics.DrawString(textBox6.Text, new Font("Arial", 10), Brushes.Black, new RectangleF(100, 500, 500, 50));
+
+
+            e.Graphics.DrawString("Doctor Name: ", new Font("Arial", 10, FontStyle.Bold), Brushes.Black, new PointF(100, 600));
+            e.Graphics.DrawString(textBox4.Text, new Font("Arial", 10), Brushes.Black, new PointF(200, 600));
+            DateTime currentDate = DateTime.Now;
+
+            string formattedDateTime = currentDate.ToString("MM/dd/yyyy HH:mm");
+            e.Graphics.DrawString("Print Date/Time: ", new Font("Arial", 10, FontStyle.Bold), Brushes.Black, new PointF(100, 620));
+            e.Graphics.DrawString(formattedDateTime, new Font("Arial", 10), Brushes.Black, new PointF(220, 620));
+        }
+        Bitmap b;
+        private void print_Click(object sender, EventArgs e)
+        {
+            Graphics g = this.CreateGraphics();
+            b = new Bitmap(this.Size.Width, this.Size.Height, g);
+            Graphics mg = Graphics.FromImage(b);
+            mg.CopyFromScreen(this.Location.X, this.Location.Y, 0, 0, this.Size);
+            printPreviewDialog1.ClientSize = new Size(1000, 900);
+            printPreviewDialog1.ShowDialog();
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

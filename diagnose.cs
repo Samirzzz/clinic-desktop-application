@@ -78,10 +78,8 @@ namespace clinic_system
         {
             if (e.RowIndex >= 0 && e.ColumnIndex == display.Columns["description"].Index)
             {
-                // Get the value of the "description" cell
                 string description = display.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
 
-                // Open the mini-form to display the description
                 showdescription miniForm = new showdescription(description);
 
                 miniForm.ShowDialog();
@@ -89,6 +87,7 @@ namespace clinic_system
         }
         private void button6_Click(object sender, EventArgs e)
         {
+            connection.Open();
             PatientReport patientReport = new PatientReport(patientnumber, docnumber);
 
             patientReport.Show();
@@ -134,6 +133,16 @@ namespace clinic_system
             MySqlConnection connection = db.Instance.GetConnection();
             connection.Open();
             investigation miniForm = new investigation(patientnumber, docnumber);
+
+            miniForm.Show();
+            this.Hide();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            MySqlConnection connection = db.Instance.GetConnection();
+            connection.Open();
+            complaint miniForm = new complaint(patientnumber,docnumber);
 
             miniForm.Show();
             this.Hide();
