@@ -57,7 +57,7 @@ namespace clinic_system
             if (dataGridView1.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a row to delete.");
-                return; // Exit the method
+                return; 
             }
 
             int AppointId = int.Parse(appointbox.Text);

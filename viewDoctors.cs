@@ -9,15 +9,17 @@ namespace clinic_system
     public partial class viewDoctors : Form
     {
         DataTable dt = new DataTable();
-
+        private Appointment appointment = new Appointment();
+        private MySqlConnection connection;
         public viewDoctors()
         {
             InitializeComponent();
-            db.Instance.GetConnection();
+            connection=db.Instance.GetConnection();
             // Set up the DataTable and add it to a container control
             dt.Columns.Add("name", typeof(string));
-            dt.Columns.Add("number", typeof(string)); // Primary key
+            dt.Columns.Add("number", typeof(string)); 
             dt.Columns.Add("spec", typeof(string));
+            dt.Columns.Add("doctor workdays", typeof(string));
             dataGridView1.DataSource = dt;
             dataGridView1.CellClick += dataGridView1_CellClick;
             dataGridView1.Columns["number"].ReadOnly = true;
@@ -36,11 +38,18 @@ namespace clinic_system
             string doctorNumber = numbox.Text;
             string newName = namebox.Text;
             string newSpec = specbox.Text;
+            List<string> Workdays = new List<string>();
+
+            foreach (var item in checkedListBox1.CheckedItems)
+            {
+                Workdays.Add(item.ToString());
+            }
 
             try
             {
                 Doctor doc = new Doctor();
                 doc.updateDoctor(newName, doctorNumber, newSpec, dt);
+                doc.updateDoctorWorkingDays(doctorNumber, Workdays, connection);
                 MessageBox.Show("Edit has been saved.");
             }
             catch (Exception ex)
@@ -102,6 +111,16 @@ namespace clinic_system
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void viewDoctors_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void speclbl_Click(object sender, EventArgs e)
         {
 
         }

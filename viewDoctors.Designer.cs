@@ -39,6 +39,8 @@
             speclbl = new Label();
             specbox = new TextBox();
             backbtn = new Button();
+            checkedListBox1 = new CheckedListBox();
+            label5 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -82,7 +84,7 @@
             namelbl.AutoSize = true;
             namelbl.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             namelbl.ForeColor = Color.DarkOrange;
-            namelbl.Location = new Point(-1, 231);
+            namelbl.Location = new Point(1, 163);
             namelbl.MinimumSize = new Size(50, 30);
             namelbl.Name = "namelbl";
             namelbl.Size = new Size(92, 31);
@@ -94,7 +96,7 @@
             numlbl.AutoSize = true;
             numlbl.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             numlbl.ForeColor = Color.DarkOrange;
-            numlbl.Location = new Point(-1, 69);
+            numlbl.Location = new Point(1, 24);
             numlbl.MinimumSize = new Size(50, 30);
             numlbl.Name = "numlbl";
             numlbl.Size = new Size(75, 31);
@@ -104,7 +106,7 @@
             // namebox
             // 
             namebox.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            namebox.Location = new Point(-1, 266);
+            namebox.Location = new Point(1, 198);
             namebox.Multiline = true;
             namebox.Name = "namebox";
             namebox.Size = new Size(218, 41);
@@ -113,7 +115,7 @@
             // numbox
             // 
             numbox.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numbox.Location = new Point(-1, 103);
+            numbox.Location = new Point(1, 58);
             numbox.Multiline = true;
             numbox.Name = "numbox";
             numbox.Size = new Size(218, 41);
@@ -124,17 +126,18 @@
             speclbl.AutoSize = true;
             speclbl.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             speclbl.ForeColor = Color.DarkOrange;
-            speclbl.Location = new Point(-1, 399);
+            speclbl.Location = new Point(1, 299);
             speclbl.MinimumSize = new Size(50, 30);
             speclbl.Name = "speclbl";
             speclbl.Size = new Size(166, 31);
             speclbl.TabIndex = 9;
             speclbl.Text = "Specialization :";
+            speclbl.Click += speclbl_Click;
             // 
             // specbox
             // 
             specbox.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            specbox.Location = new Point(-1, 433);
+            specbox.Location = new Point(1, 333);
             specbox.Multiline = true;
             specbox.Name = "specbox";
             specbox.Size = new Size(218, 41);
@@ -151,12 +154,36 @@
             backbtn.UseVisualStyleBackColor = true;
             backbtn.Click += backbtn_Click;
             // 
+            // checkedListBox1
+            // 
+            checkedListBox1.BackColor = SystemColors.Control;
+            checkedListBox1.FormattingEnabled = true;
+            checkedListBox1.Items.AddRange(new object[] { "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday" });
+            checkedListBox1.Location = new Point(12, 455);
+            checkedListBox1.Name = "checkedListBox1";
+            checkedListBox1.Size = new Size(137, 136);
+            checkedListBox1.TabIndex = 26;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.BackColor = SystemColors.Control;
+            label5.Font = new Font("Segoe UI", 13.8F);
+            label5.ForeColor = Color.DarkOrange;
+            label5.Location = new Point(1, 411);
+            label5.Name = "label5";
+            label5.Size = new Size(205, 31);
+            label5.TabIndex = 25;
+            label5.Text = "Doctor Workdays : ";
+            // 
             // viewDoctors
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(1099, 594);
+            Controls.Add(checkedListBox1);
+            Controls.Add(label5);
             Controls.Add(backbtn);
             Controls.Add(specbox);
             Controls.Add(speclbl);
@@ -169,6 +196,7 @@
             Controls.Add(dataGridView1);
             Name = "viewDoctors";
             Text = "View Doctors";
+            Load += viewDoctors_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -187,5 +215,7 @@
         private Label speclbl;
         private TextBox specbox;
         private Button backbtn;
+        private CheckedListBox checkedListBox1;
+        private Label label5;
     }
 }

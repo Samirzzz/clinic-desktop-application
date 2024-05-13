@@ -612,6 +612,36 @@ namespace clinic_system
                     rows[0]["spec"] = newSpec;
                 }
             }
+            public void updateDoctorWorkingDays(string doctorNumber, List<string> workdays, MySqlConnection connection)
+            {
+                try
+                {
+                    string deleteQuery = "DELETE FROM doctor_workdays WHERE did = @doctorNumber";
+                    using (MySqlCommand cmd = new MySqlCommand(deleteQuery, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@doctorNumber", doctorNumber);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    foreach (string workday in workdays)
+                    {
+                        string insertQuery = "INSERT INTO doctor_workdays (did, Wid) SELECT doctor.number, workdays.Wid FROM doctor, workdays WHERE doctor.number = @doctorNumber AND workdays.Day = @workday";
+                        using (MySqlCommand insertCmd = new MySqlCommand(insertQuery, connection))
+                        {
+                            insertCmd.Parameters.AddWithValue("@doctorNumber", doctorNumber);
+                            insertCmd.Parameters.AddWithValue("@workday", workday);
+                            insertCmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    MessageBox.Show("Working days updated successfully!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error updating working days: " + ex.Message);
+                }
+            }
+
             public static void viewDoctors(DataTable dt)
             {
                 try
