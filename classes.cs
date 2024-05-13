@@ -225,7 +225,7 @@ namespace clinic_system
                                 patient_search doc = new patient_search(docnumber);
                                 diagnose diagnosis = new diagnose(number, docnumber);
                                 investigation treat=new investigation(number, docnumber);
-                                PatientReport rep = new PatientReport(number,docnumber);
+                                //PatientReport rep = new PatientReport(number,docnumber);
                                 diagnosis.Show();
                                 hide.Hide();
                                 connection.Close();
@@ -479,6 +479,22 @@ namespace clinic_system
                     return false;
                 }
             }
+            public bool validatePassword(string password,string cpassword)
+            {
+                if(password == null || password.Length < 5)
+                {
+                    MessageBox.Show("Password length is should be more than 5 ");
+
+                    return false;
+                }
+                else if(password!=cpassword)
+                {
+                    MessageBox.Show("Passwords dont match");
+                    return false;
+                }
+                setpassword(password);
+                return true;
+            }
             public bool validatenumber(string number)
             {
 
@@ -502,15 +518,17 @@ namespace clinic_system
                     return true;
                 }
             }
-            public void adddoctor(string name, string number, string spec, List<string> workdays,MySqlConnection connection)
+            public void adddoctor(string name, string number, string spec, List<string> workdays,MySqlConnection connection,string password)
             {
                 try
                 {
-                    string query = "INSERT INTO doctor (name, number, spec) VALUES (@name, @number, @spec)";
+                    string query = "INSERT INTO doctor (name, number, spec,password) VALUES (@name, @number, @spec,@password)";
                     MySqlCommand mySqlCommand = new MySqlCommand(query,connection);
                     mySqlCommand.Parameters.AddWithValue("@name", name);
                     mySqlCommand.Parameters.AddWithValue("@number", number);
                     mySqlCommand.Parameters.AddWithValue("@spec", spec);
+                    mySqlCommand.Parameters.AddWithValue("@password", password);
+
 
                     int rowsAffected = mySqlCommand.ExecuteNonQuery();
 
@@ -526,7 +544,7 @@ namespace clinic_system
                             workdayCommand.Parameters.AddWithValue("@workday", workday);
 
                             int workdayRowsAffected = workdayCommand.ExecuteNonQuery();
-                            connection.Close();
+                            //connection.Close();
                             if (workdayRowsAffected <= 0)
                             {
                                 MessageBox.Show("Failed to add workday for doctor.");
@@ -540,7 +558,7 @@ namespace clinic_system
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("error: " + ex.Message);
+                    MessageBox.Show("error: issss " + ex.Message);
                 }
             }
 

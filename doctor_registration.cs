@@ -36,21 +36,32 @@ namespace clinic_system
             string name = doctor_name.Text.ToString();
             string number = doctor_number.Text.ToString();
             string spec = doctor_spec.Text.ToString();
+            string pass=Passbox.Text.ToString();
+            string cpass= cpassbox.Text.ToString();
             doctorInstance.setname(name);
             doctorInstance.setspec(spec);
+            
+            
+                List<string> selectedWorkdays = new List<string>();
 
-            List<string> selectedWorkdays = new List<string>();
-
-            foreach (var item in checkedListBox1.CheckedItems)
-            {
-                selectedWorkdays.Add(item.ToString());
-            }
+                foreach (var item in checkedListBox1.CheckedItems)
+                {
+                    selectedWorkdays.Add(item.ToString());
+                }
 
 
-            if (doctorInstance.validatenumber(number))
-            {
-                doctorInstance.adddoctor(name, number, spec, selectedWorkdays,connection);
-            }
+                if (doctorInstance.validatenumber(number))
+                {
+                    if (doctorInstance.validatePassword(pass, cpass))
+                      {
+                        doctorInstance.adddoctor(name, number, spec, selectedWorkdays, connection, pass);
+                      }
+
+                 }
+            
+           
+
+          
         }
 
 

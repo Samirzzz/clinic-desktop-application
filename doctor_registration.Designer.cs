@@ -42,6 +42,10 @@
             button2 = new Button();
             label5 = new Label();
             checkedListBox1 = new CheckedListBox();
+            label6 = new Label();
+            Passbox = new TextBox();
+            label7 = new Label();
+            cpassbox = new TextBox();
             SuspendLayout();
             // 
             // label3
@@ -60,7 +64,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(358, 211);
+            label1.Location = new Point(358, 135);
             label1.Name = "label1";
             label1.Size = new Size(0, 20);
             label1.TabIndex = 7;
@@ -71,14 +75,14 @@
             namelbl.BackColor = Color.Transparent;
             namelbl.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             namelbl.ForeColor = SystemColors.ButtonHighlight;
-            namelbl.Location = new Point(309, 206);
+            namelbl.Location = new Point(309, 130);
             namelbl.Name = "namelbl";
             namelbl.Size = new Size(0, 25);
             namelbl.TabIndex = 8;
             // 
             // button1
             // 
-            button1.Location = new Point(388, 519);
+            button1.Location = new Point(388, 529);
             button1.Name = "button1";
             button1.Size = new Size(402, 33);
             button1.TabIndex = 13;
@@ -88,14 +92,14 @@
             // 
             // doctor_number
             // 
-            doctor_number.Location = new Point(388, 236);
+            doctor_number.Location = new Point(388, 168);
             doctor_number.Name = "doctor_number";
             doctor_number.Size = new Size(402, 27);
             doctor_number.TabIndex = 12;
             // 
             // doctor_name
             // 
-            doctor_name.Location = new Point(388, 164);
+            doctor_name.Location = new Point(388, 116);
             doctor_name.Name = "doctor_name";
             doctor_name.Size = new Size(402, 27);
             doctor_name.TabIndex = 11;
@@ -106,7 +110,7 @@
             num.BackColor = Color.Transparent;
             num.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             num.ForeColor = SystemColors.ButtonHighlight;
-            num.Location = new Point(301, 235);
+            num.Location = new Point(301, 167);
             num.Name = "num";
             num.Size = new Size(81, 25);
             num.TabIndex = 10;
@@ -118,7 +122,7 @@
             label2.BackColor = Color.Transparent;
             label2.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = SystemColors.ButtonHighlight;
-            label2.Location = new Point(320, 166);
+            label2.Location = new Point(320, 118);
             label2.Name = "label2";
             label2.Size = new Size(62, 25);
             label2.TabIndex = 9;
@@ -126,7 +130,7 @@
             // 
             // doctor_spec
             // 
-            doctor_spec.Location = new Point(388, 300);
+            doctor_spec.Location = new Point(388, 224);
             doctor_spec.Name = "doctor_spec";
             doctor_spec.Size = new Size(402, 27);
             doctor_spec.TabIndex = 14;
@@ -138,7 +142,7 @@
             label4.BackColor = Color.Transparent;
             label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label4.ForeColor = SystemColors.ButtonHighlight;
-            label4.Location = new Point(259, 300);
+            label4.Location = new Point(259, 224);
             label4.Name = "label4";
             label4.Size = new Size(130, 25);
             label4.TabIndex = 15;
@@ -163,7 +167,7 @@
             label5.BackColor = Color.Transparent;
             label5.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label5.ForeColor = SystemColors.ControlLightLight;
-            label5.Location = new Point(259, 397);
+            label5.Location = new Point(314, 411);
             label5.Name = "label5";
             label5.Size = new Size(200, 31);
             label5.TabIndex = 23;
@@ -174,11 +178,49 @@
             checkedListBox1.BackColor = SystemColors.GradientActiveCaption;
             checkedListBox1.FormattingEnabled = true;
             checkedListBox1.Items.AddRange(new object[] { "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday" });
-            checkedListBox1.Location = new Point(477, 349);
+            checkedListBox1.Location = new Point(532, 375);
             checkedListBox1.Name = "checkedListBox1";
             checkedListBox1.Size = new Size(137, 136);
             checkedListBox1.TabIndex = 24;
             checkedListBox1.SelectedIndexChanged += checkedListBox1_SelectedIndexChanged;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.BackColor = Color.Transparent;
+            label6.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.ForeColor = SystemColors.ButtonHighlight;
+            label6.Location = new Point(279, 279);
+            label6.Name = "label6";
+            label6.Size = new Size(92, 25);
+            label6.TabIndex = 26;
+            label6.Text = "Password";
+            // 
+            // Passbox
+            // 
+            Passbox.Location = new Point(388, 279);
+            Passbox.Name = "Passbox";
+            Passbox.Size = new Size(402, 27);
+            Passbox.TabIndex = 25;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.BackColor = Color.Transparent;
+            label7.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.ForeColor = SystemColors.ButtonHighlight;
+            label7.Location = new Point(220, 330);
+            label7.Name = "label7";
+            label7.Size = new Size(165, 25);
+            label7.TabIndex = 28;
+            label7.Text = "Confirm Password";
+            // 
+            // cpassbox
+            // 
+            cpassbox.Location = new Point(388, 330);
+            cpassbox.Name = "cpassbox";
+            cpassbox.Size = new Size(402, 27);
+            cpassbox.TabIndex = 27;
             // 
             // doctor_registration
             // 
@@ -187,6 +229,10 @@
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1165, 607);
+            Controls.Add(label7);
+            Controls.Add(cpassbox);
+            Controls.Add(label6);
+            Controls.Add(Passbox);
             Controls.Add(checkedListBox1);
             Controls.Add(label5);
             Controls.Add(button2);
@@ -222,5 +268,9 @@
         private Button button2;
         private Label label5;
         private CheckedListBox checkedListBox1;
+        private Label label6;
+        private TextBox Passbox;
+        private Label label7;
+        private TextBox cpassbox;
     }
 }
