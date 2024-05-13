@@ -558,7 +558,7 @@ namespace clinic_system
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("error: issss " + ex.Message);
+                    MessageBox.Show("error:  " + ex.Message);
                 }
             }
 
@@ -1273,6 +1273,22 @@ namespace clinic_system
         public class Appointment
         {
             private const int MaxAppointmentsPerDay = 4;
+
+            public void updateAppointment(string patnumber,int Appid,DataTable dt)
+            {
+                string query = "UPDATE appointment SET patnumber = @patnumber";
+                using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
+                {
+                    cmd.Parameters.AddWithValue("@patnumber", patnumber);
+         
+                    cmd.ExecuteNonQuery();
+                }
+                DataRow[] rows = dt.Select("Appid = '" + Appid + "'");
+                if (rows.Length > 0)
+                {
+                    rows[0]["Patnumber"] = patnumber;
+                }
+            }
             public static bool deleteAppointment(int AppointID, DataTable dt)
             {
                 try
@@ -1286,7 +1302,6 @@ namespace clinic_system
 
                         if (rowsAffected > 0)
                         {
-                            // Remove the deleted appointment from the DataTable
                             DataRow[] rows = dt.Select("Appid = " + AppointID);
                             if (rows.Length > 0)
                             {

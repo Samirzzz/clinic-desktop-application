@@ -118,6 +118,7 @@
             savebtn.TabIndex = 11;
             savebtn.Text = "save";
             savebtn.UseVisualStyleBackColor = false;
+            savebtn.Click += savebtn_Click;
             // 
             // dataGridView1
             // 

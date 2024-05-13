@@ -60,7 +60,7 @@ namespace clinic_system
                 return; // Exit the method
             }
 
-            int AppointId  = int.Parse(appointbox.Text);
+            int AppointId = int.Parse(appointbox.Text);
 
             if (Appointment.deleteAppointment(AppointId, dt))
             {
@@ -73,6 +73,31 @@ namespace clinic_system
             else
             {
                 MessageBox.Show("Failed to delete appointment.");
+            }
+        }
+
+        private void savebtn_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a row to save.");
+                return;
+            }
+
+            string patnumber = PnumBox.Text;
+            int AppointId = int.Parse(appointbox.Text);
+
+
+
+            try
+            {
+                Appointment appointment = new Appointment();    
+                appointment.updateAppointment(patnumber, AppointId, dt);
+                MessageBox.Show("Edit has been saved.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
             }
         }
     }
