@@ -58,7 +58,7 @@ namespace clinic_system
             int counter = 0;
             patientInstance.displaycheifcomplaint(patientnumber, textBox2, connection);
 
-            drInstance.getdocname(docnumber, connection,textBox4);
+            drInstance.getdocname(docnumber, connection, textBox4);
             found_patient = patientInstance.FindByPatientNumber(patientnumber, connection);
             Name_textbox.Text = found_patient.getname();
             textBox1.Text = found_patient.getnumber();
@@ -71,12 +71,15 @@ namespace clinic_system
             {
                 Console.WriteLine(id);
             }
+
             comboBox1.Items.Add("choose");
             comboBox1.Items.AddRange(diagnoses_ids.Select(i => i.ToString()).ToArray());
             comboBox2.Items.Add("choose");
             comboBox2.Items.AddRange(investigation_ids.Select(i => i.ToString()).ToArray());
             comboBox3.Items.Add("choose");
             comboBox3.Items.AddRange(medication_ids.Select(i => i.ToString()).ToArray());
+            comboBox4.Items.Add("choose");
+            comboBox4.Items.AddRange(investigation_ids.Select(i => i.ToString()).ToArray());
 
 
 
@@ -181,13 +184,21 @@ namespace clinic_system
         {
             if (comboBox2.SelectedIndex > 0)
             {
+                drInstance.getdocname(docnumber, connection, textBox4);
+                found_patient = patientInstance.FindByPatientNumber(patientnumber, connection);
+                Name_textbox.Text = found_patient.getname();
+                textBox1.Text = found_patient.getnumber();
+
+                investigation_ids = diagnosesInstance.GetinvestigationIDs(found_patient.getnumber(), connection);
                 int selectedDiagnosisId = int.Parse(comboBox2.SelectedItem.ToString());
                 textBox3.Text = diagnosesInstance.Findtreatmentdecription(selectedDiagnosisId, found_patient.getnumber(), connection);
+
+                
+                comboBox3.Items.Add("choose");
             }
+
         }
-
-
-
+       
         private void label9_Click(object sender, EventArgs e)
         {
 
@@ -216,9 +227,10 @@ namespace clinic_system
 
             e.Graphics.DrawString("Diagnosis Description:", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new PointF(100, 280));
             e.Graphics.DrawString(textBox5.Text, new Font("Arial", 10), Brushes.Black, new RectangleF(100, 300, 500, 50));
+            string concatenatedText = textBox3.Text + ", " + textBox7.Text;
 
             e.Graphics.DrawString("Investigation:", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new PointF(100, 380));
-            e.Graphics.DrawString(textBox3.Text, new Font("Arial", 10), Brushes.Black, new RectangleF(100, 400, 500, 50));
+            e.Graphics.DrawString(concatenatedText, new Font("Arial", 10), Brushes.Black, new RectangleF(100, 400, 500, 50));
 
             e.Graphics.DrawString("Medications:", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new PointF(100, 480));
             e.Graphics.DrawString(textBox6.Text, new Font("Arial", 10), Brushes.Black, new RectangleF(100, 500, 500, 50));
@@ -246,6 +258,22 @@ namespace clinic_system
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox4.SelectedIndex > 0)
+            {
+                int selectedDiagnosisId2 = int.Parse(comboBox4.SelectedItem.ToString());
+
+                textBox7.Text = diagnosesInstance.Findtreatmentdecription(selectedDiagnosisId2, found_patient.getnumber(), connection);
+
+            }
         }
     }
 }

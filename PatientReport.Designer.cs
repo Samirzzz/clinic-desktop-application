@@ -61,6 +61,8 @@
             printDocument1 = new System.Drawing.Printing.PrintDocument();
             printPreviewDialog1 = new PrintPreviewDialog();
             print = new Button();
+            comboBox4 = new ComboBox();
+            textBox7 = new TextBox();
             header.SuspendLayout();
             controlbox.SuspendLayout();
             SuspendLayout();
@@ -165,10 +167,10 @@
             // textBox3
             // 
             textBox3.Location = new Point(180, 505);
-            textBox3.Multiline = true;
             textBox3.Name = "textBox3";
-            textBox3.Size = new Size(484, 128);
+            textBox3.Size = new Size(484, 27);
             textBox3.TabIndex = 13;
+            textBox3.TextChanged += textBox3_TextChanged;
             // 
             // label7
             // 
@@ -374,12 +376,30 @@
             print.UseVisualStyleBackColor = true;
             print.Click += print_Click;
             // 
+            // comboBox4
+            // 
+            comboBox4.FormattingEnabled = true;
+            comboBox4.Location = new Point(72, 550);
+            comboBox4.Name = "comboBox4";
+            comboBox4.Size = new Size(85, 28);
+            comboBox4.TabIndex = 33;
+            comboBox4.SelectedIndexChanged += comboBox4_SelectedIndexChanged;
+            // 
+            // textBox7
+            // 
+            textBox7.Location = new Point(180, 551);
+            textBox7.Name = "textBox7";
+            textBox7.Size = new Size(484, 27);
+            textBox7.TabIndex = 34;
+            // 
             // PatientReport
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             ClientSize = new Size(728, 960);
+            Controls.Add(textBox7);
+            Controls.Add(comboBox4);
             Controls.Add(print);
             Controls.Add(label14);
             Controls.Add(comboBox3);
@@ -452,5 +472,7 @@
         private System.Drawing.Printing.PrintDocument printDocument1;
         private PrintPreviewDialog printPreviewDialog1;
         private Button print;
+        private ComboBox comboBox4;
+        private TextBox textBox7;
     }
 }
