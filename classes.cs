@@ -1300,7 +1300,11 @@ namespace clinic_system
         {
             private const int MaxAppointmentsPerDay = 4;
             Messages messages;
+           
+            public Appointment()
+            {
 
+            }
             public Appointment(Messages messages)
             {
                 this.messages = messages;
