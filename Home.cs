@@ -13,16 +13,16 @@ namespace clinic_system
 {
     public partial class Home : Form
     {
+        private string docnumber;
         public Home()
         {
             InitializeComponent();
             db.Instance.GetConnection();
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            loginDoctor f = new loginDoctor();
+            loginDoctor f = new loginDoctor(docnumber);
             f.Show();
             this.Hide();
         }

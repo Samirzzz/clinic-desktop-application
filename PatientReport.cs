@@ -47,7 +47,7 @@ namespace clinic_system
             this.docnumber = docnumber;
             Messages messages = new Messages("", "");
             patientInstance = new Patient(messages);
-            Clinic clinic ;
+            Clinic clinic;
             drInstance = new Doctor(messages);
 
             connection = db.Instance.GetConnection();

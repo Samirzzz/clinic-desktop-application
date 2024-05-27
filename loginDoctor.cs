@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,11 +15,14 @@ namespace clinic_system
 {
     public partial class loginDoctor : Form
     {
-        public loginDoctor()
+        private string docnumber;
+        private MySqlConnection connection;
+
+        public loginDoctor(string docnumber)
         {
             InitializeComponent();
-            db.Instance.GetConnection();
-
+            connection = db.Instance.GetConnection();
+            this.docnumber = docnumber;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -34,7 +38,7 @@ namespace clinic_system
             classes.Doctor doctor=new classes.Doctor(messages);
             if (doctor.IsValidCredentials(number,password))
             {
-                Form1 f = new Form1();
+                patient_search f = new patient_search(number);
                 f.Show();
                 this.Hide();
             }

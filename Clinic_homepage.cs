@@ -87,7 +87,7 @@ namespace clinic_system
 
         private void SearchDoctor_Click(object sender, EventArgs e)
         {
-          
+
             MySqlConnection connection = db.Instance.GetConnection();
             try
             {
@@ -184,6 +184,16 @@ namespace clinic_system
             {
                 MessageBox.Show("An error occurred: " + ex.Message);
             }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+           
+
+            Home p = new Home();
+                p.Show();
+                this.Close();
+            
         }
     }
 }

@@ -17,10 +17,10 @@ namespace clinic_system
         private MySqlConnection connection;
 
         private Patient patientInstance;
-        private Clinic ClinicInstance=new Clinic();
+        private Clinic ClinicInstance = new Clinic();
         private string docnumber;
         private string patientnumber;
-       
+
 
         public patient_search(string docnumber)
         {
@@ -45,7 +45,7 @@ namespace clinic_system
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form1 form = new Form1();
+            loginDoctor form = new loginDoctor(docnumber);
             form.Show();
             this.Hide();
         }
@@ -65,13 +65,17 @@ namespace clinic_system
 
         private void button5_Click(object sender, EventArgs e)
         {
-          Form1 f = new Form1();
-            f.Show();   
+            Form1 f = new Form1();
+            f.Show();
 
             this.Hide();
-          
+
 
             //this.Close();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
         }
     }
 }
