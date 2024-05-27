@@ -16,10 +16,13 @@ namespace clinic_system
 {
     public partial class investigation : Form
     {
+        // Dictionary to store selected checkboxes
+        private Dictionary<string, List<string>> selectedCheckboxes = new Dictionary<string, List<string>>();
+        private List<string> selectedTreatments = new List<string>();
+
         private MySqlConnection connection;
         private string patientnumber;
         private string docnumber;
-        private List<string> selectedTreatments = new List<string>();
         public investigation(string patientnumber, string docnumber)
         {
             InitializeComponent();
@@ -33,74 +36,98 @@ namespace clinic_system
         {
         }
 
+    
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            panel1.Controls.Clear();
-
-            Treatment treatment = null;
             string selectedDiagnosis = comboBox1.SelectedItem?.ToString();
-            if (selectedDiagnosis == "Bone")
+            if (string.IsNullOrEmpty(selectedDiagnosis)) return;
+
+            // Save current selections
+            SaveCurrentSelections();
+
+            panel1.Controls.Clear();
+            Investigation treatment = null;
+
+            if (selectedDiagnosis == "MicroBiology")
             {
-                treatment = new BoneTreatment();
+                treatment = new microbiologyinvestigation();
             }
-            else if (selectedDiagnosis == "Cancer")
+            else if (selectedDiagnosis == "ChemoTherapy")
             {
-                treatment = new cancerTreatment();
+                treatment = new Chemotherapyinvestigation();
+            }
+            else if (selectedDiagnosis == "Singles")
+            {
+                treatment = new singlesinvestigation();
             }
 
             if (treatment != null)
             {
-
-                CheckBox rb1 = new CheckBox();
-                CheckBox rb2 = new CheckBox();
-
-                rb1.Width = 200;
-                rb2.Width = 200;
+                CheckBox rb1 = new CheckBox { Width = 200, Location = new Point(10, 10) };
+                CheckBox rb2 = new CheckBox { Width = 200, Location = new Point(10, 50) };
                 treatment.treatment(rb1, rb2);
-                rb1.Location = new Point(10, 10);
+
                 panel1.Controls.Add(rb1);
-
-                rb2.Location = new Point(10, 50);
                 panel1.Controls.Add(rb2);
+
+                LoadSavedSelections(selectedDiagnosis);
             }
-
-
         }
+
+        private void SaveCurrentSelections()
+        {
+            string selectedDiagnosis = comboBox1.SelectedItem?.ToString();
+            if (string.IsNullOrEmpty(selectedDiagnosis)) return;
+
+            List<string> selections = new List<string>();
+            foreach (CheckBox checkbox in panel1.Controls.OfType<CheckBox>())
+            {
+                if (checkbox.Checked)
+                {
+                    selections.Add(checkbox.Text);
+                }
+            }
+            selectedCheckboxes[selectedDiagnosis] = selections;
+        }
+
+        private void LoadSavedSelections(string diagnosis)
+        {
+            if (selectedCheckboxes.ContainsKey(diagnosis))
+            {
+                List<string> selections = selectedCheckboxes[diagnosis];
+                foreach (CheckBox checkbox in panel1.Controls.OfType<CheckBox>())
+                {
+                    if (selections.Contains(checkbox.Text))
+                    {
+                        checkbox.Checked = true;
+                    }
+                }
+            }
+        }
+
         private void treatment_Load(object sender, EventArgs e)
         {
-            //MySqlConnection connection = db.Instance.GetConnection();
-            //connection.Open();
-
             comboBox1.Items.Clear();
-
-
-            List<string> diagnoses = new List<string>
-               {
-                "Bone",
-                "Cancer",
-            };
+            List<string> diagnoses = new List<string> { "Singles", "ChemoTherapy", "MicroBiology" };
             foreach (string diagnosis in diagnoses)
             {
                 comboBox1.Items.Add(diagnosis);
             }
-
         }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
+     
         private void save_Click(object sender, EventArgs e)
         {
-            selectedTreatments.Clear();
-            foreach (Control control in panel1.Controls)
+            SaveCurrentSelections();
+
+            // Combine all selections from all investigation types
+            List<string> allSelections = new List<string>();
+            foreach (var selections in selectedCheckboxes.Values)
             {
-                if (control is CheckBox && ((CheckBox)control).Checked)
-                {
-                    selectedTreatments.Add(((CheckBox)control).Text);
-                }
+                allSelections.AddRange(selections);
             }
+
+            // Ensure the selectedTreatments list is populated
+            selectedTreatments = allSelections;
             MySqlConnection connection = db.Instance.GetConnection();
             SaveToDatabase(selectedTreatments, connection);
         }
@@ -110,7 +137,7 @@ namespace clinic_system
             try
             {
                 string treatmentDescription = string.Join(", ", treatments);
-                string query = "INSERT INTO treatment (dnumber, pnumber, description) VALUES (@dnumber, @pnumber, @description)";
+                string query = "INSERT INTO investigation (dnumber, pnumber, description) VALUES (@dnumber, @pnumber, @description)";
                 using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
                 {
                     mySqlCommand.Parameters.AddWithValue("@dnumber", docnumber);
@@ -119,7 +146,7 @@ namespace clinic_system
                     mySqlCommand.ExecuteNonQuery();
                 }
 
-                MessageBox.Show("Treatments saved successfully!");
+                MessageBox.Show("Investigation saved successfully!");
 
             }
             catch (Exception ex)
@@ -144,7 +171,7 @@ namespace clinic_system
             {
 
 
-                string query = "INSERT INTO treatment (pnumber, dnumber, description) VALUES (@pnumber, @dnumber, @description)";
+                string query = "INSERT INTO investigation (pnumber, dnumber, description) VALUES (@pnumber, @dnumber, @description)";
                 using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
                 {
                     string description = customtreatment.Text;
