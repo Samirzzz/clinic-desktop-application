@@ -145,12 +145,14 @@ namespace clinic_system
                     return true;
                 }
             }
-            public void addpatient(string name, string number)
+            public void addpatient(string name, string number, MySqlConnection connection)
             {
                 try
                 {
+                  
+                
                     string query = "INSERT INTO patient (name, number) VALUES (@name, @number)";
-                    MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
+                    MySqlCommand mySqlCommand = new MySqlCommand(query, connection);
                     mySqlCommand.Parameters.AddWithValue("@name", name);
                     mySqlCommand.Parameters.AddWithValue("@number", number);
                     int rowsAffected = mySqlCommand.ExecuteNonQuery();

@@ -19,12 +19,14 @@ namespace clinic_system
     {
 
         private Patient patientInstance;
+        private MySqlConnection connection;
         public patient_registration()
         {
             InitializeComponent();
-            db.Instance.GetConnection();
+            
             Messages messages = new Messages("", "");
             patientInstance = new Patient(messages);
+            connection = db.Instance.GetConnection();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -39,13 +41,14 @@ namespace clinic_system
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+           
             string name = patient_name.Text.ToString();
             string number = patient_number.Text.ToString();
             patientInstance.setname(name);
             if (patientInstance.validatenumber(number))
             {
-                patientInstance.addpatient(name, number);
+                patientInstance.addpatient(name, number,connection);
+
             }
 
 

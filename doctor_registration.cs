@@ -73,6 +73,9 @@ namespace clinic_system
         private void button2_Click(object sender, EventArgs e)
         {
             db.Instance.CloseConnection();
+            Form1 home = new Form1();
+              home.Show();
+            this.Hide();    
 
         }
 
