@@ -30,7 +30,8 @@ namespace clinic_system
         {
             string number = txtnumber.Text;
             string password = txtpassword.Text;
-            classes.Doctor doctor=new classes.Doctor();
+            Messages messages=new Messages();
+            classes.Doctor doctor=new classes.Doctor(messages);
             if (doctor.IsValidCredentials(number,password))
             {
                 Form1 f = new Form1();
