@@ -57,7 +57,7 @@ namespace clinic_system
             if (dataGridView1.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a row to delete.");
-                return; 
+                return;
             }
 
             int AppointId = int.Parse(appointbox.Text);
@@ -91,7 +91,7 @@ namespace clinic_system
 
             try
             {
-                Appointment appointment = new Appointment();    
+                Appointment appointment = new Appointment();
                 appointment.updateAppointment(patnumber, AppointId, dt);
                 MessageBox.Show("Edit has been saved.");
             }
@@ -99,6 +99,11 @@ namespace clinic_system
             {
                 MessageBox.Show("Error: " + ex.Message);
             }
+        }
+
+        private void appointbox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
