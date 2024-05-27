@@ -30,7 +30,6 @@ namespace clinic_system
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            pictureBox1 = new PictureBox();
             AddPatient = new Button();
             AddDoctor = new Button();
             WelcomeText = new TextBox();
@@ -42,19 +41,6 @@ namespace clinic_system
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // pictureBox1
-            // 
-            pictureBox1.BackgroundImageLayout = ImageLayout.Center;
-            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(-8, -2);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(757, 809);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click_1;
-            // 
             // AddPatient
             // 
             AddPatient.BackColor = Color.Turquoise;
@@ -62,7 +48,7 @@ namespace clinic_system
             AddPatient.FlatAppearance.MouseDownBackColor = Color.Black;
             AddPatient.FlatStyle = FlatStyle.Flat;
             AddPatient.Font = new Font("Arial Rounded MT Bold", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            AddPatient.Location = new Point(781, 102);
+            AddPatient.Location = new Point(117, 162);
             AddPatient.Name = "AddPatient";
             AddPatient.Size = new Size(257, 58);
             AddPatient.TabIndex = 1;
@@ -169,6 +155,8 @@ namespace clinic_system
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BackColor = Color.White;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1083, 734);
             Controls.Add(button5);
             Controls.Add(button2);
@@ -178,11 +166,9 @@ namespace clinic_system
             Controls.Add(WelcomeText);
             Controls.Add(AddDoctor);
             Controls.Add(AddPatient);
-            Controls.Add(pictureBox1);
             Cursor = Cursors.IBeam;
             Name = "Form1";
             Text = "Homepage";
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -192,9 +178,7 @@ namespace clinic_system
             throw new NotImplementedException();
         }
 
-        #endregion
-
-        private PictureBox pictureBox1;
+#endregion
         private Button AddPatient;
         private Button AddDoctor;
         private TextBox WelcomeText;
