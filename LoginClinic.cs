@@ -32,9 +32,9 @@ namespace clinic_system
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string username=textBox1.Text;
-            string password=textBox2.Text;
-            if(username =="clinic_2024" && password=="1234")
+            string username = textBox1.Text;
+            string password = textBox2.Text;
+            if (username == "clinic_2024" && password == "1234")
             {
                 Form1 f = new Form1();
                 f.Show();
@@ -44,6 +44,14 @@ namespace clinic_system
             {
                 MessageBox.Show("password or username is incorrect");
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            Home form = new Home();
+            form.Show();
+            this.Hide();
         }
     }
 }

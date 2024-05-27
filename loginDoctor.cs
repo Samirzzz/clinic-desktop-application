@@ -34,9 +34,9 @@ namespace clinic_system
         {
             string number = txtnumber.Text;
             string password = txtpassword.Text;
-            Messages messages=new Messages();
-            classes.Doctor doctor=new classes.Doctor(messages);
-            if (doctor.IsValidCredentials(number,password))
+            Messages messages = new Messages();
+            classes.Doctor doctor = new classes.Doctor(messages);
+            if (doctor.IsValidCredentials(number, password))
             {
                 patient_search f = new patient_search(number);
                 f.Show();
@@ -53,6 +53,14 @@ namespace clinic_system
         {
             txtnumber.Text = "";
             txtpassword.Text = "";
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            Home form = new Home();
+            form.Show();
+            this.Hide();
         }
     }
 }
