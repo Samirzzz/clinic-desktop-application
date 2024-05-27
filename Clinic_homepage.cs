@@ -66,7 +66,7 @@ namespace clinic_system
         private void rudpatientbtn_Click(object sender, EventArgs e)
         {
             MySqlConnection connection = db.Instance.GetConnection();
-            connection.Open();
+         
             viewPatients viewp = new viewPatients();
             viewp.Show();
             this.Hide();
