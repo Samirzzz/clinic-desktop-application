@@ -77,7 +77,10 @@ namespace clinic_system
             public string message;
             public string title;
 
+            public Messages()
+            {
 
+            }
             public Messages(string message, string title)
             {
                 this.message = message;
@@ -87,6 +90,14 @@ namespace clinic_system
             {
                 MessageBox.Show(message, title);
             }
+            public void setmessage(string message)
+            {
+                this.message=message;
+            }
+            public void setTitle(string title)
+            {
+                this.title = title;
+            }
         }
         public class Patient
         {
@@ -94,8 +105,9 @@ namespace clinic_system
             public int pid;
             public string name;
             public string number;
+
             Messages messages;
-            Doctor doc = new Doctor();
+
             public Patient(Messages messages)
             {
                 this.messages = messages;
@@ -145,12 +157,55 @@ namespace clinic_system
                     return true;
                 }
             }
+            public void patient_search(string number, string docnumber, Form hide, MySqlConnection connection)
+            {
+                try
+                {
+                    string query = "SELECT number FROM patient WHERE number = @number";
+
+                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
+                    {
+                        mySqlCommand.Parameters.AddWithValue("@number", number);
+
+                        using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+
+                                reader.Close();
+
+                                patient_search doc = new patient_search(docnumber);
+                                diagnose diagnosis = new diagnose(number, docnumber);
+                                investigation treat = new investigation(number, docnumber);
+                                //PatientReport rep = new PatientReport(number,docnumber);
+                                diagnosis.Show();
+                                hide.Hide();
+                                connection.Close();
+
+                            }
+                            else
+                            {
+                                messages.message = "Doctor with number " + number + " not found.";
+                                messages.title = "Error";
+                                messages.show_messages();
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    messages.message = "Error:  " + ex.Message;
+                    messages.title = "Error";
+                    messages.show_messages();
+                }
+            }
+
             //public void addpatient(string name, string number, MySqlConnection connection)
             //{
             //    try
             //    {
-                  
-                
+
+
             //        string query = "INSERT INTO patient (name, number) VALUES (@name, @number)";
             //        MySqlCommand mySqlCommand = new MySqlCommand(query, connection);
             //        mySqlCommand.Parameters.AddWithValue("@name", name);
@@ -411,10 +466,7 @@ namespace clinic_system
             public string password;
 
             Messages messages;
-            public Doctor()
-            {
 
-            }
             public Doctor(Messages messages)
             {
                 this.messages = messages;
@@ -471,6 +523,9 @@ namespace clinic_system
                         }
                         else
                         {
+                            messages.message = "Invalid login Credentials";
+                            messages.title = "Error";
+                            messages.show_messages();
                             return false;
                         }
                     }
@@ -515,6 +570,7 @@ namespace clinic_system
                     messages.message = "Number must be at least 11 characters long";
                     messages.title = "Validation error";
                     messages.show_messages();
+                    
                     return false;
                 }
                 else
@@ -651,15 +707,14 @@ namespace clinic_system
                         }
                     }
 
-                    MessageBox.Show("Working days updated successfully!");
-                    messages.message = "Working days updated successfully!  ";
-                    messages.title = "";
+                    messages.setmessage("Working days updated successfully! ");
+                    messages.setTitle("done");
                     messages.show_messages();
                 }
                 catch (Exception ex)
                 {
                     messages.message = "error:  " + ex.Message;
-                    messages.title = "";
+                    messages.title = "error";
                     messages.show_messages();
                 }
             }
@@ -668,7 +723,7 @@ namespace clinic_system
             {
                 try
                 {
-
+                   
                     string query = "SELECT number, name, spec FROM doctor";
                     dt.Clear();
                     using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, classes.db.Instance.GetConnection()))
@@ -707,6 +762,7 @@ namespace clinic_system
                 }
                 catch (Exception ex)
                 {
+                    
                     messages.message = "error:  " + ex.Message;
                     messages.title = "Error";
                     messages.show_messages(); 
@@ -743,22 +799,22 @@ namespace clinic_system
             }
         }
 
-        public interface Treatment
+        public interface Investigation
         {
             string getdiagnosis();
             void setdiagnosis(string diagnosis);
             void treatment(CheckBox rb1, CheckBox rb2);
            
         }
-        public class BoneTreatment : Treatment
+        public class singlesinvestigation : Investigation
         {
            
             public string getdiagnosis()
             {
-                return "Bone related diagnosis";
-                
+                return "singles investigation";
+
             }
-           
+
 
             public void setdiagnosis(string diagnosis)
             {
@@ -767,16 +823,16 @@ namespace clinic_system
             public void treatment(CheckBox rb1, CheckBox rb2)
             {
 
-                rb1.Text = "X-ray";
-                rb2.Text = "MRI";
+                rb1.Text = "CBC";
+                rb2.Text = "PT";
 
             }
         }
-        public class cancerTreatment : Treatment
+        public class Chemotherapyinvestigation : Investigation
         {
             public string getdiagnosis()
             {
-                return "cancer related diagnosis";
+                return "chemotherapy investigation";
             }
             public void setdiagnosis(string diagnosis)
             {
@@ -786,11 +842,31 @@ namespace clinic_system
             public void treatment(CheckBox rb1, CheckBox rb2)
             {
 
-                rb1.Text = "Chemotherapy";
-                rb2.Text = "Radiotherapy";
+                rb1.Text = "Guided Biopsy CBC";
+                rb2.Text = "Guided Biopsy PT";
 
             }
            
+        }
+        public class microbiologyinvestigation : Investigation
+        {
+            public string getdiagnosis()
+            {
+                return "microbiology investigation";
+            }
+            public void setdiagnosis(string diagnosis)
+            {
+                diagnosis = "micro";
+            }
+
+            public void treatment(CheckBox rb1, CheckBox rb2)
+            {
+
+                rb1.Text = "HBsAg";
+                rb2.Text = "HBe Ab";
+
+            }
+
         }
 
         public class Medication
@@ -976,15 +1052,15 @@ namespace clinic_system
 
         }
 
-
         public class Clinic
         {
             string name;
-            Appointment appointment = new Appointment();
 
             Messages messages;
+            Appointment appointment;
             public Clinic(Messages messages)
             {
+                appointment = new Appointment(messages);
                 this.messages = messages;
             }
 
@@ -1057,49 +1133,7 @@ namespace clinic_system
                 return curr_patient;
             }
 
-            public void patient_search(string number, string docnumber, Form hide, MySqlConnection connection)
-            {
-                try
-                {
-                    string query = "SELECT number FROM patient WHERE number = @number";
-
-                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
-                    {
-                        mySqlCommand.Parameters.AddWithValue("@number", number);
-
-                        using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-
-                                reader.Close();
-
-                                patient_search doc = new patient_search(docnumber);
-                                diagnose diagnosis = new diagnose(number, docnumber);
-                                investigation treat = new investigation(number, docnumber);
-                                //PatientReport rep = new PatientReport(number,docnumber);
-                                diagnosis.Show();
-                                hide.Hide();
-                                connection.Close();
-
-                            }
-                            else
-                            {
-                                messages.message = "Doctor with number "+number+" not found.";
-                                messages.title = "Error";
-                                messages.show_messages();
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    messages.message = "Error:  " + ex.Message;
-                    messages.title = "Error";
-                    messages.show_messages();
-                }
-            }
-
+         
             public void editPatient(string newName, string patientNumber, DataTable dt)
             {
 
@@ -1254,7 +1288,7 @@ namespace clinic_system
                 try
                 {
 
-                    string query = "SELECT tid as id,pnumber,description FROM treatment WHERE pnumber = @number ORDER BY tid DESC";
+                    string query = "SELECT tid as id,pnumber,description FROM investigation WHERE pnumber = @number ORDER BY tid DESC";
 
                     DataTable dt = new DataTable();
                     connection = db.Instance.GetConnection();
@@ -1295,7 +1329,7 @@ namespace clinic_system
 
                 List<int> diagnosisIds = new List<int>();
 
-                string query = "SELECT tid FROM treatment WHERE pnumber = @pnumber";
+                string query = "SELECT tid FROM investigation WHERE pnumber = @pnumber";
 
 
                 using (MySqlCommand command = new MySqlCommand(query, connection))
@@ -1332,7 +1366,7 @@ namespace clinic_system
             }
             public string Findtreatmentdecription(int Diagnoses_id, string Patient_Number, MySqlConnection conn)
             {
-                string query = "SELECT description FROM treatment WHERE tid = @Diagnoses_id AND pnumber = @Patient_Number";
+                string query = "SELECT description FROM investigation WHERE tid = @Diagnoses_id AND pnumber = @Patient_Number";
 
                 using (MySqlCommand mySqlCommand = new MySqlCommand(query, conn))
                 {
@@ -1480,12 +1514,8 @@ namespace clinic_system
         public class Appointment
         {
             private const int MaxAppointmentsPerDay = 4;
-            Messages messages;
-           
-            public Appointment()
-            {
 
-            }
+            Messages messages;
             public Appointment(Messages messages)
             {
                 this.messages = messages;

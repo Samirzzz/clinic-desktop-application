@@ -40,7 +40,7 @@ namespace clinic_system
             {
                 connection.Open();
             }
-            ClinicInstance.patient_search(number, docnumber, this, connection);
+            patientInstance.patient_search(number, docnumber, this, connection);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -65,13 +65,13 @@ namespace clinic_system
 
         private void button5_Click(object sender, EventArgs e)
         {
-           connection.Open();
+          Form1 f = new Form1();
+            f.Show();   
 
             this.Hide();
-            doctor_search d = new doctor_search();
-            d.ShowDialog();
+          
 
-            this.Close();
+            //this.Close();
         }
     }
 }

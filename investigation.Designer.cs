@@ -104,7 +104,6 @@
             label1.Size = new Size(186, 17);
             label1.TabIndex = 10;
             label1.Text = "Enter investigation manually";
-            label1.Click += label1_Click;
             // 
             // button5
             // 
