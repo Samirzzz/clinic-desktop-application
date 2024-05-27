@@ -40,7 +40,7 @@ namespace clinic_system
             {
                 connection.Open();
             }
-            ClinicInstance.patient_search(number, docnumber, this, connection);
+            patientInstance.patient_search(number, docnumber, this, connection);
         }
 
         private void button2_Click(object sender, EventArgs e)

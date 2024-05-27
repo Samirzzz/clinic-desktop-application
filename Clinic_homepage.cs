@@ -57,7 +57,8 @@ namespace clinic_system
         private void SearchDoctor_Click(object sender, EventArgs e)
         {
             MySqlConnection connection = db.Instance.GetConnection();
-            connection.Open();
+
+
             doctor_search doctor_search_ = new doctor_search();
             doctor_search_.Show();
             this.Hide();
@@ -75,7 +76,6 @@ namespace clinic_system
         private void doctorRUD_Click(object sender, EventArgs e)
         {
             MySqlConnection connection = db.Instance.GetConnection();
-            connection.Open();
             viewDoctors vd = new viewDoctors();
             vd.Show();
             this.Hide();
