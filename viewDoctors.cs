@@ -4,6 +4,7 @@ using System.Data;
 using System.Windows.Forms;
 using clinic_system;
 using static clinic_system.classes;
+
 namespace clinic_system
 {
     public partial class viewDoctors : Form
@@ -11,20 +12,28 @@ namespace clinic_system
         DataTable dt = new DataTable();
         private Appointment appointment = new Appointment();
         private MySqlConnection connection;
+
         public viewDoctors()
         {
             InitializeComponent();
-            connection=db.Instance.GetConnection();
-            // Set up the DataTable and add it to a container control
-            dt.Columns.Add("name", typeof(string));
-            dt.Columns.Add("number", typeof(string)); 
-            dt.Columns.Add("spec", typeof(string));
-            dt.Columns.Add("doctor workdays", typeof(string));
-            dataGridView1.DataSource = dt;
-            dataGridView1.CellClick += dataGridView1_CellClick;
-            dataGridView1.Columns["number"].ReadOnly = true;
-            numbox.ReadOnly = true;
-            Doctor.viewDoctors(dt);
+            try
+            {
+                connection = db.Instance.GetConnection();
+                // Set up the DataTable and add it to a container control
+                dt.Columns.Add("name", typeof(string));
+                dt.Columns.Add("number", typeof(string));
+                dt.Columns.Add("spec", typeof(string));
+                dt.Columns.Add("doctor workdays", typeof(string));
+                dataGridView1.DataSource = dt;
+                dataGridView1.CellClick += dataGridView1_CellClick;
+                dataGridView1.Columns["number"].ReadOnly = true;
+                numbox.ReadOnly = true;
+                Doctor.viewDoctors(dt);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error initializing form: " + ex.Message);
+            }
         }
 
         private void savebtn_Click(object sender, EventArgs e)
@@ -58,10 +67,6 @@ namespace clinic_system
             }
         }
 
-
-
-
-
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -69,10 +74,20 @@ namespace clinic_system
                 // Get the selected row
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
-                // Populate the text boxes with data from the selected row
-                namebox.Text = row.Cells["name"].Value.ToString();
-                numbox.Text = row.Cells["number"].Value.ToString();
-                specbox.Text = row.Cells["spec"].Value.ToString();
+                if (row.Cells["name"].Value != null)
+                    namebox.Text = row.Cells["name"].Value.ToString();
+                else
+                    namebox.Text = string.Empty;
+
+                if (row.Cells["number"].Value != null)
+                    numbox.Text = row.Cells["number"].Value.ToString();
+                else
+                    numbox.Text = string.Empty;
+
+                if (row.Cells["spec"].Value != null)
+                    specbox.Text = row.Cells["spec"].Value.ToString();
+                else
+                    specbox.Text = string.Empty;
             }
         }
 
@@ -89,16 +104,23 @@ namespace clinic_system
 
             Doctor doc = new Doctor();
 
-            if (doc.deleteDoctor(doctorNumber, dt))
+            try
             {
-                namebox.Text = "";
-                numbox.Text = "";
-                specbox.Text = "";
-                MessageBox.Show("Doctor deleted successfully.");
+                if (doc.deleteDoctor(doctorNumber, dt))
+                {
+                    namebox.Text = "";
+                    numbox.Text = "";
+                    specbox.Text = "";
+                    MessageBox.Show("Doctor deleted successfully.");
+                }
+                else
+                {
+                    MessageBox.Show("Failed to delete doctor.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Failed to delete doctor.");
+                MessageBox.Show("Error deleting doctor: " + ex.Message);
             }
         }
 

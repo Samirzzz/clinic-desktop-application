@@ -65,13 +65,13 @@ namespace clinic_system
 
         private void button5_Click(object sender, EventArgs e)
         {
-           connection.Open();
+          Form1 f = new Form1();
+            f.Show();   
 
             this.Hide();
-            doctor_search d = new doctor_search();
-            d.ShowDialog();
+          
 
-            this.Close();
+            //this.Close();
         }
     }
 }
