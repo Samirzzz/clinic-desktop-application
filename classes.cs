@@ -1090,16 +1090,22 @@ namespace clinic_system
 
                     if (rowsAffected > 0)
                     {
-                        MessageBox.Show("User added successfully!");
+                        messages.setmessage("User added successfully!");
+                        messages.setTitle("Done");
+                        messages.show_messages();
                     }
                     else
                     {
-                        MessageBox.Show("Failed to add user.");
+                        messages.setmessage("User add error");
+                        messages.setTitle("error");
+                        messages.show_messages();
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("error: " + ex.Message);
+                    messages.setmessage("error: "+ex.Message);
+                    messages.setTitle("error");
+                    messages.show_messages();
                 }
 
             }
@@ -1125,7 +1131,9 @@ namespace clinic_system
                         }
                         else
                         {
-                            MessageBox.Show($"Patient with number {number} not found.");
+                            messages.setmessage("patient with number"+number+"not found");
+                            messages.setTitle("error");
+                            messages.show_messages();
                         }
                     }
                 }
@@ -1570,7 +1578,6 @@ namespace clinic_system
             {
                 try
                 {
-
                     string query = "SELECT docnumber, patnumber, date,Appid FROM appointment";
                     dt.Clear();
                     using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, classes.db.Instance.GetConnection()))
