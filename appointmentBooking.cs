@@ -16,7 +16,8 @@ namespace clinic_system
     public partial class appointmentBooking : Form
     {
         DataTable dt = new DataTable();
-        private Appointment appointment = new Appointment();
+
+        private Appointment appointment;
         private MySqlConnection connection;
         private Doctor doctorInstance;
 
@@ -25,10 +26,11 @@ namespace clinic_system
         public appointmentBooking()
         {
             InitializeComponent();
-
+            Messages messages = new Messages();
+            appointment = new Appointment(messages);
             connection = db.Instance.GetConnection();
             dt.Columns.Add("name", typeof(string));
-            doctorInstance.viewDoctors(dt);
+            Doctor.viewDoctors(dt);
             foreach (DataRow row in dt.Rows)
             {
                 string doctorName = row["name"].ToString();

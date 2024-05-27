@@ -91,7 +91,8 @@ namespace clinic_system
 
             try
             {
-                Appointment appointment = new Appointment();
+                Messages message=new Messages();
+                Appointment appointment = new Appointment(message);
                 appointment.updateAppointment(patnumber, AppointId, dt);
                 MessageBox.Show("Edit has been saved.");
             }

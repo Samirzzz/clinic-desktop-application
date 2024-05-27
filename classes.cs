@@ -719,7 +719,7 @@ namespace clinic_system
                 }
             }
 
-            public  void viewDoctors(DataTable dt)
+            public static void viewDoctors(DataTable dt)
             {
                 try
                 {
@@ -1055,11 +1055,12 @@ namespace clinic_system
         public class Clinic
         {
             string name;
-            Appointment appointment = new Appointment();
 
             Messages messages;
+            Appointment appointment;
             public Clinic(Messages messages)
             {
+                appointment = new Appointment(messages);
                 this.messages = messages;
             }
 
@@ -1513,12 +1514,8 @@ namespace clinic_system
         public class Appointment
         {
             private const int MaxAppointmentsPerDay = 4;
-            Messages messages;
-           
-            public Appointment()
-            {
 
-            }
+            Messages messages;
             public Appointment(Messages messages)
             {
                 this.messages = messages;

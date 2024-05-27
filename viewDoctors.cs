@@ -9,7 +9,7 @@ namespace clinic_system
     public partial class viewDoctors : Form
     {
         DataTable dt = new DataTable();
-        private Appointment appointment = new Appointment();
+        private Appointment appointment;
         private MySqlConnection connection;
         private Doctor doctorInstance;
 
@@ -17,6 +17,8 @@ namespace clinic_system
         {
             InitializeComponent();
             connection=db.Instance.GetConnection();
+            Messages message = new Messages();
+            appointment = new Appointment(message);
             Messages messages = new Messages("", "");
             doctorInstance = new Doctor(messages);
             dt.Columns.Add("name", typeof(string));
@@ -27,7 +29,7 @@ namespace clinic_system
             dataGridView1.CellClick += dataGridView1_CellClick;
             dataGridView1.Columns["number"].ReadOnly = true;
             numbox.ReadOnly = true;
-            doctorInstance.viewDoctors(dt);
+            Doctor.viewDoctors(dt);
         }
 
         private void savebtn_Click(object sender, EventArgs e)
