@@ -25,7 +25,6 @@ namespace clinic_system
         private void button1_Click(object sender, EventArgs e)
         {
             MySqlConnection connection = db.Instance.GetConnection();
-            connection.Open();
             patient_registration Patient_reg_form = new patient_registration();
             Patient_reg_form.Show();
             this.Hide();
@@ -49,8 +48,8 @@ namespace clinic_system
         private void searchPatient_Click(object sender, EventArgs e)
         {
             MySqlConnection connection = db.Instance.GetConnection();
-            connection.Open();
-            searchPatient view_patient = new searchPatient();
+        
+            patient_search view_patient = new patient_search("1");
             view_patient.Show();
             this.Hide();
         }

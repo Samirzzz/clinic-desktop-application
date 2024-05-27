@@ -22,6 +22,7 @@ namespace clinic_system
         Patient found_patient = new Patient();
         private Patient patientInstance;
         private Doctor drInstance;
+        private Clinic clinicInstance;
 
         private MySqlConnection connection;
 
@@ -46,6 +47,7 @@ namespace clinic_system
             this.docnumber = docnumber;
             Messages messages = new Messages("", "");
             patientInstance = new Patient(messages);
+            Clinic clinic ;
             drInstance = new Doctor(messages);
 
             connection = db.Instance.GetConnection();
@@ -59,7 +61,7 @@ namespace clinic_system
             patientInstance.displaycheifcomplaint(patientnumber, textBox2, connection);
 
             drInstance.getdocname(docnumber, connection, textBox4);
-            found_patient = patientInstance.FindByPatientNumber(patientnumber, connection);
+            found_patient = clinicInstance.FindByPatientNumber(patientnumber, connection);
             Name_textbox.Text = found_patient.getname();
             textBox1.Text = found_patient.getnumber();
 
@@ -185,7 +187,7 @@ namespace clinic_system
             if (comboBox2.SelectedIndex > 0)
             {
                 drInstance.getdocname(docnumber, connection, textBox4);
-                found_patient = patientInstance.FindByPatientNumber(patientnumber, connection);
+                found_patient = clinicInstance.FindByPatientNumber(patientnumber, connection);
                 Name_textbox.Text = found_patient.getname();
                 textBox1.Text = found_patient.getnumber();
 
@@ -193,12 +195,12 @@ namespace clinic_system
                 int selectedDiagnosisId = int.Parse(comboBox2.SelectedItem.ToString());
                 textBox3.Text = diagnosesInstance.Findtreatmentdecription(selectedDiagnosisId, found_patient.getnumber(), connection);
 
-                
+
                 comboBox3.Items.Add("choose");
             }
 
         }
-       
+
         private void label9_Click(object sender, EventArgs e)
         {
 
@@ -274,6 +276,11 @@ namespace clinic_system
                 textBox7.Text = diagnosesInstance.Findtreatmentdecription(selectedDiagnosisId2, found_patient.getnumber(), connection);
 
             }
+        }
+
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
