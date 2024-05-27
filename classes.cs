@@ -77,7 +77,10 @@ namespace clinic_system
             public string message;
             public string title;
 
+            public Messages()
+            {
 
+            }
             public Messages(string message, string title)
             {
                 this.message = message;
@@ -87,6 +90,14 @@ namespace clinic_system
             {
                 MessageBox.Show(message, title);
             }
+            public void setmessage(string message)
+            {
+                this.message=message;
+            }
+            public void setTitle(string title)
+            {
+                this.title = title;
+            }
         }
         public class Patient
         {
@@ -94,8 +105,9 @@ namespace clinic_system
             public int pid;
             public string name;
             public string number;
+
             Messages messages;
-            Doctor doc = new Doctor();
+
             public Patient(Messages messages)
             {
                 this.messages = messages;
@@ -454,10 +466,7 @@ namespace clinic_system
             public string password;
 
             Messages messages;
-            public Doctor()
-            {
 
-            }
             public Doctor(Messages messages)
             {
                 this.messages = messages;
@@ -514,6 +523,9 @@ namespace clinic_system
                         }
                         else
                         {
+                            messages.message = "Invalid login Credentials";
+                            messages.title = "Error";
+                            messages.show_messages();
                             return false;
                         }
                     }
@@ -695,20 +707,19 @@ namespace clinic_system
                         }
                     }
 
-                    MessageBox.Show("Working days updated successfully!");
-                    messages.message = "Working days updated successfully!  ";
-                    messages.title = "";
+                    messages.setmessage("Working days updated successfully! ");
+                    messages.setTitle("done");
                     messages.show_messages();
                 }
                 catch (Exception ex)
                 {
                     messages.message = "error:  " + ex.Message;
-                    messages.title = "";
+                    messages.title = "error";
                     messages.show_messages();
                 }
             }
 
-            public static void viewDoctors(DataTable dt)
+            public  void viewDoctors(DataTable dt)
             {
                 try
                 {
@@ -1040,7 +1051,6 @@ namespace clinic_system
            
 
         }
-
 
         public class Clinic
         {

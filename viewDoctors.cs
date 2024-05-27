@@ -11,11 +11,14 @@ namespace clinic_system
         DataTable dt = new DataTable();
         private Appointment appointment = new Appointment();
         private MySqlConnection connection;
+        private Doctor doctorInstance;
+
         public viewDoctors()
         {
             InitializeComponent();
             connection=db.Instance.GetConnection();
-            // Set up the DataTable and add it to a container control
+            Messages messages = new Messages("", "");
+            doctorInstance = new Doctor(messages);
             dt.Columns.Add("name", typeof(string));
             dt.Columns.Add("number", typeof(string)); 
             dt.Columns.Add("spec", typeof(string));
@@ -24,7 +27,7 @@ namespace clinic_system
             dataGridView1.CellClick += dataGridView1_CellClick;
             dataGridView1.Columns["number"].ReadOnly = true;
             numbox.ReadOnly = true;
-            Doctor.viewDoctors(dt);
+            doctorInstance.viewDoctors(dt);
         }
 
         private void savebtn_Click(object sender, EventArgs e)
@@ -47,7 +50,8 @@ namespace clinic_system
 
             try
             {
-                Doctor doc = new Doctor();
+                Messages messages = new Messages();
+                Doctor doc = new Doctor(messages);
                 doc.updateDoctor(newName, doctorNumber, newSpec, dt);
                 doc.updateDoctorWorkingDays(doctorNumber, Workdays, connection);
                 MessageBox.Show("Edit has been saved.");
@@ -86,8 +90,8 @@ namespace clinic_system
             }
 
             string doctorNumber = numbox.Text;
-
-            Doctor doc = new Doctor();
+            Messages messages = new Messages();
+            Doctor doc = new Doctor(messages);
 
             if (doc.deleteDoctor(doctorNumber, dt))
             {

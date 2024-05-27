@@ -18,6 +18,8 @@ namespace clinic_system
         DataTable dt = new DataTable();
         private Appointment appointment = new Appointment();
         private MySqlConnection connection;
+        private Doctor doctorInstance;
+
 
 
         public appointmentBooking()
@@ -26,7 +28,7 @@ namespace clinic_system
 
             connection = db.Instance.GetConnection();
             dt.Columns.Add("name", typeof(string));
-            Doctor.viewDoctors(dt);
+            doctorInstance.viewDoctors(dt);
             foreach (DataRow row in dt.Rows)
             {
                 string doctorName = row["name"].ToString();
