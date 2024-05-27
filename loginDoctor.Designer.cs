@@ -34,6 +34,7 @@
             txtpassword = new TextBox();
             button1 = new Button();
             button2 = new Button();
+            button3 = new Button();
             SuspendLayout();
             // 
             // label1
@@ -93,6 +94,19 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click_1;
             // 
+            // button3
+            // 
+            button3.BackColor = Color.Transparent;
+            button3.FlatStyle = FlatStyle.System;
+            button3.Font = new Font("Microsoft Sans Serif", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button3.Location = new Point(713, 33);
+            button3.Name = "button3";
+            button3.Size = new Size(75, 50);
+            button3.TabIndex = 22;
+            button3.Text = "<-";
+            button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
+            // 
             // loginDoctor
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -100,6 +114,7 @@
             BackgroundImage = Properties.Resources.pexels_pixabay_40568;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(814, 450);
+            Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(txtpassword);
@@ -120,5 +135,6 @@
         private TextBox txtpassword;
         private Button button1;
         private Button button2;
+        private Button button3;
     }
 }
