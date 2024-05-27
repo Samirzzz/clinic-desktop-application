@@ -16,6 +16,7 @@ namespace clinic_system
     {
         DataTable dt = new DataTable();
 
+
         public viewAppointments()
         {
             InitializeComponent();
