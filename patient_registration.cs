@@ -19,6 +19,7 @@ namespace clinic_system
     {
 
         private Patient patientInstance;
+         private  Clinic clinicInstance=new Clinic();
         private MySqlConnection connection;
         public patient_registration()
         {
@@ -44,10 +45,11 @@ namespace clinic_system
            
             string name = patient_name.Text.ToString();
             string number = patient_number.Text.ToString();
+            
             patientInstance.setname(name);
             if (patientInstance.validatenumber(number))
             {
-                patientInstance.addpatient(name, number,connection);
+                clinicInstance.addpatient(name, number,connection);
 
             }
 

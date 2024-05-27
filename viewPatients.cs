@@ -9,7 +9,7 @@ namespace clinic_system
     public partial class viewPatients : Form
     {
         DataTable dt = new DataTable();
-
+        Clinic clinicinstance=new Clinic();
         public viewPatients()
         {
             InitializeComponent();
@@ -41,7 +41,8 @@ namespace clinic_system
             {
 
                 Patient p = new Patient();
-                p.editPatient(newName, patientNumber, dt);
+                Clinic ClinicInstance=new Clinic();
+                ClinicInstance.editPatient(newName, patientNumber, dt);
                 MessageBox.Show("Edit has been saved.");
             }
             catch (Exception ex)
@@ -77,7 +78,9 @@ namespace clinic_system
             }
             string patientNumber = numbox.Text;
             Patient p = new Patient();
-            if (p.DeletePatient(patientNumber, dt))
+            Clinic ClinicInstance = new Clinic();
+
+            if (ClinicInstance.DeletePatient(patientNumber, dt))
             {
                 namebox.Text = "";
                 numbox.Text = "";

@@ -10,14 +10,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Xml.Linq;
+using static clinic_system.classes;
 
 namespace clinic_system
 {
     public partial class searchPatient : Form
     {
+        private Clinic clinicinstance = new Clinic();
+        private MySqlConnection connection;
         public searchPatient()
         {
             InitializeComponent();
+            connection = db.Instance.GetConnection();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -28,7 +32,9 @@ namespace clinic_system
         private void searchbutton_Click(object sender, EventArgs e)
         {
             string entered_number = Number_textbox.Text.ToString();
-            string entered_name = Name_textbox.Text.ToString();
+            viewpatientdetails view=new viewpatientdetails(entered_number);
+            view.Show();
+            this.Hide();
 
 
         }
@@ -39,6 +45,11 @@ namespace clinic_system
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void searchPatient_Load(object sender, EventArgs e)
         {
 
         }

@@ -17,9 +17,10 @@ namespace clinic_system
         private MySqlConnection connection;
 
         private Patient patientInstance;
+        private Clinic ClinicInstance=new Clinic();
         private string docnumber;
         private string patientnumber;
-
+       
 
         public patient_search(string docnumber)
         {
@@ -39,7 +40,7 @@ namespace clinic_system
             {
                 connection.Open();
             }
-            patientInstance.patient_search(number, docnumber, this, connection);
+            ClinicInstance.patient_search(number, docnumber, this, connection);
         }
 
         private void button2_Click(object sender, EventArgs e)

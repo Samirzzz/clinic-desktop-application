@@ -145,106 +145,106 @@ namespace clinic_system
                     return true;
                 }
             }
-            public void addpatient(string name, string number, MySqlConnection connection)
-            {
-                try
-                {
+            //public void addpatient(string name, string number, MySqlConnection connection)
+            //{
+            //    try
+            //    {
                   
                 
-                    string query = "INSERT INTO patient (name, number) VALUES (@name, @number)";
-                    MySqlCommand mySqlCommand = new MySqlCommand(query, connection);
-                    mySqlCommand.Parameters.AddWithValue("@name", name);
-                    mySqlCommand.Parameters.AddWithValue("@number", number);
-                    int rowsAffected = mySqlCommand.ExecuteNonQuery();
+            //        string query = "INSERT INTO patient (name, number) VALUES (@name, @number)";
+            //        MySqlCommand mySqlCommand = new MySqlCommand(query, connection);
+            //        mySqlCommand.Parameters.AddWithValue("@name", name);
+            //        mySqlCommand.Parameters.AddWithValue("@number", number);
+            //        int rowsAffected = mySqlCommand.ExecuteNonQuery();
 
 
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("User added successfully!");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed to add user.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("error: " + ex.Message);
-                }
+            //        if (rowsAffected > 0)
+            //        {
+            //            MessageBox.Show("User added successfully!");
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Failed to add user.");
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show("error: " + ex.Message);
+            //    }
 
-            }
-
-
-            public Patient FindByPatientNumber(string number, MySqlConnection conn)
-            {
-                Patient curr_patient = new Patient();
-                string query = "SELECT number, name FROM patient WHERE number = @number";
-
-                using (MySqlCommand mySqlCommand = new MySqlCommand(query, conn))
-                {
-                    mySqlCommand.Parameters.AddWithValue("@number", number);
-
-                    using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            string name = reader.GetString("name");
-                            string patientNum = reader.GetString("number");
-
-                            curr_patient.setname(name);
-                            curr_patient.setnumber(number);
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Patient with number {number} not found.");
-                        }
-                    }
-                }
-
-                return curr_patient;
-            }
+            //}
 
 
+            //public Patient FindByPatientNumber(string number, MySqlConnection conn)
+            //{
+            //    Patient curr_patient = new Patient();
+            //    string query = "SELECT number, name FROM patient WHERE number = @number";
+
+            //    using (MySqlCommand mySqlCommand = new MySqlCommand(query, conn))
+            //    {
+            //        mySqlCommand.Parameters.AddWithValue("@number", number);
+
+            //        using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
+            //        {
+            //            if (reader.Read())
+            //            {
+            //                string name = reader.GetString("name");
+            //                string patientNum = reader.GetString("number");
+
+            //                curr_patient.setname(name);
+            //                curr_patient.setnumber(number);
+            //            }
+            //            else
+            //            {
+            //                MessageBox.Show($"Patient with number {number} not found.");
+            //            }
+            //        }
+            //    }
+
+            //    return curr_patient;
+            //}
 
 
-            public void patient_search(string number, string docnumber, Form hide, MySqlConnection connection)
-            {
-                try
-                {
-                    string query = "SELECT number FROM patient WHERE number = @number";
 
-                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
-                    {
-                        mySqlCommand.Parameters.AddWithValue("@number", number);
 
-                        using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
+            //public void patient_search(string number, string docnumber, Form hide, MySqlConnection connection)
+            //{
+            //    try
+            //    {
+            //        string query = "SELECT number FROM patient WHERE number = @number";
 
-                                reader.Close();
+            //        using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
+            //        {
+            //            mySqlCommand.Parameters.AddWithValue("@number", number);
 
-                                patient_search doc = new patient_search(docnumber);
-                                diagnose diagnosis = new diagnose(number, docnumber);
-                                investigation treat=new investigation(number, docnumber);
-                                //PatientReport rep = new PatientReport(number,docnumber);
-                                diagnosis.Show();
-                                hide.Hide();
-                                connection.Close();
+            //            using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
+            //            {
+            //                if (reader.Read())
+            //                {
 
-                            }
-                            else
-                            {
-                                MessageBox.Show($"Doctor with number {number} not found.");
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message);
-                }
-            }
+            //                    reader.Close();
+
+            //                    patient_search doc = new patient_search(docnumber);
+            //                    diagnose diagnosis = new diagnose(number, docnumber);
+            //                    investigation treat=new investigation(number, docnumber);
+            //                    //PatientReport rep = new PatientReport(number,docnumber);
+            //                    diagnosis.Show();
+            //                    hide.Hide();
+            //                    connection.Close();
+
+            //                }
+            //                else
+            //                {
+            //                    MessageBox.Show($"Doctor with number {number} not found.");
+            //                }
+            //            }
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show("Error: " + ex.Message);
+            //    }
+            //}
 
 
 
@@ -285,23 +285,23 @@ namespace clinic_system
                     }
                 }
             }
-            public void editPatient(string newName, string patientNumber, DataTable dt)
-            {
+            //public void editPatient(string newName, string patientNumber, DataTable dt)
+            //{
 
-                string query = "UPDATE patient SET name = @name WHERE number = @number";
-                using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
-                {
-                    cmd.Parameters.AddWithValue("@name", newName);
-                    cmd.Parameters.AddWithValue("@number", patientNumber);
-                    cmd.ExecuteNonQuery();
-                }
+            //    string query = "UPDATE patient SET name = @name WHERE number = @number";
+            //    using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
+            //    {
+            //        cmd.Parameters.AddWithValue("@name", newName);
+            //        cmd.Parameters.AddWithValue("@number", patientNumber);
+            //        cmd.ExecuteNonQuery();
+            //    }
 
-                DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
-                if (rows.Length > 0)
-                {
-                    rows[0]["name"] = newName;
-                }
-            }
+            //    DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
+            //    if (rows.Length > 0)
+            //    {
+            //        rows[0]["name"] = newName;
+            //    }
+            //}
             public static void viewPatients(DataTable dt)
             {
                 try
@@ -321,35 +321,35 @@ namespace clinic_system
                     MessageBox.Show("Error: " + ex.Message);
                 }
             }
-            public bool DeletePatient(string patientNumber, DataTable dt)
-            {
-                try
-                {
-                    string query = "DELETE FROM patient WHERE number = @number";
+            //public bool DeletePatient(string patientNumber, DataTable dt)
+            //{
+            //    try
+            //    {
+            //        string query = "DELETE FROM patient WHERE number = @number";
 
-                    using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
-                    {
-                        cmd.Parameters.AddWithValue("@number", patientNumber);
-                        int rowsAffected = cmd.ExecuteNonQuery();
+            //        using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
+            //        {
+            //            cmd.Parameters.AddWithValue("@number", patientNumber);
+            //            int rowsAffected = cmd.ExecuteNonQuery();
 
-                        if (rowsAffected > 0)
-                        {
-                            DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
-                            if (rows.Length > 0)
-                            {
-                                dt.Rows.Remove(rows[0]);
-                            }
-                        }
+            //            if (rowsAffected > 0)
+            //            {
+            //                DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
+            //                if (rows.Length > 0)
+            //                {
+            //                    dt.Rows.Remove(rows[0]);
+            //                }
+            //            }
 
-                        return rowsAffected > 0; 
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message);
-                    return false; 
-                }
-            }
+            //            return rowsAffected > 0; 
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show("Error: " + ex.Message);
+            //        return false; 
+            //    }
+            //}
             public void addcheifcompliant(string pnumber, string complaint, MySqlConnection connection)
             {
                 try
@@ -946,15 +946,181 @@ namespace clinic_system
                 }
             }
 
+           
+
+           
+
+        }
+
+
+        public class Clinic
+        {
+            string name;
+
+           public  Clinic() { }
+            string getName()
+            {
+                return name;
+
+            }
+
+            void setName(string name) { this.name = name; }
+
+
+
+            public void addpatient(string name, string number, MySqlConnection connection)
+            {
+                try
+                {
+
+
+                    string query = "INSERT INTO patient (name, number) VALUES (@name, @number)";
+                    MySqlCommand mySqlCommand = new MySqlCommand(query, connection);
+                    mySqlCommand.Parameters.AddWithValue("@name", name);
+                    mySqlCommand.Parameters.AddWithValue("@number", number);
+                    int rowsAffected = mySqlCommand.ExecuteNonQuery();
+
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("User added successfully!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to add user.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("error: " + ex.Message);
+                }
+
+            }
+
+            public Patient FindByPatientNumber(string number, MySqlConnection conn)
+            {
+                Patient curr_patient = new Patient();
+                string query = "SELECT number, name FROM patient WHERE number = @number";
+              
+                using (MySqlCommand mySqlCommand = new MySqlCommand(query, conn))
+                { 
+                    mySqlCommand.Parameters.AddWithValue("@number", number);
+
+                    using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            string name = reader.GetString("name");
+                            string patientNum = reader.GetString("number");
+
+                            curr_patient.setname(name);
+                            curr_patient.setnumber(number);
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Patient with number {number} not found.");
+                        }
+                    }
+                }
+
+                return curr_patient;
+            }
+
+            public void patient_search(string number, string docnumber, Form hide, MySqlConnection connection)
+            {
+                try
+                {
+                    string query = "SELECT number FROM patient WHERE number = @number";
+
+                    using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
+                    {
+                        mySqlCommand.Parameters.AddWithValue("@number", number);
+
+                        using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+
+                                reader.Close();
+
+                                patient_search doc = new patient_search(docnumber);
+                                diagnose diagnosis = new diagnose(number, docnumber);
+                                investigation treat = new investigation(number, docnumber);
+                                //PatientReport rep = new PatientReport(number,docnumber);
+                                diagnosis.Show();
+                                hide.Hide();
+                                connection.Close();
+
+                            }
+                            else
+                            {
+                                MessageBox.Show($"Doctor with number {number} not found.");
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
+
+            public void editPatient(string newName, string patientNumber, DataTable dt)
+            {
+
+                string query = "UPDATE patient SET name = @name WHERE number = @number";
+                using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
+                {
+                    cmd.Parameters.AddWithValue("@name", newName);
+                    cmd.Parameters.AddWithValue("@number", patientNumber);
+                    cmd.ExecuteNonQuery();
+                }
+
+                DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
+                if (rows.Length > 0)
+                {
+                    rows[0]["name"] = newName;
+                }
+            }
+
+            public bool DeletePatient(string patientNumber, DataTable dt)
+            {
+                try
+                {
+                    string query = "DELETE FROM patient WHERE number = @number";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
+                    {
+                        cmd.Parameters.AddWithValue("@number", patientNumber);
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
+                            if (rows.Length > 0)
+                            {
+                                dt.Rows.Remove(rows[0]);
+                            }
+                        }
+
+                        return rowsAffected > 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                    return false;
+                }
+            }
+
+
+
 
         }
 
 
 
-
-
-
-            public class Diagnosis
+        public class Diagnosis
         {
             int diagid;
             int did;
