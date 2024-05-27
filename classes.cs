@@ -980,11 +980,18 @@ namespace clinic_system
         public class Clinic
         {
             string name;
+            Appointment appointment = new Appointment();
 
-           public  Clinic() { }
+            Messages messages;
+            public Clinic(Messages messages)
+            {
+                this.messages = messages;
+            }
+
+            public  Clinic() { }
             string getName()
             {
-                return name;
+                return this.name;
 
             }
 
@@ -1078,14 +1085,18 @@ namespace clinic_system
                             }
                             else
                             {
-                                MessageBox.Show($"Doctor with number {number} not found.");
+                                messages.message = "Doctor with number "+number+" not found.";
+                                messages.title = "Error";
+                                messages.show_messages();
                             }
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    messages.message = "Error:  " + ex.Message;
+                    messages.title = "Error";
+                    messages.show_messages();
                 }
             }
 
@@ -1132,7 +1143,9 @@ namespace clinic_system
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    messages.message = "Error:  " + ex.Message;
+                    messages.title = "Error";
+                    messages.show_messages();
                     return false;
                 }
             }
@@ -1141,8 +1154,6 @@ namespace clinic_system
 
 
         }
-
-
 
         public class Diagnosis
         {
