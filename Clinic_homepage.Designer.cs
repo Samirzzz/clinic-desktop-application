@@ -38,7 +38,7 @@ namespace clinic_system
             button1 = new Button();
             button2 = new Button();
             button5 = new Button();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            //((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // AddPatient
@@ -147,7 +147,7 @@ namespace clinic_system
             button5.TabIndex = 10;
             button5.Text = "\r\n";
             button5.UseVisualStyleBackColor = true;
-            button5.Click += button5_Click;
+            //button5.Click += button5_Click;
             // 
             // Form1
             // 

@@ -45,9 +45,9 @@ namespace clinic_system
             InitializeComponent();
             this.patientnumber = patientnumber;
             this.docnumber = docnumber;
-            Messages messages = new Messages("", "");
+            Messages messages = new Messages();
             patientInstance = new Patient(messages);
-            Clinic clinic;
+            clinicInstance = new Clinic(messages);
             drInstance = new Doctor(messages);
 
             connection = db.Instance.GetConnection();
