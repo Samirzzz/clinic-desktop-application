@@ -39,7 +39,7 @@ namespace clinic_system
         private void AddDoctor_Click(object sender, EventArgs e)
         {
             MySqlConnection connection = db.Instance.GetConnection();
-            connection.Open();
+            //connection.Open();
             doctor_registration doctor_reg_form = new doctor_registration();
             doctor_reg_form.Show();
             this.Hide();
@@ -89,7 +89,7 @@ namespace clinic_system
         private void button1_Click_1(object sender, EventArgs e)
         {
             MySqlConnection connection = db.Instance.GetConnection();
-            connection.Open();
+            //connection.Open();
             appointmentBooking viewp = new appointmentBooking();
             viewp.Show();
             this.Hide();

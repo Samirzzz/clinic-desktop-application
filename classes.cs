@@ -485,13 +485,16 @@ namespace clinic_system
             {
                 if(password == null || password.Length < 5)
                 {
-                    MessageBox.Show("Password length is should be more than 5 ");
-
+                    messages.message = "Password length is should be more than 5";
+                    messages.title = "Validation Error";
+                    messages.show_messages();
                     return false;
                 }
                 else if(password!=cpassword)
                 {
-                    MessageBox.Show("Passwords dont match");
+                    messages.message = "Passwords dont match";
+                    messages.title = "Validation Error";
+                    messages.show_messages();
                     return false;
                 }
                 setpassword(password);
@@ -536,8 +539,9 @@ namespace clinic_system
 
                     if (rowsAffected > 0)
                     {
-                        MessageBox.Show("User added successfully!");
-
+                    messages.message = "User added Successfully!";
+                    messages.title = "Doctor Registration";
+                    messages.show_messages();
                         foreach (string workday in workdays)
                         {
                             query = "INSERT INTO doctor_workdays (did, Wid) SELECT doctor.number, workdays.Wid FROM doctor, workdays WHERE doctor.number = @number AND workdays.Day = @workday";
@@ -549,18 +553,25 @@ namespace clinic_system
                             //connection.Close();
                             if (workdayRowsAffected <= 0)
                             {
-                                MessageBox.Show("Failed to add workday for doctor.");
+                                messages.message = "Failed to add workday for doctor.";
+                                messages.title = "Doctor Registration Error";
+                                messages.show_messages();
                             }
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Failed to add user.");
+                        messages.message = "Failed to add user.";
+                        messages.title = "Doctor Registration Error";
+                        messages.show_messages();
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("error:  " + ex.Message);
+                    messages.message = "error:  "+ex.Message;
+                    messages.title = "Doctor Registration Error";
+                    messages.show_messages();
+
                 }
             }
 
@@ -586,7 +597,9 @@ namespace clinic_system
                             }
                             else
                             {
-                                MessageBox.Show($"Doctor with number {number} not found.");
+                                messages.message = "doctor with number  " + number+" not found";
+                                messages.title = "Doctor search Error";
+                                messages.show_messages();
                             }
                         }
                     }
@@ -594,7 +607,9 @@ namespace clinic_system
 
                 catch (Exception ex)
                 {
-                    MessageBox.Show("error: " + ex.Message);
+                    messages.message = "error:  " + ex.Message;
+                    messages.title = "Doctor Registration Error";
+                    messages.show_messages();
                 }
             }
             public void updateDoctor(string newName, string doctorNumber, string newSpec, DataTable dt)
@@ -637,10 +652,15 @@ namespace clinic_system
                     }
 
                     MessageBox.Show("Working days updated successfully!");
+                    messages.message = "Working days updated successfully!  ";
+                    messages.title = "";
+                    messages.show_messages();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error updating working days: " + ex.Message);
+                    messages.message = "error:  " + ex.Message;
+                    messages.title = "";
+                    messages.show_messages();
                 }
             }
 
@@ -687,7 +707,9 @@ namespace clinic_system
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    messages.message = "error:  " + ex.Message;
+                    messages.title = "Error";
+                    messages.show_messages(); 
                     return false;
                 }
             }
@@ -710,7 +732,9 @@ namespace clinic_system
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    messages.message = "error:  " + ex.Message;
+                    messages.title = "Error";
+                    messages.show_messages();
                 }
              
                b.Text = doctorName;
@@ -1196,7 +1220,9 @@ namespace clinic_system
                 
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    messages.message = "Error:  "+ex.Message ;
+                    messages.title = "Error";
+                    messages.show_messages();
                 }
 
                 finally
@@ -1238,7 +1264,9 @@ namespace clinic_system
 
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    messages.message = "Error:  " + ex.Message;
+                    messages.title = "Error";
+                    messages.show_messages();
                 }
 
                 finally
@@ -1278,7 +1306,9 @@ namespace clinic_system
                     catch (MySqlException ex)
                     {
 
-                        Console.WriteLine("Error: " + ex.Message);
+                        messages.message = "Error:  " + ex.Message;
+                        messages.title = "Error";
+                        messages.show_messages();
                     }
 
                 }
@@ -1308,7 +1338,9 @@ namespace clinic_system
                         }
                         else
                         {
-                            MessageBox.Show($"Diagnosis with ID {Diagnoses_id} not found.");
+                            messages.message = "Diagnosis with ID:  " + Diagnoses_id+" not found.";
+                            messages.title = "Error";
+                            messages.show_messages();
                         }
                     }
 
@@ -1343,11 +1375,13 @@ namespace clinic_system
                             }
                             catch (MySqlException ex)
                             {
-                                
-                                Console.WriteLine("Error: " + ex.Message);
+
+                             messages.message = "Error:  " + ex.Message;
+                             messages.title = "Error";
+                             messages.show_messages();
                             }
                         
-                    }
+                         }
 
             
                     return diagnosisIds;
@@ -1378,8 +1412,9 @@ namespace clinic_system
                         }
                         else
                         {
-                            MessageBox.Show($"Diagnosis with ID {Diagnoses_id} not found.");
-                        }
+                            messages.message = "Diagnosis with ID:  " + Diagnoses_id+" not found.";
+                            messages.title = "Error";
+                            messages.show_messages();                        }
                     }
 
                     return curr_description;
@@ -1405,18 +1440,24 @@ namespace clinic_system
 
                             if (rowsAffected > 0)
                             {
-                                MessageBox.Show("Added successfully!");
-                            }
+                            messages.message = "Description added successfully!";
+                            messages.title = "";
+                            messages.show_messages();
+                        }
                             else
                             {
-                                MessageBox.Show("Failed to add.");
-                            }
+                            messages.message = "error adding the description." ;
+                            messages.title = "Error";
+                            messages.show_messages();
+                        }
                         }
                     
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    messages.message = "error: "+ex.Message;
+                    messages.title = "Error";
+                    messages.show_messages();
                 }
 
 
@@ -1425,52 +1466,15 @@ namespace clinic_system
 
         }
 
-        //public class Appointment
-        //{
-        //    public string docnumber;
-        //    public string patnumber;
-        //    public DateTime date;
-        //    public string status;
-
-        //    public void addAppointment(string docnumber,string patnumber,DateTime date,string status)
-        //    {
-        //        try
-        //        {
-
-
-
-        //            string query = "INSERT INTO appointment (docnumber, patnumber,date,status) VALUES (@docnumber, @patnumber, @date,@status)";
-        //            MySqlCommand mySqlCommand = new MySqlCommand(query, db.Instance.GetConnection());
-        //            mySqlCommand.Parameters.AddWithValue("@docnumber", docnumber);
-        //            mySqlCommand.Parameters.AddWithValue("@patnumber", patnumber);
-        //            mySqlCommand.Parameters.AddWithValue("@date", date);
-        //            mySqlCommand.Parameters.AddWithValue("@status", status);
-
-
-        //            int rowsAffected = mySqlCommand.ExecuteNonQuery();
-
-
-        //            if (rowsAffected > 0)
-        //            {
-        //                MessageBox.Show("Appointment added successfully!");
-        //            }
-        //            else
-        //            {
-        //                MessageBox.Show("Failed to add appointment.");
-        //            }
-
-
-
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show("error: " + ex.Message);
-        //        }
-        //    }
-        //}    }
         public class Appointment
         {
             private const int MaxAppointmentsPerDay = 4;
+            Messages messages;
+
+            public Appointment(Messages messages)
+            {
+                this.messages = messages;
+            }
 
             public void updateAppointment(string patnumber,int Appid,DataTable dt)
             {
@@ -1538,13 +1542,17 @@ namespace clinic_system
             {
                 if (!DoctorWorksOnDay(doctorNumber, date.DayOfWeek.ToString(),connection))
                 {
-                    MessageBox.Show("Doctor does not work on this day.");
+                    messages.message = "Doctor does not work on this day.  ";
+                    messages.title = "Error";
+                    messages.show_messages();
                     return;
                 }
 
                 if (IsMaxAppointmentsReached(doctorNumber, date.Date,connection))
                 {
-                    MessageBox.Show("Doctor already has the maximum number of appointments for this day.");
+                    messages.message = "Doctor already has the maximum number of appointments for this day.";
+                    messages.title = "Error";
+                    messages.show_messages();
                     return;
                 }
 
@@ -1558,12 +1566,16 @@ namespace clinic_system
 
                     if (rowsAffected > 0)
                     {
-                        MessageBox.Show("Appointment added successfully!");
+                        messages.message = "Appointment added successfully!.";
+                        messages.title = "";
+                        messages.show_messages(); 
                         connection.Close();
                     }
                     else
                     {
-                        MessageBox.Show("Failed to add appointment.");
+                        messages.message = "Failed to add appointment.";
+                        messages.title = "Error";
+                        messages.show_messages();
                     }
                 }
             }

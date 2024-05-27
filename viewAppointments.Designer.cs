@@ -161,6 +161,7 @@
             appointbox.Name = "appointbox";
             appointbox.Size = new Size(218, 41);
             appointbox.TabIndex = 21;
+            appointbox.TextChanged += appointbox_TextChanged;
             // 
             // label2
             // 
