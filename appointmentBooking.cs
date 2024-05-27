@@ -23,7 +23,8 @@ namespace clinic_system
         public appointmentBooking()
         {
             InitializeComponent();
-            connection= db.Instance.GetConnection();
+
+            connection = db.Instance.GetConnection();
             dt.Columns.Add("name", typeof(string));
             Doctor.viewDoctors(dt);
             foreach (DataRow row in dt.Rows)
