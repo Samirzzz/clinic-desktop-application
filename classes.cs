@@ -72,7 +72,15 @@ namespace clinic_system
                 }
             }
         }
-        public class Messages
+        public interface IMessageService
+        {
+            void show_messages();
+            void setmessage(string message);
+            void setTitle(string title);
+        }
+
+
+        public class Messages : IMessageService
         {
             public string message;
             public string title;
@@ -92,13 +100,14 @@ namespace clinic_system
             }
             public void setmessage(string message)
             {
-                this.message=message;
+                this.message = message;
             }
             public void setTitle(string title)
             {
                 this.title = title;
             }
         }
+
         public class Patient
         {
 
@@ -107,6 +116,7 @@ namespace clinic_system
             public string number;
 
             Messages messages;
+
 
             public Patient(Messages messages)
             {
@@ -465,9 +475,10 @@ namespace clinic_system
             public string spec;
             public string password;
 
-            Messages messages;
+            //Messages messages;
+            IMessageService messages;
 
-            public Doctor(Messages messages)
+            public Doctor(IMessageService messages)
             {
                 this.messages = messages;
             }
@@ -523,8 +534,8 @@ namespace clinic_system
                         }
                         else
                         {
-                            messages.message = "Invalid login Credentials";
-                            messages.title = "Error";
+                            messages.setmessage("Invalid login Credentials")  ;
+                            messages.setTitle("Error");
                             messages.show_messages();
                             return false;
                         }
@@ -540,15 +551,15 @@ namespace clinic_system
             {
                 if(password == null || password.Length < 5)
                 {
-                    messages.message = "Password length is should be more than 5";
-                    messages.title = "Validation Error";
+                    messages.setmessage("Password length is should be more than 5");
+                    messages.setTitle("Validation Error");
                     messages.show_messages();
                     return false;
                 }
                 else if(password!=cpassword)
                 {
-                    messages.message = "Passwords dont match";
-                    messages.title = "Validation Error";
+                    messages.setmessage("Passwords dont match");
+                    messages.setTitle("Validation Error");
                     messages.show_messages();
                     return false;
                 }
@@ -560,15 +571,15 @@ namespace clinic_system
 
                 if (string.IsNullOrEmpty(number))
                 {
-                    messages.message = "No empty field is allowed";
-                    messages.title = "Validation error";
+                    messages.setmessage("No empty field is allowed");
+                    messages.setTitle("Validation error");
                     messages.show_messages();
                     return false;
                 }
                 else if (number.Length < 11)
                 {
-                    messages.message = "Number must be at least 11 characters long";
-                    messages.title = "Validation error";
+                    messages.setmessage("Number must be at least 11 characters long");
+                    messages.setTitle("Validation error");
                     messages.show_messages();
                     
                     return false;
@@ -595,8 +606,8 @@ namespace clinic_system
 
                     if (rowsAffected > 0)
                     {
-                    messages.message = "User added Successfully!";
-                    messages.title = "Doctor Registration";
+                    messages.setmessage("User added Successfully!");
+                    messages.setTitle("Doctor Registration");
                     messages.show_messages();
                         foreach (string workday in workdays)
                         {
@@ -609,23 +620,23 @@ namespace clinic_system
                             //connection.Close();
                             if (workdayRowsAffected <= 0)
                             {
-                                messages.message = "Failed to add workday for doctor.";
-                                messages.title = "Doctor Registration Error";
+                                messages.setmessage("Failed to add workday for doctor.");
+                                messages.setTitle("Doctor Registration Error");
                                 messages.show_messages();
                             }
                         }
                     }
                     else
                     {
-                        messages.message = "Failed to add user.";
-                        messages.title = "Doctor Registration Error";
+                        messages.setmessage("Failed to add user.");
+                        messages.setTitle("Doctor Registration Error");
                         messages.show_messages();
                     }
                 }
                 catch (Exception ex)
                 {
-                    messages.message = "error:  "+ex.Message;
-                    messages.title = "Doctor Registration Error";
+                    messages.setmessage("error:  "+ex.Message);
+                    messages.setTitle("Doctor Registration Error");
                     messages.show_messages();
 
                 }
@@ -653,8 +664,8 @@ namespace clinic_system
                             }
                             else
                             {
-                                messages.message = "doctor with number  " + number+" not found";
-                                messages.title = "Doctor search Error";
+                                messages.setmessage("doctor with number  " + number+" not found");
+                                messages.setTitle("Doctor search Error");
                                 messages.show_messages();
                             }
                         }
@@ -663,8 +674,8 @@ namespace clinic_system
 
                 catch (Exception ex)
                 {
-                    messages.message = "error:  " + ex.Message;
-                    messages.title = "Doctor Registration Error";
+                    messages.setmessage("error:  " + ex.Message);
+                    messages.setTitle("Doctor Registration Error");
                     messages.show_messages();
                 }
             }
@@ -713,8 +724,8 @@ namespace clinic_system
                 }
                 catch (Exception ex)
                 {
-                    messages.message = "error:  " + ex.Message;
-                    messages.title = "error";
+                    messages.setmessage("error:  " + ex.Message);
+                    messages.setTitle("error");
                     messages.show_messages();
                 }
             }
@@ -763,8 +774,8 @@ namespace clinic_system
                 catch (Exception ex)
                 {
                     
-                    messages.message = "error:  " + ex.Message;
-                    messages.title = "Error";
+                    messages.setmessage("error:  " + ex.Message);
+                    messages.setTitle("Error");
                     messages.show_messages(); 
                     return false;
                 }
@@ -788,8 +799,8 @@ namespace clinic_system
                 }
                 catch (Exception ex)
                 {
-                    messages.message = "error:  " + ex.Message;
-                    messages.title = "Error";
+                    messages.setmessage("error:  " + ex.Message);
+                    messages.setTitle("Error");
                     messages.show_messages();
                 }
              
