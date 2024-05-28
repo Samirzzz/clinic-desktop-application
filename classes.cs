@@ -27,7 +27,7 @@ namespace clinic_system
         public class db
         {
             private static db instance;
-            private string mysqlconn = "server=localhost; user=root; database=clinic-system; password=1234; pooling=true;";
+            private string mysqlconn = "server=localhost; user=root; database=clinic-system; password=; pooling=true;";
             private MySqlConnection mysqlconnection;
 
             private db()
