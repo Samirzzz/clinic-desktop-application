@@ -115,10 +115,10 @@ namespace clinic_system
             public string name;
             public string number;
 
-            Messages messages;
+            IMessageService messages;
 
 
-            public Patient(Messages messages)
+            public Patient(IMessageService messages)
             {
                 this.messages = messages;
             }
@@ -149,15 +149,15 @@ namespace clinic_system
 
                 if (string.IsNullOrEmpty(number))
                 {
-                    messages.message = "No empty field is allowed";
-                    messages.title = "Validation error";
+                    messages.setmessage("No empty field is allowed");
+                    messages.setTitle("Validation error");
                     messages.show_messages();
                     return false;
                 }
                 else if (number.Length < 11)
                 {
-                    messages.message = "Number must be at least 11 characters long";
-                    messages.title = "Validation error";
+                    messages.setmessage("Number must be at least 11 characters long");
+                    messages.setTitle("Validation error");
                     messages.show_messages();
                     return false;
                 }
@@ -195,8 +195,8 @@ namespace clinic_system
                             }
                             else
                             {
-                                messages.message = "Doctor with number " + number + " not found.";
-                                messages.title = "Error";
+                                messages.setmessage("Patient with number " + number + " not found.");
+                                messages.setTitle("Error");
                                 messages.show_messages();
                             }
                         }
@@ -204,112 +204,13 @@ namespace clinic_system
                 }
                 catch (Exception ex)
                 {
-                    messages.message = "Error:  " + ex.Message;
-                    messages.title = "Error";
+                    messages.setmessage("Error:  " + ex.Message);
+                    messages.setTitle("Error");
                     messages.show_messages();
                 }
             }
 
-            //public void addpatient(string name, string number, MySqlConnection connection)
-            //{
-            //    try
-            //    {
-
-
-            //        string query = "INSERT INTO patient (name, number) VALUES (@name, @number)";
-            //        MySqlCommand mySqlCommand = new MySqlCommand(query, connection);
-            //        mySqlCommand.Parameters.AddWithValue("@name", name);
-            //        mySqlCommand.Parameters.AddWithValue("@number", number);
-            //        int rowsAffected = mySqlCommand.ExecuteNonQuery();
-
-
-            //        if (rowsAffected > 0)
-            //        {
-            //            MessageBox.Show("User added successfully!");
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Failed to add user.");
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show("error: " + ex.Message);
-            //    }
-
-            //}
-
-
-            //public Patient FindByPatientNumber(string number, MySqlConnection conn)
-            //{
-            //    Patient curr_patient = new Patient();
-            //    string query = "SELECT number, name FROM patient WHERE number = @number";
-
-            //    using (MySqlCommand mySqlCommand = new MySqlCommand(query, conn))
-            //    {
-            //        mySqlCommand.Parameters.AddWithValue("@number", number);
-
-            //        using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
-            //        {
-            //            if (reader.Read())
-            //            {
-            //                string name = reader.GetString("name");
-            //                string patientNum = reader.GetString("number");
-
-            //                curr_patient.setname(name);
-            //                curr_patient.setnumber(number);
-            //            }
-            //            else
-            //            {
-            //                MessageBox.Show($"Patient with number {number} not found.");
-            //            }
-            //        }
-            //    }
-
-            //    return curr_patient;
-            //}
-
-
-
-
-            //public void patient_search(string number, string docnumber, Form hide, MySqlConnection connection)
-            //{
-            //    try
-            //    {
-            //        string query = "SELECT number FROM patient WHERE number = @number";
-
-            //        using (MySqlCommand mySqlCommand = new MySqlCommand(query, connection))
-            //        {
-            //            mySqlCommand.Parameters.AddWithValue("@number", number);
-
-            //            using (MySqlDataReader reader = mySqlCommand.ExecuteReader())
-            //            {
-            //                if (reader.Read())
-            //                {
-
-            //                    reader.Close();
-
-            //                    patient_search doc = new patient_search(docnumber);
-            //                    diagnose diagnosis = new diagnose(number, docnumber);
-            //                    investigation treat=new investigation(number, docnumber);
-            //                    //PatientReport rep = new PatientReport(number,docnumber);
-            //                    diagnosis.Show();
-            //                    hide.Hide();
-            //                    connection.Close();
-
-            //                }
-            //                else
-            //                {
-            //                    MessageBox.Show($"Doctor with number {number} not found.");
-            //                }
-            //            }
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show("Error: " + ex.Message);
-            //    }
-            //}
+ 
 
 
 
@@ -350,23 +251,7 @@ namespace clinic_system
                     }
                 }
             }
-            //public void editPatient(string newName, string patientNumber, DataTable dt)
-            //{
 
-            //    string query = "UPDATE patient SET name = @name WHERE number = @number";
-            //    using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
-            //    {
-            //        cmd.Parameters.AddWithValue("@name", newName);
-            //        cmd.Parameters.AddWithValue("@number", patientNumber);
-            //        cmd.ExecuteNonQuery();
-            //    }
-
-            //    DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
-            //    if (rows.Length > 0)
-            //    {
-            //        rows[0]["name"] = newName;
-            //    }
-            //}
             public static void viewPatients(DataTable dt)
             {
                 try
@@ -386,35 +271,7 @@ namespace clinic_system
                     MessageBox.Show("Error: " + ex.Message);
                 }
             }
-            //public bool DeletePatient(string patientNumber, DataTable dt)
-            //{
-            //    try
-            //    {
-            //        string query = "DELETE FROM patient WHERE number = @number";
-
-            //        using (MySqlCommand cmd = new MySqlCommand(query, classes.db.Instance.GetConnection()))
-            //        {
-            //            cmd.Parameters.AddWithValue("@number", patientNumber);
-            //            int rowsAffected = cmd.ExecuteNonQuery();
-
-            //            if (rowsAffected > 0)
-            //            {
-            //                DataRow[] rows = dt.Select("number = '" + patientNumber + "'");
-            //                if (rows.Length > 0)
-            //                {
-            //                    dt.Rows.Remove(rows[0]);
-            //                }
-            //            }
-
-            //            return rowsAffected > 0; 
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show("Error: " + ex.Message);
-            //        return false; 
-            //    }
-            //}
+  
             public void addcheifcompliant(string pnumber, string complaint, MySqlConnection connection)
             {
                 try
@@ -475,7 +332,6 @@ namespace clinic_system
             public string spec;
             public string password;
 
-            //Messages messages;
             IMessageService messages;
 
             public Doctor(IMessageService messages)
@@ -886,11 +742,11 @@ namespace clinic_system
             int did;
             int pid;
             string description;
+            IMessageService messages;
 
             public Medication() { }
 
-            Messages messages;
-            public Medication(Messages messages)
+            public Medication(IMessageService messages)
             {
                 this.messages = messages;
             }
@@ -1067,9 +923,9 @@ namespace clinic_system
         {
             string name;
 
-            Messages messages;
-            Appointment appointment;
-            public Clinic(Messages messages)
+            IMessageService messages;
+             Appointment appointment;
+            public Clinic(IMessageService messages)
             {
                 appointment = new Appointment(messages);
                 this.messages = messages;
@@ -1196,8 +1052,8 @@ namespace clinic_system
                 }
                 catch (Exception ex)
                 {
-                    messages.message = "Error:  " + ex.Message;
-                    messages.title = "Error";
+                    messages.setmessage("Error:  " + ex.Message);
+                    messages.setTitle("Error");
                     messages.show_messages();
                     return false;
                 }
@@ -1214,11 +1070,10 @@ namespace clinic_system
             int did;
             int pid;
             string description;
-
+            IMessageService messages;
             public Diagnosis() { }
 
-            Messages messages;
-            public Diagnosis(Messages messages)
+            public Diagnosis(IMessageService messages)
             {
                 this.messages = messages;
             }
@@ -1284,8 +1139,8 @@ namespace clinic_system
                 
                 catch (Exception ex)
                 {
-                    messages.message = "Error:  "+ex.Message ;
-                    messages.title = "Error";
+                    messages.setmessage( "Error:  "+ex.Message) ;
+                    messages.setTitle("Error");
                     messages.show_messages();
                 }
 
@@ -1328,8 +1183,8 @@ namespace clinic_system
 
                 catch (Exception ex)
                 {
-                    messages.message = "Error:  " + ex.Message;
-                    messages.title = "Error";
+                    messages.setmessage("Error:  " + ex.Message);
+                    messages.setTitle("Error");
                     messages.show_messages();
                 }
 
@@ -1370,8 +1225,8 @@ namespace clinic_system
                     catch (MySqlException ex)
                     {
 
-                        messages.message = "Error:  " + ex.Message;
-                        messages.title = "Error";
+                        messages.setmessage("Error:  " + ex.Message);
+                        messages.setTitle("Error");
                         messages.show_messages();
                     }
 
@@ -1402,8 +1257,8 @@ namespace clinic_system
                         }
                         else
                         {
-                            messages.message = "Diagnosis with ID:  " + Diagnoses_id+" not found.";
-                            messages.title = "Error";
+                            messages.setmessage("Diagnosis with ID:  " + Diagnoses_id+" not found.");
+                            messages.setTitle("Error");
                             messages.show_messages();
                         }
                     }
@@ -1440,8 +1295,8 @@ namespace clinic_system
                             catch (MySqlException ex)
                             {
 
-                             messages.message = "Error:  " + ex.Message;
-                             messages.title = "Error";
+                             messages.setmessage("Error:  " + ex.Message);
+                             messages.setTitle("Error");
                              messages.show_messages();
                             }
                         
@@ -1476,8 +1331,8 @@ namespace clinic_system
                         }
                         else
                         {
-                            messages.message = "Diagnosis with ID:  " + Diagnoses_id+" not found.";
-                            messages.title = "Error";
+                            messages.setmessage("Diagnosis with ID:  " + Diagnoses_id+" not found.");
+                            messages.setTitle("Error");
                             messages.show_messages();                        }
                     }
 
@@ -1504,14 +1359,14 @@ namespace clinic_system
 
                             if (rowsAffected > 0)
                             {
-                            messages.message = "Description added successfully!";
-                            messages.title = "";
+                            messages.setmessage("Description added successfully!");
+                            messages.setTitle("");
                             messages.show_messages();
                         }
                             else
                             {
-                            messages.message = "error adding the description." ;
-                            messages.title = "Error";
+                            messages.setmessage("error adding the description.");
+                            messages.setTitle("Error");
                             messages.show_messages();
                         }
                         }
@@ -1519,8 +1374,8 @@ namespace clinic_system
                 }
                 catch (Exception ex)
                 {
-                    messages.message = "error: "+ex.Message;
-                    messages.title = "Error";
+                    messages.setmessage("error: "+ex.Message);
+                    messages.setTitle("Error");
                     messages.show_messages();
                 }
 
@@ -1534,8 +1389,8 @@ namespace clinic_system
         {
             private const int MaxAppointmentsPerDay = 4;
 
-            Messages messages;
-            public Appointment(Messages messages)
+            IMessageService messages;
+            public Appointment(IMessageService messages)
             {
                 this.messages = messages;
             }
@@ -1605,16 +1460,16 @@ namespace clinic_system
             {
                 if (!DoctorWorksOnDay(doctorNumber, date.DayOfWeek.ToString(),connection))
                 {
-                    messages.message = "Doctor does not work on this day.  ";
-                    messages.title = "Error";
+                    messages.setmessage("Doctor does not work on this day.  ");
+                    messages.setTitle("Error");
                     messages.show_messages();
                     return;
                 }
 
                 if (IsMaxAppointmentsReached(doctorNumber, date.Date,connection))
                 {
-                    messages.message = "Doctor already has the maximum number of appointments for this day.";
-                    messages.title = "Error";
+                    messages.setmessage("Doctor already has the maximum number of appointments for this day.");
+                    messages.setTitle("Error");
                     messages.show_messages();
                     return;
                 }
@@ -1629,15 +1484,15 @@ namespace clinic_system
 
                     if (rowsAffected > 0)
                     {
-                        messages.message = "Appointment added successfully!.";
-                        messages.title = "";
+                        messages.setmessage("Appointment added successfully!.");
+                        messages.setTitle("");
                         messages.show_messages(); 
                         connection.Close();
                     }
                     else
                     {
-                        messages.message = "Failed to add appointment.";
-                        messages.title = "Error";
+                        messages.setmessage("Failed to add appointment.");
+                        messages.setTitle("Error");
                         messages.show_messages();
                     }
                 }
