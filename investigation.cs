@@ -16,7 +16,6 @@ namespace clinic_system
 {
     public partial class investigation : Form
     {
-        // Dictionary to store selected checkboxes
         private Dictionary<string, List<string>> selectedCheckboxes = new Dictionary<string, List<string>>();
         private List<string> selectedTreatments = new List<string>();
 
@@ -42,7 +41,6 @@ namespace clinic_system
             string selectedDiagnosis = comboBox1.SelectedItem?.ToString();
             if (string.IsNullOrEmpty(selectedDiagnosis)) return;
 
-            // Save current selections
             SaveCurrentSelections();
 
             panel1.Controls.Clear();
@@ -63,12 +61,43 @@ namespace clinic_system
 
             if (treatment != null)
             {
-                CheckBox rb1 = new CheckBox { Width = 200, Location = new Point(10, 10) };
-                CheckBox rb2 = new CheckBox { Width = 200, Location = new Point(10, 50) };
-                treatment.treatment(rb1, rb2);
+                int xOffset = 10;
+                int yOffset = 10;
+                int xStep = 210;  
+                int yStep = 40;   
+                int checkboxesPerRow = 5;
+                Font smallerFont = new Font("Arial", 8);
+                CheckBox[] checkBoxes = new CheckBox[38];
 
-                panel1.Controls.Add(rb1);
-                panel1.Controls.Add(rb2);
+                for (int i = 0; i < 38; i++)
+                {
+                    int x = xOffset + (i % checkboxesPerRow) * xStep;
+                    int y = yOffset + (i / checkboxesPerRow) * yStep;
+                    checkBoxes[i] = new CheckBox { Width = 200, Location = new Point(x, y), Font = smallerFont };
+                    panel1.Controls.Add(checkBoxes[i]);
+                }
+               
+                treatment.treatment(checkBoxes[0], checkBoxes[1], checkBoxes[2], checkBoxes[3], checkBoxes[4],
+                                           checkBoxes[5], checkBoxes[6], checkBoxes[7], checkBoxes[8], checkBoxes[9],
+                                           checkBoxes[10], checkBoxes[11], checkBoxes[12], checkBoxes[13], checkBoxes[14],
+                                           checkBoxes[15], checkBoxes[16], checkBoxes[17], checkBoxes[18], checkBoxes[19],
+                                           checkBoxes[20], checkBoxes[21], checkBoxes[22], checkBoxes[23], checkBoxes[24],
+                                           checkBoxes[25], checkBoxes[26], checkBoxes[27], checkBoxes[28], checkBoxes[29],
+                                           checkBoxes[30], checkBoxes[31], checkBoxes[32], checkBoxes[33], checkBoxes[34],
+                                           checkBoxes[35], checkBoxes[36], checkBoxes[37]);
+                if (selectedDiagnosis == "Singles")
+                {
+                    checkBoxes[37].Width = 400;
+                }
+                if (selectedDiagnosis != "Singles")
+                {
+                    for (int i = 25; i < checkBoxes.Length; i++)
+                    {
+                        checkBoxes[i].Hide();
+                    }
+                }
+
+
 
                 LoadSavedSelections(selectedDiagnosis);
             }

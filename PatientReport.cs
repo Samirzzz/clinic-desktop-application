@@ -196,7 +196,6 @@ namespace clinic_system
                 textBox3.Text = diagnosesInstance.Findtreatmentdecription(selectedDiagnosisId, found_patient.getnumber(), connection);
 
 
-                comboBox3.Items.Add("choose");
             }
 
         }

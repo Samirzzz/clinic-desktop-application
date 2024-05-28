@@ -27,7 +27,7 @@ namespace clinic_system
         public class db
         {
             private static db instance;
-            private string mysqlconn = "server=localhost; user=root; database=clinic-system; password=; pooling=true;";
+            private string mysqlconn = "server=localhost; user=root; database=clinic-system; password=1234; pooling=true;";
             private MySqlConnection mysqlconnection;
 
             private db()
@@ -803,8 +803,14 @@ namespace clinic_system
         {
             string getdiagnosis();
             void setdiagnosis(string diagnosis);
-            void treatment(CheckBox rb1, CheckBox rb2);
-           
+            void treatment(CheckBox rb1, CheckBox rb2, CheckBox rb3, CheckBox rb4, CheckBox rb5,
+               CheckBox rb6, CheckBox rb7, CheckBox rb8, CheckBox rb9, CheckBox rb10,
+               CheckBox rb11, CheckBox rb12, CheckBox rb13, CheckBox rb14, CheckBox rb15,
+               CheckBox rb16, CheckBox rb17, CheckBox rb18, CheckBox rb19, CheckBox rb20,
+               CheckBox rb21, CheckBox rb22, CheckBox rb23, CheckBox rb24, CheckBox rb25,
+               CheckBox rb26, CheckBox rb27, CheckBox rb28, CheckBox rb29, CheckBox rb30,
+               CheckBox rb31, CheckBox rb32, CheckBox rb33, CheckBox rb34, CheckBox rb35,
+               CheckBox rb36, CheckBox rb37, CheckBox rb38);
         }
         public class singlesinvestigation : Investigation
         {
@@ -818,13 +824,58 @@ namespace clinic_system
 
             public void setdiagnosis(string diagnosis)
             {
-                diagnosis = "Bone";
+                diagnosis = "single";
             }
-            public void treatment(CheckBox rb1, CheckBox rb2)
+            public void treatment(CheckBox rb1, CheckBox rb2, CheckBox rb3, CheckBox rb4, CheckBox rb5,
+                            CheckBox rb6, CheckBox rb7, CheckBox rb8, CheckBox rb9, CheckBox rb10,
+                            CheckBox rb11, CheckBox rb12, CheckBox rb13, CheckBox rb14, CheckBox rb15,
+                            CheckBox rb16, CheckBox rb17, CheckBox rb18, CheckBox rb19, CheckBox rb20,
+                            CheckBox rb21, CheckBox rb22, CheckBox rb23, CheckBox rb24, CheckBox rb25,
+                            CheckBox rb26, CheckBox rb27, CheckBox rb28, CheckBox rb29, CheckBox rb30,
+                            CheckBox rb31, CheckBox rb32, CheckBox rb33, CheckBox rb34, CheckBox rb35,
+                            CheckBox rb36, CheckBox rb37, CheckBox rb38)
             {
 
                 rb1.Text = "CBC";
                 rb2.Text = "PT";
+                rb3.Text = "Coomb's (Direct)";
+                rb4.Text = "T. protien";
+                rb5.Text = "Creat. Clearance";
+                rb6.Text = "B2 Microglblin";
+                rb7.Text = "Mg++";
+                rb8.Text = "Urine analysis";
+                rb38.Text = "LDH";
+                rb10.Text = "PTT";
+                rb11.Text = "Coomb's (Indirect)";
+                rb12.Text = "Albumin";
+                rb13.Text = "Na+";
+                rb14.Text = "Cholestrol";
+                rb15.Text = "Ph++";
+                rb16.Text = "stool analysis";
+                rb17.Text = "Glucose";
+                rb18.Text = "ALP";
+                rb19.Text = "Urea";
+                rb20.Text = "K+";
+                rb21.Text = "Trigs";
+                rb22.Text = "Amylase";
+                rb23.Text = "CSF examination";
+                rb24.Text = "Retics";
+                rb25.Text = "LDL";
+                rb26.Text = "AST";
+                rb27.Text = "Bil (T)";
+                rb28.Text = "Creatinine";
+                rb29.Text = "Ca (total)";
+                rb30.Text = "Hdl";
+                rb31.Text = "Lipase";
+                rb32.Text = "ESR";
+                rb33.Text = "ALT";
+                rb34.Text = "Bil (D)";
+                rb35.Text = "Uric acid";
+                rb36.Text = "Ca++ (i)";
+                rb37.Text = "Fibrinogen";
+                rb38.Text = "CBC with manual differantial";
+
+
 
             }
         }
@@ -839,12 +890,40 @@ namespace clinic_system
                 diagnosis = "Cancer";
             }
 
-            public void treatment(CheckBox rb1, CheckBox rb2)
+           public void treatment(CheckBox rb1, CheckBox rb2, CheckBox rb3, CheckBox rb4, CheckBox rb5,
+                CheckBox rb6, CheckBox rb7, CheckBox rb8, CheckBox rb9, CheckBox rb10,
+                CheckBox rb11, CheckBox rb12, CheckBox rb13, CheckBox rb14, CheckBox rb15,
+                CheckBox rb16, CheckBox rb17, CheckBox rb18, CheckBox rb19, CheckBox rb20,
+                CheckBox rb21, CheckBox rb22, CheckBox rb23, CheckBox rb24, CheckBox rb25,
+                CheckBox rb26, CheckBox rb27, CheckBox rb28, CheckBox rb29, CheckBox rb30,
+                CheckBox rb31, CheckBox rb32, CheckBox rb33, CheckBox rb34, CheckBox rb35,
+                CheckBox rb36, CheckBox rb37, CheckBox rb38)
             {
 
-                rb1.Text = "Guided Biopsy CBC";
-                rb2.Text = "Guided Biopsy PT";
-
+                rb1.Text = "Guided Biopsy CBC-PT";
+                rb2.Text = "Creatinine";
+                rb3.Text = "CBC";
+                rb4.Text = "AST";
+                rb5.Text = "ALT";
+                rb6.Text = "creatinine";
+                rb8.Text = "Bil (T)";
+                rb9.Text = "CBC";
+                rb10.Text = "AST";
+                rb11.Text = "ALT";
+                rb12.Text = "ALP";
+                rb13.Text = "Bil (T)";
+                rb14.Text = "Urea";
+                rb15.Text = "Creat";
+                rb16.Text = "Uric acid";
+                rb17.Text = "CBC";
+                rb18.Text = "PT";
+                rb19.Text = "PTT";
+                rb20.Text = "ALT";
+                rb21.Text = "AST";
+                rb22.Text = "ALP";
+                rb23.Text = "Bil(T)";
+                rb24.Text = "Urea";
+                rb25.Text = "Creat";
             }
            
         }
@@ -859,12 +938,39 @@ namespace clinic_system
                 diagnosis = "micro";
             }
 
-            public void treatment(CheckBox rb1, CheckBox rb2)
-            {
+           public void treatment(CheckBox rb1, CheckBox rb2, CheckBox rb3, CheckBox rb4, CheckBox rb5, 
+               CheckBox rb6, CheckBox rb7, CheckBox rb8, CheckBox rb9, CheckBox rb10, 
+               CheckBox rb11, CheckBox rb12, CheckBox rb13, CheckBox rb14, CheckBox rb15, 
+               CheckBox rb16, CheckBox rb17, CheckBox rb18, CheckBox rb19, CheckBox rb20, 
+               CheckBox rb21, CheckBox rb22, CheckBox rb23, CheckBox rb24, CheckBox rb25, 
+               CheckBox rb26, CheckBox rb27, CheckBox rb28, CheckBox rb29, CheckBox rb30, 
+               CheckBox rb31, CheckBox rb32, CheckBox rb33, CheckBox rb34, CheckBox rb35, 
+               CheckBox rb36, CheckBox rb37, CheckBox rb38)            {
 
                 rb1.Text = "HBsAg";
                 rb2.Text = "HBe Ab";
-
+                rb3.Text = "CMV IgG";
+                rb4.Text = "TB PCR";
+                rb5.Text = "Urine C/S";
+                rb6.Text = "Throat S. C/S";
+                rb7.Text = "HCV AB";
+                rb8.Text = "HBc IgM";
+                rb9.Text = "HBV PCR (quamt.)";
+                rb10.Text = "HCV PCR (quant.)";
+                rb11.Text = "Sputum C/S";
+                rb12.Text = "Vaginal S. C/S";
+                rb13.Text = "HBs Ab";
+                rb14.Text = "HBc IgG";
+                rb15.Text = "Toxo IgG";
+                rb16.Text = "CMV PCR";
+                rb17.Text = "Stool C/S";
+                rb18.Text = "Pus C/S";
+                rb19.Text = "HBe Ag";
+                rb20.Text = "CMV IgM";
+                rb21.Text = "Toxo IgG";
+                rb22.Text = "EBV PCR";
+                rb23.Text = "Blood C/S";
+                rb24.Text = "Wound C/S";
             }
 
         }
