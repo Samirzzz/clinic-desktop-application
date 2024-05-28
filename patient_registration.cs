@@ -19,13 +19,14 @@ namespace clinic_system
     {
 
         private Patient patientInstance;
-         private  Clinic clinicInstance=new Clinic();
+         private  Clinic clinicInstance;
         private MySqlConnection connection;
         public patient_registration()
         {
             InitializeComponent();
             
             Messages messages = new Messages("", "");
+            clinicInstance=new Clinic(messages);
             patientInstance = new Patient(messages);
             connection = db.Instance.GetConnection();
         }
