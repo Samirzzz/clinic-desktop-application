@@ -35,7 +35,7 @@ namespace clinic_system
         {
         }
 
-    
+
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selectedDiagnosis = comboBox1.SelectedItem?.ToString();
@@ -46,60 +46,72 @@ namespace clinic_system
             panel1.Controls.Clear();
             Investigation treatment = null;
 
-            if (selectedDiagnosis == "MicroBiology")
+            switch (selectedDiagnosis)
             {
-                treatment = new microbiologyinvestigation();
-            }
-            else if (selectedDiagnosis == "ChemoTherapy")
-            {
-                treatment = new Chemotherapyinvestigation();
-            }
-            else if (selectedDiagnosis == "Singles")
-            {
-                treatment = new singlesinvestigation();
+                case "MicroBiology":
+                    treatment = new microbiologyinvestigation();
+                    break;
+                case "ChemoTherapy":
+                    treatment = new Chemotherapyinvestigation();
+                    break;
+                case "Singles":
+                    treatment = new singlesinvestigation();
+                    break;
             }
 
             if (treatment != null)
             {
-                int xOffset = 10;
-                int yOffset = 10;
-                int xStep = 210;  
-                int yStep = 40;   
-                int checkboxesPerRow = 5;
-                Font smallerFont = new Font("Arial", 8);
-                CheckBox[] checkBoxes = new CheckBox[38];
-
-                for (int i = 0; i < 38; i++)
-                {
-                    int x = xOffset + (i % checkboxesPerRow) * xStep;
-                    int y = yOffset + (i / checkboxesPerRow) * yStep;
-                    checkBoxes[i] = new CheckBox { Width = 200, Location = new Point(x, y), Font = smallerFont };
-                    panel1.Controls.Add(checkBoxes[i]);
-                }
-               
-                treatment.treatment(checkBoxes[0], checkBoxes[1], checkBoxes[2], checkBoxes[3], checkBoxes[4],
-                                           checkBoxes[5], checkBoxes[6], checkBoxes[7], checkBoxes[8], checkBoxes[9],
-                                           checkBoxes[10], checkBoxes[11], checkBoxes[12], checkBoxes[13], checkBoxes[14],
-                                           checkBoxes[15], checkBoxes[16], checkBoxes[17], checkBoxes[18], checkBoxes[19],
-                                           checkBoxes[20], checkBoxes[21], checkBoxes[22], checkBoxes[23], checkBoxes[24],
-                                           checkBoxes[25], checkBoxes[26], checkBoxes[27], checkBoxes[28], checkBoxes[29],
-                                           checkBoxes[30], checkBoxes[31], checkBoxes[32], checkBoxes[33], checkBoxes[34],
-                                           checkBoxes[35], checkBoxes[36], checkBoxes[37]);
-                if (selectedDiagnosis == "Singles")
-                {
-                    checkBoxes[37].Width = 400;
-                }
-                if (selectedDiagnosis != "Singles")
-                {
-                    for (int i = 25; i < checkBoxes.Length; i++)
-                    {
-                        checkBoxes[i].Hide();
-                    }
-                }
-
-
-
+                CreateCheckboxes(treatment, selectedDiagnosis);
                 LoadSavedSelections(selectedDiagnosis);
+            }
+        }
+
+        private void CreateCheckboxes(Investigation treatment, string selectedDiagnosis)
+        {
+            int xOffset = 10;
+            int yOffset = 10;
+            int xStep = 210;
+            int yStep = 40;
+            int checkboxesPerRow = 5;
+            Font smallerFont = new Font("Arial", 8);
+            CheckBox[] checkBoxes = new CheckBox[38];
+
+            for (int i = 0; i < 38; i++)
+            {
+                int x = xOffset + (i % checkboxesPerRow) * xStep;
+                int y = yOffset + (i / checkboxesPerRow) * yStep;
+                checkBoxes[i] = new CheckBox { Width = 200, Location = new Point(x, y), Font = smallerFont };
+                panel1.Controls.Add(checkBoxes[i]);
+            }
+
+            treatment.treatment(checkBoxes[0], checkBoxes[1], checkBoxes[2], checkBoxes[3], checkBoxes[4],
+                                checkBoxes[5], checkBoxes[6], checkBoxes[7], checkBoxes[8], checkBoxes[9],
+                                checkBoxes[10], checkBoxes[11], checkBoxes[12], checkBoxes[13], checkBoxes[14],
+                                checkBoxes[15], checkBoxes[16], checkBoxes[17], checkBoxes[18], checkBoxes[19],
+                                checkBoxes[20], checkBoxes[21], checkBoxes[22], checkBoxes[23], checkBoxes[24],
+                                checkBoxes[25], checkBoxes[26], checkBoxes[27], checkBoxes[28], checkBoxes[29],
+                                checkBoxes[30], checkBoxes[31], checkBoxes[32], checkBoxes[33], checkBoxes[34],
+                                checkBoxes[35], checkBoxes[36], checkBoxes[37]);
+
+            if (selectedDiagnosis == "Singles")
+            {
+                checkBoxes[37].Width = 400;
+            }
+            else
+            {
+                for (int i = 25; i < checkBoxes.Length; i++)
+                {
+                    checkBoxes[i].Hide();
+                }
+            }
+
+            // Remove checkboxes with empty text
+            for (int i = checkBoxes.Length - 1; i >= 0; i--)
+            {
+                if (string.IsNullOrWhiteSpace(checkBoxes[i].Text))
+                {
+                    panel1.Controls.Remove(checkBoxes[i]);
+                }
             }
         }
 

@@ -71,6 +71,7 @@
             // 
             // panel1
             // 
+            panel1.BackColor = SystemColors.ControlLightLight;
             panel1.Location = new Point(40, 95);
             panel1.Name = "panel1";
             panel1.Size = new Size(771, 323);
@@ -118,10 +119,12 @@
             button5.UseVisualStyleBackColor = false;
             button5.Click += button5_Click;
             // 
-            // treatment
+            // investigation
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1116, 496);
             Controls.Add(button5);
             Controls.Add(label1);
@@ -131,7 +134,7 @@
             Controls.Add(comboBox1);
             Controls.Add(save);
             Controls.Add(Diagnosis);
-            Name = "treatment";
+            Name = "investigation";
             Text = "treatment";
             Load += treatment_Load;
             ResumeLayout(false);

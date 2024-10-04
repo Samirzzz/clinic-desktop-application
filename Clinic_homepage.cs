@@ -15,10 +15,15 @@ namespace clinic_system
     public partial class Form1 : Form
     {
         public static Form1 Instancee;
+        private string patientnumber;
+        private string docnumber;
         public Form1()
         {
             InitializeComponent();
             db.Instance.GetConnection();
+            this.patientnumber = patientnumber;
+            this.docnumber = docnumber;
+            Messages messages = new Messages("", "");
             Instancee = this;
         }
 
@@ -188,12 +193,31 @@ namespace clinic_system
 
         private void button5_Click(object sender, EventArgs e)
         {
-           
+
 
             Home p = new Home();
-                p.Show();
-                this.Close();
-            
+            p.Show();
+            this.Close();
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            MySqlConnection connection = db.Instance.GetConnection();
+            try
+            {
+                if (connection.State == System.Data.ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                patient_search viewp = new patient_search(docnumber);
+                viewp.Show();
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
         }
     }
 }

@@ -27,7 +27,7 @@ namespace clinic_system
         public class db
         {
             private static db instance;
-            private string mysqlconn = "server=localhost; user=root; database=clinic-system; password=; pooling=true;";
+            private string mysqlconn = "server=localhost; user=root; database=clinic-system; password=1234; pooling=true;";
             private MySqlConnection mysqlconnection;
 
             private db()
@@ -681,7 +681,7 @@ namespace clinic_system
         }
         public class singlesinvestigation : Investigation
         {
-           
+
             public string getdiagnosis()
             {
                 return "singles investigation";
@@ -757,14 +757,14 @@ namespace clinic_system
                 diagnosis = "Cancer";
             }
 
-           public void treatment(CheckBox rb1, CheckBox rb2, CheckBox rb3, CheckBox rb4, CheckBox rb5,
-                CheckBox rb6, CheckBox rb7, CheckBox rb8, CheckBox rb9, CheckBox rb10,
-                CheckBox rb11, CheckBox rb12, CheckBox rb13, CheckBox rb14, CheckBox rb15,
-                CheckBox rb16, CheckBox rb17, CheckBox rb18, CheckBox rb19, CheckBox rb20,
-                CheckBox rb21, CheckBox rb22, CheckBox rb23, CheckBox rb24, CheckBox rb25,
-                CheckBox rb26, CheckBox rb27, CheckBox rb28, CheckBox rb29, CheckBox rb30,
-                CheckBox rb31, CheckBox rb32, CheckBox rb33, CheckBox rb34, CheckBox rb35,
-                CheckBox rb36, CheckBox rb37, CheckBox rb38)
+            public void treatment(CheckBox rb1, CheckBox rb2, CheckBox rb3, CheckBox rb4, CheckBox rb5,
+                 CheckBox rb6, CheckBox rb7, CheckBox rb8, CheckBox rb9, CheckBox rb10,
+                 CheckBox rb11, CheckBox rb12, CheckBox rb13, CheckBox rb14, CheckBox rb15,
+                 CheckBox rb16, CheckBox rb17, CheckBox rb18, CheckBox rb19, CheckBox rb20,
+                 CheckBox rb21, CheckBox rb22, CheckBox rb23, CheckBox rb24, CheckBox rb25,
+                 CheckBox rb26, CheckBox rb27, CheckBox rb28, CheckBox rb29, CheckBox rb30,
+                 CheckBox rb31, CheckBox rb32, CheckBox rb33, CheckBox rb34, CheckBox rb35,
+                 CheckBox rb36, CheckBox rb37, CheckBox rb38)
             {
 
                 rb1.Text = "Guided Biopsy CBC-PT";
@@ -792,7 +792,7 @@ namespace clinic_system
                 rb24.Text = "Urea";
                 rb25.Text = "Creat";
             }
-           
+
         }
         public class microbiologyinvestigation : Investigation
         {
@@ -805,14 +805,15 @@ namespace clinic_system
                 diagnosis = "micro";
             }
 
-           public void treatment(CheckBox rb1, CheckBox rb2, CheckBox rb3, CheckBox rb4, CheckBox rb5, 
-               CheckBox rb6, CheckBox rb7, CheckBox rb8, CheckBox rb9, CheckBox rb10, 
-               CheckBox rb11, CheckBox rb12, CheckBox rb13, CheckBox rb14, CheckBox rb15, 
-               CheckBox rb16, CheckBox rb17, CheckBox rb18, CheckBox rb19, CheckBox rb20, 
-               CheckBox rb21, CheckBox rb22, CheckBox rb23, CheckBox rb24, CheckBox rb25, 
-               CheckBox rb26, CheckBox rb27, CheckBox rb28, CheckBox rb29, CheckBox rb30, 
-               CheckBox rb31, CheckBox rb32, CheckBox rb33, CheckBox rb34, CheckBox rb35, 
-               CheckBox rb36, CheckBox rb37, CheckBox rb38)            {
+            public void treatment(CheckBox rb1, CheckBox rb2, CheckBox rb3, CheckBox rb4, CheckBox rb5,
+                CheckBox rb6, CheckBox rb7, CheckBox rb8, CheckBox rb9, CheckBox rb10,
+                CheckBox rb11, CheckBox rb12, CheckBox rb13, CheckBox rb14, CheckBox rb15,
+                CheckBox rb16, CheckBox rb17, CheckBox rb18, CheckBox rb19, CheckBox rb20,
+                CheckBox rb21, CheckBox rb22, CheckBox rb23, CheckBox rb24, CheckBox rb25,
+                CheckBox rb26, CheckBox rb27, CheckBox rb28, CheckBox rb29, CheckBox rb30,
+                CheckBox rb31, CheckBox rb32, CheckBox rb33, CheckBox rb34, CheckBox rb35,
+                CheckBox rb36, CheckBox rb37, CheckBox rb38)
+            {
 
                 rb1.Text = "HBsAg";
                 rb2.Text = "HBe Ab";
